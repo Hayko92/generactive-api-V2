@@ -14,6 +14,7 @@ public final class Storage {
     private static final List<Group> GROUP_LIST = new ArrayList<>();
     private static final List<Item> ITEM_LIST = new ArrayList<>();
 
+
     private Storage() {
     }
 
