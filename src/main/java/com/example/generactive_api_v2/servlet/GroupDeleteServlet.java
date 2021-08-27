@@ -2,10 +2,8 @@ package com.example.generactive_api_v2.servlet;
 
 import com.example.generactive_api_v2.db.Storage;
 import com.example.generactive_api_v2.model.Group;
-import com.example.generactive_api_v2.model.Item;
+import com.example.generactive_api_v2.servlet.util.CheckCredentials;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +16,7 @@ import java.util.Optional;
 @WebServlet(name = "deleteGroupById", value = "/groups/*")
 public class GroupDeleteServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        if (!CheckCredentials.isLogined(req, resp)) return;
         String path = req.getPathInfo();
         String[] parts = path.split("/");
         String idString = parts[parts.length - 1];
@@ -28,12 +27,12 @@ public class GroupDeleteServlet extends HttpServlet {
             group.ifPresent(value -> Storage.getGroupList().remove(value));
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE, "WRONG ID");
-
         }
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        if (!CheckCredentials.isLogined(req, resp)) return;
         String path = req.getPathInfo();
         String[] parts = path.split("/");
         String idString = parts[parts.length - 1];

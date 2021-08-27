@@ -3,6 +3,7 @@ package com.example.generactive_api_v2.servlet;
 
 import com.example.generactive_api_v2.db.Storage;
 import com.example.generactive_api_v2.model.Item;
+import com.example.generactive_api_v2.servlet.util.CheckCredentials;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.annotation.WebServlet;
@@ -14,12 +15,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(name = "addingItemServlet", value = "/items/")
+@WebServlet(name = "addingItemServlet", value = "/items")
 public class ItemServlet extends HttpServlet {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        if (!CheckCredentials.isLogined(req, resp)) return;
         BufferedReader bf = req.getReader();
         StringBuilder body = new StringBuilder();
         while (bf.ready()) {
@@ -32,11 +34,12 @@ public class ItemServlet extends HttpServlet {
         writer.write(objectMapper.writeValueAsString(item));
     }
 
+
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        if (!CheckCredentials.isLogined(req, resp)) return;
         resp.setContentType("application/json");
         List<Item> items = Storage.getItemList();
         PrintWriter writer = resp.getWriter();
         writer.write(objectMapper.writeValueAsString(items));
     }
-
 }

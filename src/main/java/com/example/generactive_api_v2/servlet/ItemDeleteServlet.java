@@ -3,9 +3,8 @@ package com.example.generactive_api_v2.servlet;
 
 import com.example.generactive_api_v2.db.Storage;
 import com.example.generactive_api_v2.model.Item;
+import com.example.generactive_api_v2.servlet.util.CheckCredentials;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +17,7 @@ import java.util.Optional;
 @WebServlet(name = "deleteItemById", value = "/items/*")
 public class ItemDeleteServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+        if (!CheckCredentials.isLogined(req, resp)) return;
         String path = req.getPathInfo();
         String[] parts = path.split("/");
         String idString = parts[parts.length - 1];
@@ -34,6 +34,7 @@ public class ItemDeleteServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        if (!CheckCredentials.isLogined(req, resp)) return;
         String path = req.getPathInfo();
         String[] parts = path.split("/");
         String idString = parts[parts.length - 1];

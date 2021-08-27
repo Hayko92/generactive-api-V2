@@ -3,9 +3,8 @@ package com.example.generactive_api_v2.servlet;
 
 import com.example.generactive_api_v2.db.Storage;
 import com.example.generactive_api_v2.model.Item;
+import com.example.generactive_api_v2.servlet.util.CheckCredentials;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,8 @@ import java.util.List;
 public class ItemSearchServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        if (!CheckCredentials.isLogined(req, resp)) return;
         ObjectMapper objectMapper = new ObjectMapper();
         String fromStr = req.getParameter("priceFrom");
         String toSTr = req.getParameter("priceTo");
