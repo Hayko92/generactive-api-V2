@@ -17,7 +17,6 @@ import java.util.Optional;
 @WebServlet(name = "deleteItemById", value = "/items/*")
 public class ItemDeleteServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        if (!CheckCredentials.isLogined(req, resp)) return;
         String path = req.getPathInfo();
         String[] parts = path.split("/");
         String idString = parts[parts.length - 1];
@@ -34,7 +33,6 @@ public class ItemDeleteServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if (!CheckCredentials.isLogined(req, resp)) return;
         String path = req.getPathInfo();
         String[] parts = path.split("/");
         String idString = parts[parts.length - 1];

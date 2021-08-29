@@ -21,7 +21,6 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if (!CheckCredentials.isLogined(req, resp)) return;
         BufferedReader bf = req.getReader();
         StringBuilder body = new StringBuilder();
         while (bf.ready()) {
@@ -36,7 +35,6 @@ public class ItemServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if (!CheckCredentials.isLogined(req, resp)) return;
         resp.setContentType("application/json");
         List<Item> items = Storage.getItemList();
         PrintWriter writer = resp.getWriter();

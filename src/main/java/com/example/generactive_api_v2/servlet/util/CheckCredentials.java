@@ -8,7 +8,6 @@ public final class CheckCredentials {
     public static boolean isLogined(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
         if (session.getAttribute("isLogined") == null) {
-            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
         }
         return true;

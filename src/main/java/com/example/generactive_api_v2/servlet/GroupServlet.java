@@ -18,7 +18,6 @@ public class GroupServlet extends HttpServlet {
     ObjectMapper objectMapper = new ObjectMapper();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if (!CheckCredentials.isLogined(req, resp)) return;
         resp.setContentType("application/json");
         List<Group> groups = Storage.getGroupList();
         PrintWriter writer = resp.getWriter();
@@ -26,7 +25,6 @@ public class GroupServlet extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if (!CheckCredentials.isLogined(req, resp)) return;
         BufferedReader bf = req.getReader();
         StringBuilder body = new StringBuilder();
         while (bf.ready()) {

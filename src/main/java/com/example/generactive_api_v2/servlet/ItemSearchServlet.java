@@ -18,7 +18,6 @@ public class ItemSearchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if (!CheckCredentials.isLogined(req, resp)) return;
         ObjectMapper objectMapper = new ObjectMapper();
         String fromStr = req.getParameter("priceFrom");
         String toSTr = req.getParameter("priceTo");

@@ -16,7 +16,6 @@ import java.util.Optional;
 @WebServlet(name = "deleteGroupById", value = "/groups/*")
 public class GroupDeleteServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if (!CheckCredentials.isLogined(req, resp)) return;
         String path = req.getPathInfo();
         String[] parts = path.split("/");
         String idString = parts[parts.length - 1];
@@ -32,7 +31,6 @@ public class GroupDeleteServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if (!CheckCredentials.isLogined(req, resp)) return;
         String path = req.getPathInfo();
         String[] parts = path.split("/");
         String idString = parts[parts.length - 1];
