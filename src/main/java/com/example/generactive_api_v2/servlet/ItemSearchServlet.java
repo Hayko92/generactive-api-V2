@@ -3,7 +3,6 @@ package com.example.generactive_api_v2.servlet;
 
 import com.example.generactive_api_v2.db.Storage;
 import com.example.generactive_api_v2.model.Item;
-import com.example.generactive_api_v2.servlet.util.CheckCredentials;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

@@ -3,7 +3,6 @@ package com.example.generactive_api_v2.filter;
 import com.example.generactive_api_v2.servlet.util.CheckCredentials;
 
 import javax.servlet.FilterChain;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpFilter;
