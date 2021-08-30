@@ -1,18 +1,13 @@
 package com.example.generactive_api_v2.servlet.util;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public final class CheckCredentials {
-    public static boolean isLogined(HttpServletRequest req, HttpServletResponse resp) {
+    public static boolean isLogined(HttpServletRequest req) {
         HttpSession session = req.getSession();
-        if (session.getAttribute("isLogined") == null) {
-            return false;
-        }
-        return true;
+        return session.getAttribute("isLogined") != null;
     }
-
     private CheckCredentials() {
     }
 }

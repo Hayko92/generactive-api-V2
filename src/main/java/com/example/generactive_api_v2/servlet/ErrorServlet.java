@@ -19,5 +19,4 @@ public class ErrorServlet extends HttpServlet {
         writer.write("Error code: "+code+"\n");
         writer.write("Error Message: "+message+"\n");
     }
-
 }

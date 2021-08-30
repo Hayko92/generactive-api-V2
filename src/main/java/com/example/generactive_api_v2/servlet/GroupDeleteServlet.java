@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @WebServlet(name = "deleteGroupById", value = "/groups/*")
 public class GroupDeleteServlet extends HttpServlet {
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         String path = req.getPathInfo();
         String[] parts = path.split("/");
         String idString = parts[parts.length - 1];

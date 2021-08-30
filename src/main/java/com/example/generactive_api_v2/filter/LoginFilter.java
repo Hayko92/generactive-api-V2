@@ -16,7 +16,7 @@ public class LoginFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
-        if (!CheckCredentials.isLogined(req, res)) {
+        if (!CheckCredentials.isLogined(req)) {
             res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             PrintWriter writer = res.getWriter();
             writer.write("sorry,you have not permissions to this page");
