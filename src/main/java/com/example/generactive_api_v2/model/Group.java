@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Group {
     private   int id;
-    private final String title;
+    private   String title;
     private Group parent;
     private final List<Item> items;
     private final List<Group> groups;
@@ -34,6 +34,10 @@ public class Group {
     public void addItem(Item item) {
         this.items.add(item);
         item.setParent(this);
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public List<Group> getGroups() {
