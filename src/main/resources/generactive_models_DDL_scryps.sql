@@ -1,25 +1,25 @@
 CREATE TABLE configuration
 (
-    Id         SERIAL PRIMARY KEY,
-    Resolution VARCHAR(3) CHECK ( Resolution IN ('HD', 'FHD', '_4K'))
+    id         SERIAL PRIMARY KEY,
+    resolution VARCHAR(3) CHECK ( resolution IN ('HD', 'FHD', '_4K'))
 );
 CREATE TABLE item
 (
-    Id               SERIAL PRIMARY KEY,
-    Title            VARCHAR(20),
-    Price            INT,
-    Image_Url        VARCHAR(30),
-    Currency         VARCHAR(3),
-    Parent           INT,
-    Configuration_Id INT REFERENCES Configuration (Id),
-    Complexity       DECIMAL
+    id               SERIAL PRIMARY KEY,
+    title            VARCHAR(20),
+    price            INT,
+    image_URL        VARCHAR(30),
+    currency         VARCHAR(3),
+    parent           INT,
+    configuration_Id INT REFERENCES Configuration (id),
+    complexity       DECIMAL
 );
 
 CREATE TABLE "group"
 (
-    Id     SERIAL PRIMARY KEY,
-    Title  VARCHAR(20),
-    Parent INT REFERENCES "group" (Id)
+    id     SERIAL PRIMARY KEY,
+    title  VARCHAR(20),
+    parent INT REFERENCES "group" (id)
 );
 ALTER TABLE item
-    ADD CONSTRAINT Fkey FOREIGN KEY (Parent) REFERENCES "group" (Id);
+    ADD CONSTRAINT Fkey FOREIGN KEY (parent) REFERENCES "group" (id);
