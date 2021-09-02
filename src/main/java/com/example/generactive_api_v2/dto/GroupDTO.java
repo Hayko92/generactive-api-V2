@@ -1,8 +1,7 @@
-package com.example.generactive_api_v2.model.dto;
+package com.example.generactive_api_v2.dto;
 
 import com.example.generactive_api_v2.model.Group;
 import com.example.generactive_api_v2.model.Item;
-import com.example.generactive_api_v2.util.GroupIdGenerator;
 
 import java.util.ArrayList;
 import java.util.List;

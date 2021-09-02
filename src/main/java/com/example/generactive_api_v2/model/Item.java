@@ -100,7 +100,7 @@ public class Item {
                 return this.getPrice();
             case FHD:
                 return this.getPrice() * 2;
-            case FourK:
+            case _4K:
                 return this.getPrice() * 4;
         }
         return 0;

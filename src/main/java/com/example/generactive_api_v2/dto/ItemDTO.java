@@ -1,9 +1,8 @@
-package com.example.generactive_api_v2.model.dto;
+package com.example.generactive_api_v2.dto;
 
 import com.example.generactive_api_v2.model.Configuration;
 import com.example.generactive_api_v2.model.Group;
 import com.example.generactive_api_v2.model.Resolution;
-import com.example.generactive_api_v2.util.ItemIdGenerator;
 
 public class ItemDTO {
     private  int id;

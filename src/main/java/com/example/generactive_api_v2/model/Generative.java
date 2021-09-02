@@ -15,7 +15,7 @@ public class Generative extends Item {
                 return this.getPrice() * complexity;
             case FHD:
                 return this.getPrice() * 2 * complexity;
-            case FourK:
+            case _4K:
                 return this.getPrice() * 4 * complexity;
         }
         return 0;
