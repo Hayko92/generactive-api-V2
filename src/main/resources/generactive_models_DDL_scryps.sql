@@ -15,13 +15,11 @@ CREATE TABLE item
     Complexity       DECIMAL
 );
 
-CREATE TABLE group
+CREATE TABLE "group"
 (
     Id     SERIAL PRIMARY KEY,
     Title  VARCHAR(20),
-    Parent INT REFERENCES Groups (Id),
-    Items  Json,
-    Groups Json
+    Parent INT REFERENCES "group" (Id)
 );
 ALTER TABLE item
-    ADD CONSTRAINT Fkey FOREIGN KEY (Parent) REFERENCES Groups (Id);
+    ADD CONSTRAINT Fkey FOREIGN KEY (Parent) REFERENCES "group" (Id);
