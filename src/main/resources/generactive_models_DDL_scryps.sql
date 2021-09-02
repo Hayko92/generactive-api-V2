@@ -1,9 +1,9 @@
-CREATE TABLE Configuration
+CREATE TABLE configuration
 (
     Id         SERIAL PRIMARY KEY,
     Resolution VARCHAR(3) CHECK ( Resolution IN ('HD', 'FHD', '_4K'))
 );
-CREATE TABLE Items
+CREATE TABLE item
 (
     Id               SERIAL PRIMARY KEY,
     Title            VARCHAR(20),
@@ -15,13 +15,11 @@ CREATE TABLE Items
     Complexity       DECIMAL
 );
 
-CREATE TABLE Groups
+CREATE TABLE "group"
 (
     Id     SERIAL PRIMARY KEY,
     Title  VARCHAR(20),
-    Parent INT REFERENCES Groups (Id),
-    Items  Json,
-    Groups Json
+    Parent INT REFERENCES "group" (Id)
 );
-ALTER TABLE Items
-    ADD CONSTRAINT Fkey FOREIGN KEY (Parent) REFERENCES Groups (Id);
+ALTER TABLE item
+    ADD CONSTRAINT Fkey FOREIGN KEY (Parent) REFERENCES "group" (Id);
