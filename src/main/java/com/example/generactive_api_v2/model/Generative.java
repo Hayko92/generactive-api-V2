@@ -1,13 +1,20 @@
 package com.example.generactive_api_v2.model;
 
 public class Generative extends Item {
-    private final double complexity;
+    private double complexity;
 
     public Generative(String title, int price, String image_URL, Configuration configuration, double complexity, String currency) {
-        super( title, price, image_URL, configuration, currency);
+        super(title, price, image_URL, configuration, currency);
+        this.complexity = complexity;
+    }
+    public void setComplexity(double complexity) {
         this.complexity = complexity;
     }
 
+    public Generative() {
+        super();
+        complexity = 0;
+    }
     @Override
     public double calculatePrice(Configuration configuration) {
         switch (configuration.getResolution()) {
@@ -19,5 +26,9 @@ public class Generative extends Item {
                 return this.getPrice() * 4 * complexity;
         }
         return 0;
+    }
+
+    public double getComplexity() {
+        return complexity;
     }
 }
