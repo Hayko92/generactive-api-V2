@@ -11,8 +11,7 @@ CREATE TABLE item
     image_URL        VARCHAR(30),
     currency         VARCHAR(3),
     parent           INT,
-    configuration_Id INT REFERENCES Configuration (id),
-    complexity       DECIMAL
+    configuration_Id INT
 );
 
 CREATE TABLE "group"
@@ -22,4 +21,15 @@ CREATE TABLE "group"
     parent INT REFERENCES "group" (id)
 );
 ALTER TABLE item
-    ADD CONSTRAINT Fkey FOREIGN KEY (parent) REFERENCES "group" (id);
+    ADD CONSTRAINT Fkey_gr FOREIGN KEY (parent) REFERENCES "group" (id);
+ALTER TABLE item
+    ADD CONSTRAINT Fkey_conf FOREIGN KEY (Configuration_Id) REFERENCES Configuration (id);
+
+CREATE TABLE generactive_item (
+     complexity DECIMAL
+ ) INHERITS (item) ;
+
+DROP TABLE Configuration,"group",item,Generactive_Item;
+
+
+
