@@ -1,5 +1,6 @@
 package com.example.generactive_api_v2.servlet;
 
+import com.example.generactive_api_v2.db.GroupJDBCReposotory;
 import com.example.generactive_api_v2.db.Storage;
 import com.example.generactive_api_v2.model.Group;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +19,7 @@ public class GroupServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
-        List<Group> groups = Storage.getGroupList();
+        List<Group> groups = GroupJDBCReposotory.getGroupList();
         PrintWriter writer = resp.getWriter();
         writer.write(objectMapper.writeValueAsString(groups));
     }

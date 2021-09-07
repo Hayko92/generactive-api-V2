@@ -1,7 +1,7 @@
 package com.example.generactive_api_v2.servlet;
 
 
-import com.example.generactive_api_v2.db.ItemJDBCRepository;
+import com.example.generactive_api_v2.db.StockItemJDBCRepository;
 import com.example.generactive_api_v2.dto.GeneractiveDTO;
 import com.example.generactive_api_v2.dto.ItemDTO;
 import com.example.generactive_api_v2.model.Generative;
@@ -16,14 +16,14 @@ import java.io.PrintWriter;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "deleteItemById", value = "/items/*")
-public class ItemDeleteServlet extends HttpServlet {
+public class StockItemDeleteServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         String path = req.getPathInfo();
         String[] parts = path.split("/");
         String idString = parts[parts.length - 1];
         try {
             int id = Integer.parseInt(idString);
-            ItemJDBCRepository.deleteById(id);
+            StockItemJDBCRepository.deleteById(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -37,13 +37,10 @@ public class ItemDeleteServlet extends HttpServlet {
         ObjectMapper objectMapper = new ObjectMapper();
 
         String payLoad = req.getReader().lines().collect(Collectors.joining());
-        ItemDTO itemDTO = null;
-        if (payLoad.contains("complexity")) {
-            itemDTO = objectMapper.readValue(payLoad, GeneractiveDTO.class);
-        } else itemDTO = objectMapper.readValue(payLoad, ItemDTO.class);
+        ItemDTO itemDTO=objectMapper.readValue(payLoad, ItemDTO.class);
         try {
             int id = Integer.parseInt(idString);
-            Item finded = ItemJDBCRepository.findItemById(id);
+            Item finded = StockItemJDBCRepository.findItemById(id);
             if (finded != null) {
                 finded.setConfiguration(itemDTO.getConfiguration());
                 finded.setCurrency(itemDTO.getCurrency());
@@ -51,10 +48,7 @@ public class ItemDeleteServlet extends HttpServlet {
                 finded.setPrice(itemDTO.getPrice());
                 finded.setTitle(itemDTO.getTitle());
                 finded.setImage_url(itemDTO.getImage_url());
-                if (finded instanceof Generative) {
-                    ((Generative) finded).setComplexity(((GeneractiveDTO) itemDTO).getComplexity());
-                }
-                ItemJDBCRepository.updateById(id, itemDTO);
+                StockItemJDBCRepository.updateById(id, itemDTO);
             } else return;
 
             resp.setContentType("application/json");

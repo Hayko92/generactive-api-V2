@@ -3,40 +3,22 @@ package com.example.generactive_api_v2.db;
 import com.example.generactive_api_v2.dto.GeneractiveDTO;
 import com.example.generactive_api_v2.dto.ItemDTO;
 import com.example.generactive_api_v2.model.*;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public final class ItemJDBCRepository {
+public final class StockItemJDBCRepository {
 
-    public static Connection getConnection() {
-        Connection connection = null;
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager
-                    .getConnection(PostgresCredentials.URL, PostgresCredentials.USER, PostgresCredentials.PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
-
-    private ItemJDBCRepository() {
+    private StockItemJDBCRepository() {
     }
 
     public static void add(Item item) {
-        try {
-            Connection connection = getConnection();
+        try (Connection connection = DBConnection.getConnection()) {
             PreparedStatement statement;
-            String queryForGeneractive = "INSERT INTO Generactive_Item (Title, Price, Image_Url, Currency, Parent, Configuration_Id, Complexity) VALUES (?,?,?,?,?,?,?)";
-            String queryForStock = "INSERT INTO Item (Title, Price, Image_Url, Currency, Parent, Configuration_Id) VALUES (?,?,?,?,?,?)";
-            if (item instanceof Stock) {
-                statement = connection.prepareStatement(queryForStock);
-            } else {
-                statement = connection.prepareStatement(queryForGeneractive);
-                statement.setDouble(7, ((Generative) item).getComplexity());
-            }
+            String query = "INSERT INTO Item (Title, Price, Image_Url, Currency, Parent, Configuration_Id) VALUES (?,?,?,?,?,?)";
+            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, item.getTitle());
             statement.setInt(2, item.getPrice());
             statement.setString(3, item.getImage_url());
@@ -47,14 +29,13 @@ public final class ItemJDBCRepository {
             if (item.getConfiguration() == null) {
                 statement.setNull(6, Types.INTEGER);
             } else statement.setInt(6, item.getConfiguration().getResolution().getId());
-            statement.executeUpdate();
+            statement.execute();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                int id = resultSet.getInt(1);
-                item.setId(id);
+                int generated = resultSet.getInt(1);
+                item.setId(generated);
             }
             statement.close();
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -64,7 +45,7 @@ public final class ItemJDBCRepository {
 
     public static List<Item> getAll() {
         List<Item> rv = new ArrayList<>();
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DBConnection.getConnection()) {
             String query = "SELECT * FROM Item";
             PreparedStatement statement = connection.prepareStatement(query);
             rv = executePreparedStatment(statement);
@@ -78,7 +59,7 @@ public final class ItemJDBCRepository {
     private static Configuration getConfiguration(int config_id) {
         Configuration configuration = null;
 
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DBConnection.getConnection()) {
             String query = "SELECT * from configuration where id=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, config_id);
@@ -102,7 +83,7 @@ public final class ItemJDBCRepository {
 
     private static Group getGroupById(int parentid) {
         Group group = null;
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DBConnection.getConnection()) {
             String query = "SELECT * from \"group\" where id=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, parentid);
@@ -126,7 +107,7 @@ public final class ItemJDBCRepository {
 
     public static List<Item> getItemsWithPriceFromTo(int from, int to) {
         List<Item> rv = new ArrayList<>();
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DBConnection.getConnection()) {
             String query = "SELECT * FROM Item where price BETWEEN ? AND ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, from);
@@ -164,19 +145,12 @@ public final class ItemJDBCRepository {
     public static Item findItemById(int id) {
         Item item = null;
         String query = "SELECT * FROM item where id=?";
-        try {
-            PreparedStatement statement = getConnection().prepareStatement(query);
+        try (Connection connection = DBConnection.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                if (resultSet.getMetaData().getColumnCount() > 7) {
-                    item = new Generative();
-                    ((Generative) item).setComplexity(resultSet.getInt(8));
-
-
-                } else {
-                    item = new Stock();
-                }
+                item = new Item();
                 item.setId(resultSet.getInt(1));
                 item.setTitle(resultSet.getString(2));
                 item.setPrice(resultSet.getInt(3));
@@ -193,7 +167,7 @@ public final class ItemJDBCRepository {
     }
 
     public static void deleteById(int id) {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = DBConnection.getConnection()) {
             String query = "DELETE FROM item where id=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
@@ -204,35 +178,23 @@ public final class ItemJDBCRepository {
     }
 
     public static void updateById(int id, ItemDTO itemDTO) {
-        try (Connection connection = getConnection()) {
-            String queryForStock = "UPDATE  item set title=?, price=?,image_url=?, currency=?,parent=?, configuration_id=? where id=?";
-            String queryForGeneractive = "UPDATE  generactive_item set title=?, price=?,image_url=?, currency=?,parent=?, configuration_id=?,complexity=? where id=?";
-            PreparedStatement statement;
-            Item item = findItemById(id);
-            if (item != null) {
-                if (item instanceof Generative) {
-                    statement = connection.prepareStatement(queryForGeneractive);
-
-                    statement.setDouble(7, ((GeneractiveDTO) itemDTO).getComplexity());
-                    statement.setInt(8, id);
-                } else {
-                    statement = connection.prepareStatement(queryForStock);
-                    statement.setInt(7, id);
-                }
-                statement.setString(1, itemDTO.getTitle());
-                statement.setInt(2, itemDTO.getPrice());
-                statement.setString(3, itemDTO.getImage_url());
-                statement.setString(4, itemDTO.getCurrency());
-                if (itemDTO.getParent() != null) statement.setInt(5, itemDTO.getParent().getId());
-                else statement.setNull(5, Types.INTEGER);
-                if (itemDTO.getConfiguration() != null)
-                    statement.setInt(6, itemDTO.getConfiguration().getResolution().getId());
-                else statement.setNull(6, Types.INTEGER);
-            } else return;
+        PreparedStatement statement;
+        try (Connection connection = DBConnection.getConnection()) {
+            String query = "UPDATE  item set title=?, price=?,image_url=?, currency=?,parent=?, configuration_id=? where id=?";
+            statement = connection.prepareStatement(query);
+            statement.setInt(7, id);
+            statement.setString(1, itemDTO.getTitle());
+            statement.setInt(2, itemDTO.getPrice());
+            statement.setString(3, itemDTO.getImage_url());
+            statement.setString(4, itemDTO.getCurrency());
+            if (itemDTO.getParent() != null) statement.setInt(5, itemDTO.getParent().getId());
+            else statement.setNull(5, Types.INTEGER);
+            if (itemDTO.getConfiguration() != null)
+                statement.setInt(6, itemDTO.getConfiguration().getResolution().getId());
+            else statement.setNull(6, Types.INTEGER);
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-
     }
 }
