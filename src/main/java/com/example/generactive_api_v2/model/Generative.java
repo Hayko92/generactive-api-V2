@@ -7,7 +7,6 @@ public class Generative extends Item {
         super(title, price, image_URL, configuration, currency);
         this.complexity = complexity;
     }
-
     public void setComplexity(double complexity) {
         this.complexity = complexity;
     }
@@ -16,7 +15,6 @@ public class Generative extends Item {
         super();
         complexity = 0;
     }
-
     @Override
     public double calculatePrice(Configuration configuration) {
         switch (configuration.getResolution()) {

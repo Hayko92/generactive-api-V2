@@ -16,7 +16,7 @@ CREATE TABLE item
 
 CREATE TABLE "group"
 (
-    id     SERIAL PRIMARY KEY,
+    id     SERIAL primary key ,
     title  VARCHAR(20),
     parent INT REFERENCES "group" (id)
 );
