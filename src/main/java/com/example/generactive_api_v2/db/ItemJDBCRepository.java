@@ -3,7 +3,6 @@ package com.example.generactive_api_v2.db;
 import com.example.generactive_api_v2.dto.GeneractiveDTO;
 import com.example.generactive_api_v2.dto.ItemDTO;
 import com.example.generactive_api_v2.model.*;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
