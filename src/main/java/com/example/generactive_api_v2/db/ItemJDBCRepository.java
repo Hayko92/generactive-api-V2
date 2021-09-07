@@ -1,11 +1,11 @@
 package com.example.generactive_api_v2.db;
 
-import com.example.generactive_api_v2.model.Generative;
-import com.example.generactive_api_v2.model.Item;
-import com.example.generactive_api_v2.model.Stock;
+import com.example.generactive_api_v2.model.*;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public final class ItemJDBCRepository {
 
@@ -56,9 +56,30 @@ public final class ItemJDBCRepository {
     }
 
     public static List<Item> getItemList() {
-//        List<Item> rv = new ArrayList<>();
-//        Connection connection = getConnection();
-//        String query = "SELECT * FROM item";
-        return null;
+        List<Item> rv = new ArrayList<>();
+        try (Connection connection = getConnection()) {
+            String query = "SELECT * FROM Item";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Item item = new Item();
+                item.setId(resultSet.getInt(1));
+                item.setTitle(resultSet.getString(2));
+                item.setPrice(resultSet.getInt(3));
+                item.setImage_url(resultSet.getString(4));
+                item.setCurrency(resultSet.getString(5));
+                int parentid =  resultSet.getInt(6);
+                Optional<Group> parent = Storage.getGroupById(parentid);
+                parent.ifPresent(item::setParent);
+
+              //  item.setConfiguration(resultSet.getObject(7, Configuration.class));
+                rv.add(item);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rv;
     }
 }
