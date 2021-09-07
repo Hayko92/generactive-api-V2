@@ -53,6 +53,9 @@ public class Item {
     }
 
     public Item() {
+        this.id = ItemIdGenerator.getNextId();
+        this.currency = "USD";
+        this.configuration = new Configuration(Resolution.HD);
     }
 
     public String getImage_url() {

@@ -51,7 +51,8 @@ public class ItemDTO {
     }
 
     public ItemDTO() {
-
+        this.currency = "USD";
+        this.configuration = new Configuration(Resolution.HD);
     }
 
     public String getImage_url() {
