@@ -3,6 +3,7 @@ package com.example.generactive_api_v2.db;
 import com.example.generactive_api_v2.dto.GeneractiveDTO;
 import com.example.generactive_api_v2.dto.ItemDTO;
 import com.example.generactive_api_v2.model.*;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,7 +48,12 @@ public final class ItemJDBCRepository {
             if (item.getConfiguration() == null) {
                 statement.setNull(6, Types.INTEGER);
             } else statement.setInt(6, item.getConfiguration().getResolution().getId());
-            statement.execute();
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                item.setId(id);
+            }
             statement.close();
             connection.close();
         } catch (SQLException e) {
