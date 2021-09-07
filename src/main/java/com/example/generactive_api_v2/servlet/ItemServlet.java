@@ -26,7 +26,7 @@ public class ItemServlet extends HttpServlet {
         if (payload.contains("complexity")) {
             item = objectMapper.readValue(payload, Generative.class);
         } else item = objectMapper.readValue(payload, Stock.class);
-        ItemJDBCRepository.addItem(item);
+        ItemJDBCRepository.add(item);
         resp.setContentType("application/json");
         PrintWriter writer = resp.getWriter();
         writer.write(objectMapper.writeValueAsString(item));
@@ -36,7 +36,7 @@ public class ItemServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
-        List<Item> items = ItemJDBCRepository.getItemList();
+        List<Item> items = ItemJDBCRepository.getAll();
         PrintWriter writer = resp.getWriter();
         writer.write(objectMapper.writeValueAsString(items));
     }

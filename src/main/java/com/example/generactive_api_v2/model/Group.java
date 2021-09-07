@@ -14,7 +14,6 @@ public class Group {
     private final List<Group> groups;
 
     public Group() {
-        this.id = GroupIdGenerator.getNextId();
         this.title = "";
         this.items = new ArrayList<>();
         this.groups = new ArrayList<>();
