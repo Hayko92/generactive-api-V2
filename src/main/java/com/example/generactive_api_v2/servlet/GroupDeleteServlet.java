@@ -1,9 +1,10 @@
 package com.example.generactive_api_v2.servlet;
 
-import com.example.generactive_api_v2.db.Storage;
+import com.example.generactive_api_v2.db.GroupJDBCRepository;
 import com.example.generactive_api_v2.model.Group;
 import com.example.generactive_api_v2.dto.GroupDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +20,9 @@ public class GroupDeleteServlet extends HttpServlet {
         String path = req.getPathInfo();
         String[] parts = path.split("/");
         String idString = parts[parts.length - 1];
-
         try {
             int id = Integer.parseInt(idString);
-            Optional<Group> group = Storage.findGroupById(id);
-            group.ifPresent(value -> Storage.getGroupList().remove(value));
+            GroupJDBCRepository.removeById(id);
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE, "WRONG ID");
         }
@@ -39,16 +38,10 @@ public class GroupDeleteServlet extends HttpServlet {
         GroupDTO groupDTO = objectMapper.readValue(payload, GroupDTO.class);
         try {
             int id = Integer.parseInt(idString);
-            Optional<Group> finded = Storage.findGroupById(id);
-            if (finded.isPresent()) {
-                Group group = finded.get();
-                group.setParent(groupDTO.getParent());
-                group.setTitle(groupDTO.getTitle());
-
-            } else return;
+            Group group = GroupJDBCRepository.updateById(id, groupDTO);
             resp.setContentType("application/json");
             PrintWriter writer = resp.getWriter();
-            writer.write(objectMapper.writeValueAsString(finded.get()));
+            writer.write(objectMapper.writeValueAsString(group));
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE, "WRONG ID");
 

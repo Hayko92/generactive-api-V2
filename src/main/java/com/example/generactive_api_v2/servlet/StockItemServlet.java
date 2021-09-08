@@ -1,8 +1,7 @@
 package com.example.generactive_api_v2.servlet;
 
 
-import com.example.generactive_api_v2.db.ItemJDBCRepository;
-import com.example.generactive_api_v2.model.Generative;
+import com.example.generactive_api_v2.db.StockItemJDBCRepository;
 import com.example.generactive_api_v2.model.Item;
 import com.example.generactive_api_v2.model.Stock;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,18 +14,16 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@WebServlet(name = "addingItemServlet", value = "/items")
-public class ItemServlet extends HttpServlet {
+@WebServlet(name = "stockAddingItemServlet", value = "/items")
+public class StockItemServlet extends HttpServlet {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String payload = req.getReader().lines().collect(Collectors.joining());
-        Item item;
-        if (payload.contains("complexity")) {
-            item = objectMapper.readValue(payload, Generative.class);
-        } else item = objectMapper.readValue(payload, Stock.class);
-        ItemJDBCRepository.add(item);
+        Stock item;
+        item = objectMapper.readValue(payload, Stock.class);
+        StockItemJDBCRepository.add(item);
         resp.setContentType("application/json");
         PrintWriter writer = resp.getWriter();
         writer.write(objectMapper.writeValueAsString(item));
@@ -36,7 +33,7 @@ public class ItemServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
-        List<Item> items = ItemJDBCRepository.getAll();
+        List<Item> items = StockItemJDBCRepository.getAll();
         PrintWriter writer = resp.getWriter();
         writer.write(objectMapper.writeValueAsString(items));
     }
