@@ -46,7 +46,7 @@ public final class Storage {
 
     public static Optional<Item> getLastItem() {
         if (GROUP_LIST.size() > 0) return getItemById(ITEM_LIST.size() - 1);
-        else return null;
+        else return Optional.empty();
     }
 
 
@@ -124,11 +124,10 @@ public final class Storage {
     }
 
     public static List<Item> getItemsWithPriceFromTo(int from, int to) {
-        List<Item> result = Storage.getItemList()
+        return Storage.getItemList()
                 .stream()
                 .filter(el -> el.getPrice() > from && el.getPrice() < to)
                 .collect(Collectors.toList());
-        return result;
     }
 }
 

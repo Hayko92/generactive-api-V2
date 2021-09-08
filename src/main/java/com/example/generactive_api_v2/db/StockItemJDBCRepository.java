@@ -1,8 +1,10 @@
 package com.example.generactive_api_v2.db;
 
-import com.example.generactive_api_v2.dto.GeneractiveDTO;
 import com.example.generactive_api_v2.dto.ItemDTO;
-import com.example.generactive_api_v2.model.*;
+import com.example.generactive_api_v2.model.Configuration;
+import com.example.generactive_api_v2.model.Group;
+import com.example.generactive_api_v2.model.Item;
+import com.example.generactive_api_v2.model.Resolution;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -60,7 +62,7 @@ public final class StockItemJDBCRepository {
         Configuration configuration = null;
 
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "SELECT * from configuration where id=?";
+            String query = "SELECT * FROM Configuration WHERE Id=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, config_id);
             ResultSet resultSet = statement.executeQuery();
@@ -84,7 +86,7 @@ public final class StockItemJDBCRepository {
     private static Group getGroupById(int parentid) {
         Group group = null;
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "SELECT * from \"group\" where id=?";
+            String query = "SELECT * FROM Group WHERE Id=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, parentid);
             ResultSet resultSet = statement.executeQuery();
@@ -108,7 +110,7 @@ public final class StockItemJDBCRepository {
     public static List<Item> getItemsWithPriceFromTo(int from, int to) {
         List<Item> rv = new ArrayList<>();
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "SELECT * FROM Item where price BETWEEN ? AND ?";
+            String query = "SELECT * FROM Item WHERE Price BETWEEN ? AND ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, from);
             statement.setInt(2, to);
@@ -144,7 +146,7 @@ public final class StockItemJDBCRepository {
 
     public static Item findItemById(int id) {
         Item item = null;
-        String query = "SELECT * FROM item where id=?";
+        String query = "SELECT * FROM Item WHERE Id=?";
         try (Connection connection = DBConnection.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
@@ -168,7 +170,7 @@ public final class StockItemJDBCRepository {
 
     public static void deleteById(int id) {
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "DELETE FROM item where id=?";
+            String query = "DELETE FROM Item WHERE Id=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             statement.executeUpdate();
@@ -180,7 +182,7 @@ public final class StockItemJDBCRepository {
     public static void updateById(int id, ItemDTO itemDTO) {
         PreparedStatement statement;
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "UPDATE  item set title=?, price=?,image_url=?, currency=?,parent=?, configuration_id=? where id=?";
+            String query = "UPDATE  Item SET Title=?, Price=?,Image_Url=?, Currency=?,Parent=?, Configuration_Id=? WHERE Id=?";
             statement = connection.prepareStatement(query);
             statement.setInt(7, id);
             statement.setString(1, itemDTO.getTitle());

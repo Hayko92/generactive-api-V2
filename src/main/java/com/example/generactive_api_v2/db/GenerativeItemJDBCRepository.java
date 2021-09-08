@@ -50,7 +50,7 @@ public final class GenerativeItemJDBCRepository {
     public static List<Generative> getAll() {
         List<Generative> rv = new ArrayList<>();
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "SELECT * FROM generactive_item";
+            String query = "SELECT * FROM Generactive_Item";
             PreparedStatement statement = connection.prepareStatement(query);
             executeStatement(rv, statement);
             return rv;
@@ -85,7 +85,7 @@ public final class GenerativeItemJDBCRepository {
         Configuration configuration = null;
 
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "SELECT * from configuration where id=?";
+            String query = "SELECT * FROM Configuration WHERE Id=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, config_id);
             ResultSet resultSet = statement.executeQuery();
@@ -109,7 +109,7 @@ public final class GenerativeItemJDBCRepository {
 
     public static Generative findItemById(int id) {
         Generative item = null;
-        String query = "SELECT * FROM generactive_item where id=?";
+        String query = "SELECT * FROM Generactive_Item WHERE Id=?";
         try {
             PreparedStatement statement = DBConnection.getConnection().prepareStatement(query);
             statement.setInt(1, id);
@@ -135,7 +135,7 @@ public final class GenerativeItemJDBCRepository {
     public static List<Generative> getItemsWithPriceFromTo(int from, int to) {
         List<Generative> rv = new ArrayList<>();
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "SELECT * FROM generactive_item where price BETWEEN ? AND ?";
+            String query = "SELECT * FROM Generactive_Item WHERE Price BETWEEN ? AND ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, from);
             statement.setInt(2, to);
@@ -148,7 +148,7 @@ public final class GenerativeItemJDBCRepository {
 
     public static void deleteById(int id) {
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "DELETE FROM generactive_item where id=?";
+            String query = "DELETE FROM Generactive_Item WHERE Id=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             statement.executeUpdate();
@@ -159,7 +159,7 @@ public final class GenerativeItemJDBCRepository {
 
     public static void updateById(int id, GeneractiveDTO itemDTO) {
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "UPDATE  generactive_item set title=?, price=?,image_url=?, currency=?,parent=?, configuration_id=?,complexity=? where id=?";
+            String query = "UPDATE  Generactive_Item SET Title=?, Price=?,Image_Url=?, Currency=?,Parent=?, Configuration_Id=?,Complexity=? WHERE Id=?";
             PreparedStatement statement;
             Generative item = findItemById(id);
             if (item != null) {
