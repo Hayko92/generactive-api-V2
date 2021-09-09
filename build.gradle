@@ -28,15 +28,10 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.12.4'
     compileOnly group: 'javax', name: 'javaee-api', version: '8.0'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23'
-    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
-
-
-
-
-
-
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+
 }
 
 test {

@@ -1,11 +1,11 @@
 CREATE TABLE configuration
 (
-    id         SERIAL PRIMARY KEY,
+    id         int identity PRIMARY KEY,
     resolution VARCHAR(3) CHECK ( resolution IN ('HD', 'FHD', '_4K'))
 );
 CREATE TABLE item
 (
-    id               SERIAL PRIMARY KEY,
+    id               int identity PRIMARY KEY,
     title            VARCHAR(20),
     price            INT,
     image_URL        VARCHAR(30),
@@ -16,7 +16,7 @@ CREATE TABLE item
 
 CREATE TABLE "group"
 (
-    id     SERIAL primary key ,
+    id     int identity primary key ,
     title  VARCHAR(20),
     parent INT REFERENCES "group" (id)
 );
@@ -29,7 +29,7 @@ CREATE TABLE generactive_item
 (
     id INT REFERENCES Item (Id),
     complexity DECIMAL
-)
+);
 DROP TABLE Configuration,"group",item,Generactive_Item;
 
 
