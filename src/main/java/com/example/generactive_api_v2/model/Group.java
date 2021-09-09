@@ -10,8 +10,16 @@ public class Group {
     private   int id;
     private   String title;
     private Group parent;
-    private final List<Item> items;
-    private final List<Group> groups;
+    private   List<Item> items;
+    private   List<Group> groups;
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
 
     public Group() {
         this.title = "";

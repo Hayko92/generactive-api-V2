@@ -58,7 +58,7 @@ public final class StockItemJDBCRepository {
         return rv;
     }
 
-    private static Configuration getConfiguration(int config_id) {
+    public static Configuration getConfiguration(int config_id) {
         Configuration configuration = null;
 
         try (Connection connection = DBConnection.getConnection()) {
