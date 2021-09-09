@@ -1,17 +1,15 @@
 package com.example.generactive_api_v2.servlet;
 
 import com.example.generactive_api_v2.db.GroupJDBCRepository;
-import com.example.generactive_api_v2.model.Group;
 import com.example.generactive_api_v2.dto.GroupDTO;
+import com.example.generactive_api_v2.model.Group;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "deleteGroupById", value = "/groups/*")

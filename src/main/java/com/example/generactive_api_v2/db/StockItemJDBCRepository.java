@@ -25,9 +25,7 @@ public final class StockItemJDBCRepository {
             statement.setInt(2, item.getPrice());
             statement.setString(3, item.getImage_url());
             statement.setString(4, item.getCurrency());
-            if (item.getParent() == null) {
-                statement.setNull(5, Types.INTEGER);
-            } else statement.setInt(5, item.getParent().getId());
+          statement.setInt(5, item.getParent());
             if (item.getConfiguration() == null) {
                 statement.setNull(6, Types.INTEGER);
             } else statement.setInt(6, item.getConfiguration().getResolution().getId());
@@ -58,7 +56,7 @@ public final class StockItemJDBCRepository {
         return rv;
     }
 
-    private static Configuration getConfiguration(int config_id) {
+    public static Configuration getConfiguration(int config_id) {
         Configuration configuration = null;
 
         try (Connection connection = DBConnection.getConnection()) {
@@ -67,7 +65,7 @@ public final class StockItemJDBCRepository {
             statement.setInt(1, config_id);
             ResultSet resultSet = statement.executeQuery();
             String resolution = "";
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 resolution = statement.executeQuery().getString(2);
             }
             String finalResolution = resolution;
@@ -95,9 +93,7 @@ public final class StockItemJDBCRepository {
                 group = new Group();
                 group.setId(resultSet.getInt(1));
                 group.setTitle(resultSet.getString(2));
-                while (resultSet.getInt(3) != 0) {
-                    group.setParent(getGroupById(resultSet.getInt(3)));
-                }
+                group.setParent(resultSet.getInt(3));
             }
             return group;
         } catch (SQLException e) {
@@ -135,7 +131,7 @@ public final class StockItemJDBCRepository {
             item.setCurrency(resultSet.getString(5));
             int parentid = resultSet.getInt(6);
             Group group = getGroupById(parentid);
-            item.setParent(group);
+            item.setParent(group.getId());
             int config_id = resultSet.getInt(7);
             Configuration configuration = getConfiguration(config_id);
             item.setConfiguration(configuration);
@@ -158,7 +154,7 @@ public final class StockItemJDBCRepository {
                 item.setPrice(resultSet.getInt(3));
                 item.setImage_url(resultSet.getString(4));
                 item.setCurrency(resultSet.getString(5));
-                item.setParent(getGroupById(resultSet.getInt(6)));
+                item.setParent(getGroupById(resultSet.getInt(6)).getId());
                 item.setConfiguration(getConfiguration(resultSet.getInt(7)));
             }
 
@@ -189,8 +185,8 @@ public final class StockItemJDBCRepository {
             statement.setInt(2, itemDTO.getPrice());
             statement.setString(3, itemDTO.getImage_url());
             statement.setString(4, itemDTO.getCurrency());
-            if (itemDTO.getParent() != null) statement.setInt(5, itemDTO.getParent().getId());
-            else statement.setNull(5, Types.INTEGER);
+          statement.setInt(5, itemDTO.getParent());
+
             if (itemDTO.getConfiguration() != null)
                 statement.setInt(6, itemDTO.getConfiguration().getResolution().getId());
             else statement.setNull(6, Types.INTEGER);

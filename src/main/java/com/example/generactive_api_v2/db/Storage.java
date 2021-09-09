@@ -92,7 +92,7 @@ public final class Storage {
     public static List<Group> findSubGroupsByParent(Group parent) {
         return getGroupList()
                 .stream()
-                .filter(el -> el.getParent().equals(parent))
+                .filter(el -> el.getParent()==parent.getParent())
                 .collect(Collectors.toList());
     }
 

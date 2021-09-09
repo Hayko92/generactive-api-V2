@@ -10,7 +10,7 @@ public class ItemDTO {
     private  String image_url;
     private  int price;
     private  String currency;
-    private Group parent;
+    private int parent;
     private Configuration configuration;
 
 
@@ -62,7 +62,7 @@ public class ItemDTO {
         return currency;
     }
 
-    public Group getParent() {
+    public int getParent() {
         return parent;
     }
 
@@ -78,7 +78,7 @@ public class ItemDTO {
         return price;
     }
 
-    public void setParent(Group parent) {
+    public void setParent(int parent) {
         this.parent = parent;
     }
 

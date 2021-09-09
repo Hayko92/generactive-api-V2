@@ -9,9 +9,17 @@ import java.util.Objects;
 public class Group {
     private   int id;
     private   String title;
-    private Group parent;
-    private final List<Item> items;
-    private final List<Group> groups;
+    private int parent;
+    private   List<Item> items;
+    private   List<Group> groups;
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
 
     public Group() {
         this.title = "";
@@ -32,7 +40,7 @@ public class Group {
 
     public void addItem(Item item) {
         this.items.add(item);
-        item.setParent(this);
+        item.setParent(this.getId());
     }
 
     public void setTitle(String title) {
@@ -45,7 +53,7 @@ public class Group {
 
     public void addGroup(Group group) {
         this.groups.add(group);
-        group.setParent(this);
+        group.setParent(this.parent);
 
     }
 
@@ -61,11 +69,11 @@ public class Group {
         this.id = id;
     }
 
-    public void setParent(Group parent) {
+    public void setParent(int parent) {
         this.parent = parent;
     }
 
-    public Group getParent() {
+    public int getParent() {
         return parent;
     }
 
