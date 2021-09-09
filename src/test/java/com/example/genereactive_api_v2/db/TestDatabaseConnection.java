@@ -14,7 +14,7 @@ public class TestDatabaseConnection {
     public static Connection getConnection() {
         Connection connection = null;
         try {
-            Class.forName("org.h2.Drive");
+            Class.forName("org.h2.Driver");
             connection = DriverManager
                     .getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {

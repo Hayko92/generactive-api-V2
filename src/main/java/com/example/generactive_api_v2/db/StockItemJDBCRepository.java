@@ -81,28 +81,6 @@ public final class StockItemJDBCRepository {
         return configuration;
     }
 
-    private static Group getGroupById(int parentid) {
-        Group group = null;
-        try (Connection connection = DBConnection.getConnection()) {
-            String query = "SELECT * FROM Group WHERE Id=?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, parentid);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                group = new Group();
-                group.setId(resultSet.getInt(1));
-                group.setTitle(resultSet.getString(2));
-                group.setParent(resultSet.getInt(3));
-            }
-            return group;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return group;
-
-    }
-
     public static List<Item> getItemsWithPriceFromTo(int from, int to) {
         List<Item> rv = new ArrayList<>();
         try (Connection connection = DBConnection.getConnection()) {
@@ -130,7 +108,7 @@ public final class StockItemJDBCRepository {
             item.setImage_url(resultSet.getString(4));
             item.setCurrency(resultSet.getString(5));
             int parentid = resultSet.getInt(6);
-            Group group = getGroupById(parentid);
+            Group group = GroupJDBCRepository.getGroupById(parentid);
             item.setParent(group.getId());
             int config_id = resultSet.getInt(7);
             Configuration configuration = getConfiguration(config_id);
@@ -154,7 +132,7 @@ public final class StockItemJDBCRepository {
                 item.setPrice(resultSet.getInt(3));
                 item.setImage_url(resultSet.getString(4));
                 item.setCurrency(resultSet.getString(5));
-                item.setParent(getGroupById(resultSet.getInt(6)).getId());
+                item.setParent(GroupJDBCRepository.getGroupById(resultSet.getInt(6)).getId());
                 item.setConfiguration(getConfiguration(resultSet.getInt(7)));
             }
 
