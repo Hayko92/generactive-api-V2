@@ -5,9 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 final class DBConnection {
-    public static final String URL = "jdbc:postgresql://localhost:5432/postgres";
-    public static final String USER = "postgres";
-    public static final String PASSWORD = "123456";
+
+    public static final String URL = DatabaseConfigUtil.getConnectionProperties().getProperty("db.url");
+    public static final String USER = DatabaseConfigUtil.getConnectionProperties().getProperty("db.user");
+    public static final String PASSWORD = DatabaseConfigUtil.getConnectionProperties().getProperty("db.password");
     private DBConnection() {
     }
 
