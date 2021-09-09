@@ -126,8 +126,8 @@ public class GroupJDBCRepository {
             String query = "UPDATE \"group\" SET  Title=?, Parent=? WHERE Id=?";
             PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, groupDTO.getTitle());
-            if (groupDTO.getParent() != null) statement.setInt(2, groupDTO.getParent().getId());
-            else statement.setInt(2, 0);
+           if(groupDTO.getParent()!=0) statement.setInt(2, groupDTO.getParent());
+           else statement.setNull(2,Types.INTEGER);
             statement.setInt(3, id);
             statement.executeUpdate();
 

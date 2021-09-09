@@ -9,7 +9,7 @@ import java.util.List;
 public class GroupDTO {
     private   int id;
     private String title;
-    private Group parent;
+    private int parent;
     private final List<Item> items;
     private final List<Group> groups;
 
@@ -49,11 +49,11 @@ public void setTitle(String title) {
         this.id = id;
     }
 
-    public void setParent(Group parent) {
+    public void setParent(int parent) {
         this.parent = parent;
     }
 
-    public Group getParent() {
+    public int getParent() {
         return parent;
     }
 }

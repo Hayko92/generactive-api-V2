@@ -10,7 +10,7 @@ CREATE TABLE item
     price            INT,
     image_URL        VARCHAR(30),
     currency         VARCHAR(3),
-    parent           INT,
+    parent           INT ,
     configuration_Id INT
 );
 
