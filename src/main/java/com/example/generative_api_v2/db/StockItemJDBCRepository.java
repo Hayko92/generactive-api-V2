@@ -19,8 +19,17 @@ public final class StockItemJDBCRepository {
     public static void clear(Connection connection) {
         try {
             String query = "DELETE FROM item";
+            String query2 = "ALTER SEQUENCE GENERATIVE_TEST_DB.PUBLIC.SYSTEM_SEQUENCE_9C415522_48E0_4911_A4A6_627EDCCCABCD RESTART WITH 1";
+            String query3 = "ALTER SEQUENCE GENERATIVE_TEST_DB.PUBLIC.SYSTEM_SEQUENCE_77468E07_9A3C_4B20_8DFE_1D8EA10AE9B1  RESTART WITH 1";
+            String query4 = "ALTER SEQUENCE GENERATIVE_TEST_DB.PUBLIC.SYSTEM_SEQUENCE_EE9DAC49_0BF9_43ED_8FF0_C8A38630C420 RESTART WITH 1";
             PreparedStatement statement1 = connection.prepareStatement(query);
+            PreparedStatement statement2 = connection.prepareStatement(query2);
+            PreparedStatement statement3 = connection.prepareStatement(query3);
+            PreparedStatement statement4 = connection.prepareStatement(query4);
             statement1.executeUpdate();
+            statement2.executeUpdate();
+            statement3.executeUpdate();
+            statement4.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
