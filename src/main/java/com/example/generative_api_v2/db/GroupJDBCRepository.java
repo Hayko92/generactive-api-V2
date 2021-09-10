@@ -98,7 +98,7 @@ public class GroupJDBCRepository {
             PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, group.getTitle());
             if (group.getParent() != 0) statement.setInt(2, group.getParent());
-            else statement.setInt(2, 0);
+            else statement.setNull(2, Types.INTEGER);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -136,4 +136,20 @@ public class GroupJDBCRepository {
         }
         return getGroupById(id);
     }
+
+    public static Group getLastAdded() {
+        Group group = null;
+        String query = "SELECT * FROM \"group\" ORDER BY Id DESC limit 1";
+        try (Connection connection = DBConnection.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                group = getGroupById(resultSet.getInt(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return group;
+    }
 }
+

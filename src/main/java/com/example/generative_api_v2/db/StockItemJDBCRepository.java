@@ -184,18 +184,9 @@ public final class StockItemJDBCRepository {
         try (Connection connection = DBConnection.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                item = new Item();
-                item.setId(resultSet.getInt(1));
-                item.setTitle(resultSet.getString(2));
-                item.setPrice(resultSet.getInt(3));
-                item.setImage_url(resultSet.getString(4));
-                item.setCurrency(resultSet.getString(5));
-                Group groupById = GroupJDBCRepository.getGroupById(resultSet.getInt(6));
-                if (groupById != null) item.setParent(groupById.getId());
-                item.setConfiguration(getConfiguration(resultSet.getInt(7)));
+            if (resultSet.next()) {
+                item = findItemById(resultSet.getInt(1));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

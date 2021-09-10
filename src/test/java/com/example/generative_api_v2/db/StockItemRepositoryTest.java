@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class StockItemRepositoryTest {
     @BeforeEach
-    protected void truncatetables() {
+    protected void clearItemTables() {
         try (Connection connection = TestDatabaseConnection.getConnection()) {
             String query = "DELETE FROM Item;\n" +
                     "DELETE FROM Generactive_Item;";
