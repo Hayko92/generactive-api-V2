@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -14,12 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GroupRepositoryTest {
     @BeforeEach
-    protected void clearGroupTable() {
-        try (Connection connection = TestDatabaseConnection.getConnection()) {
-            String query = "DELETE FROM \"group\"";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.executeUpdate();
-
+    protected   void clearItemAndGroupTables() {
+        try(Connection connection = TestDatabaseConnection.getConnection()) {
+            GroupJDBCRepository.clear(connection);
+            StockItemJDBCRepository.clear(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }

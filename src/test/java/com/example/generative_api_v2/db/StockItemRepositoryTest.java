@@ -15,13 +15,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class StockItemRepositoryTest {
     @BeforeEach
-    protected void clearItemTables() {
-        try (Connection connection = TestDatabaseConnection.getConnection()) {
-            String query = "DELETE FROM Item;\n" +
-                    "DELETE FROM Generactive_Item;";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.executeUpdate();
-
+    protected   void clearItemAndGroupTables() {
+        try(Connection connection = TestDatabaseConnection.getConnection()) {
+            GroupJDBCRepository.clear(connection);
+            StockItemJDBCRepository.clear(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
