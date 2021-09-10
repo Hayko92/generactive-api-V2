@@ -90,7 +90,7 @@ public class StockItemRepositoryTest {
         assertNotNull(StockItemJDBCRepository.findItemById(generatedId));
         StockItemJDBCRepository.deleteById(generatedId);
         assertNull(StockItemJDBCRepository.findItemById(generatedId));
-        
+
     }
 
     @Test
