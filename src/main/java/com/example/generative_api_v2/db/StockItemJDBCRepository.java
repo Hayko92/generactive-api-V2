@@ -18,9 +18,9 @@ public final class StockItemJDBCRepository {
 
     public static void clear(Connection connection) {
         try {
-            String query = "delete FROM  item";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.executeUpdate();
+            String query = "DELETE FROM item";
+            PreparedStatement statement1 = connection.prepareStatement(query);
+            statement1.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
