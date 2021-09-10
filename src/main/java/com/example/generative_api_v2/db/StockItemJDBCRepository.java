@@ -16,6 +16,17 @@ public final class StockItemJDBCRepository {
     private StockItemJDBCRepository() {
     }
 
+    public static void clear(Connection connection) {
+        try {
+            String query = "DELETE FROM Item";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void add(Item item) {
         try (Connection connection = DBConnection.getConnection()) {
             PreparedStatement statement;
