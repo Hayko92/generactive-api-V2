@@ -14,7 +14,7 @@ public class GroupJDBCRepository {
 
     public static void clear(Connection connection) {
         try {
-            String query = "DELETE FROM \"group\"";
+            String query = "delete FROM  \"group\"";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.executeUpdate();
 
