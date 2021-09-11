@@ -10,4 +10,6 @@ public interface GroupDAO {
     Group getById(int id);
     void deleteById(int id);
     void  updateById( Group group);
+
+    Group getLastAdded();
 }

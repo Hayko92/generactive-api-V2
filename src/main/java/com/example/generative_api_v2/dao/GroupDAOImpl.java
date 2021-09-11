@@ -2,9 +2,11 @@ package com.example.generative_api_v2.dao;
 
 import com.example.generative_api_v2.db.hibernate.HibernateSessionFactoryUtil;
 import com.example.generative_api_v2.model.Group;
+import com.example.generative_api_v2.model.Item;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -59,5 +61,17 @@ public class GroupDAOImpl implements GroupDAO{
         session.saveOrUpdate(group);
         transaction.commit();
         session.close();
+    }
+
+    @Override
+    public Group getLastAdded() {
+        SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Group> query = session.createQuery("select g from Group g order by g.id desc ");
+        query.setMaxResults(1);
+        List<Group> resultList = query.getResultList();
+        if (resultList != null) return resultList.get(0);
+        else return null;
     }
 }

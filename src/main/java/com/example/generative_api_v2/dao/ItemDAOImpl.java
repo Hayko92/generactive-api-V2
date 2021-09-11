@@ -70,13 +70,27 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public void updateById( Item item) {
+    public void updateById(Item item) {
         SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.saveOrUpdate(item);
+        session.update(item);
         transaction.commit();
         session.close();
+    }
+
+    @Override
+    public Item getLastAdded() {
+        SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Item> query = session.createQuery("select i from Item i order by i.id desc ");
+        query.setMaxResults(1);
+        List<Item> resultList = query.getResultList();
+        if (resultList != null) return resultList.get(0);
+        else return null;
+
+
     }
 
 
