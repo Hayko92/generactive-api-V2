@@ -31,6 +31,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.5.7.Final'
+
 
 }
 
