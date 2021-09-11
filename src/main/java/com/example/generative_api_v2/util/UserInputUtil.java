@@ -1,6 +1,6 @@
 package com.example.generative_api_v2.util;
 
-import com.example.generative_api_v2.db.Storage;
+import com.example.generative_api_v2.db.jdbc.Storage;
 import com.example.generative_api_v2.model.*;
 
 import java.io.BufferedReader;

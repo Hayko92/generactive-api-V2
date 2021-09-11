@@ -1,4 +1,4 @@
-package com.example.generative_api_v2.db;
+package com.example.generative_api_v2.db.jdbc;
 
 import com.example.generative_api_v2.dto.GeneractiveDTO;
 import com.example.generative_api_v2.model.Configuration;
@@ -31,7 +31,7 @@ public final class GenerativeItemJDBCRepository {
 
             if (item.getConfiguration() == null) {
                 statement.setNull(6, Types.INTEGER);
-            } else statement.setInt(6, item.getConfiguration().getResolution().getId());
+            } else statement.setInt(6, item.getConfiguration().getResolution().ordinal());
             statement.execute();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -172,7 +172,7 @@ public final class GenerativeItemJDBCRepository {
              statement.setInt(5, itemDTO.getParent());
 
                 if (itemDTO.getConfiguration() != null)
-                    statement.setInt(6, itemDTO.getConfiguration().getResolution().getId());
+                    statement.setInt(6, itemDTO.getConfiguration().getResolution().ordinal());
                 else statement.setNull(6, Types.INTEGER);
             } else return;
             statement.executeUpdate();
