@@ -1,5 +1,7 @@
 package com.example.generative_api_v2.db;
 
+import com.example.generative_api_v2.db.jdbc.GroupJDBCRepository;
+import com.example.generative_api_v2.db.jdbc.StockItemJDBCRepository;
 import com.example.generative_api_v2.dto.ItemDTO;
 import com.example.generative_api_v2.model.Item;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,7 +1,7 @@
 package com.example.generative_api_v2.servlet;
 
 
-import com.example.generative_api_v2.db.StockItemJDBCRepository;
+import com.example.generative_api_v2.db.jdbc.StockItemJDBCRepository;
 import com.example.generative_api_v2.dto.ItemDTO;
 import com.example.generative_api_v2.model.Item;
 import com.fasterxml.jackson.databind.ObjectMapper;

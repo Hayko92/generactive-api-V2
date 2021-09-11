@@ -1,7 +1,7 @@
 CREATE TABLE configuration
 (
     id         SERIAL PRIMARY KEY,
-    resolution VARCHAR(3) CHECK ( resolution IN ('HD', 'FHD', '_4K'))
+    resolution resolution
 );
 CREATE TABLE item
 (
@@ -26,7 +26,8 @@ CREATE TABLE generactive_item (
      complexity DECIMAL
  ) INHERITS (item) ;
 
-DROP TABLE Configuration,"group",item,Generactive_Item;
+DROP TABLE Configuration;
+--     "group",item,Generactive_Item;
 
 ALTER TABLE item ADD CONSTRAINT Fkey_gr FOREIGN KEY (parent) REFERENCES "group" (id);
 ALTER TABLE item ADD CONSTRAINT Fkey_conf FOREIGN KEY (Configuration_Id) REFERENCES Configuration (id);

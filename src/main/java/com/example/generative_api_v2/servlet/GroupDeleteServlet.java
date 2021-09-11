@@ -1,6 +1,6 @@
 package com.example.generative_api_v2.servlet;
 
-import com.example.generative_api_v2.db.GroupJDBCRepository;
+import com.example.generative_api_v2.db.jdbc.GroupJDBCRepository;
 import com.example.generative_api_v2.dto.GroupDTO;
 import com.example.generative_api_v2.model.Group;
 import com.fasterxml.jackson.databind.ObjectMapper;
