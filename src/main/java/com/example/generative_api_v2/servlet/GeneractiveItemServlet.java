@@ -1,6 +1,7 @@
 package com.example.generative_api_v2.servlet;
 
 
+
 import com.example.generative_api_v2.db.jdbc.GenerativeItemJDBCRepository;
 import com.example.generative_api_v2.model.Generative;
 import com.fasterxml.jackson.databind.ObjectMapper;

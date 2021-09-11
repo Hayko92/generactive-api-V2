@@ -3,10 +3,24 @@ package com.example.generative_api_v2.model;
 public class Generative extends Item {
     private double complexity;
 
-    public Generative(String title, int price, String image_URL, Configuration configuration, double complexity, String currency) {
-        super(title, price, image_URL, configuration, currency);
+    public Generative(String title, int price, String image_URL, double complexity, String currency) {
+        super(title, price, image_URL, currency);
         this.complexity = complexity;
     }
+
+    public Generative(String title, String image_url, int price, String currency, int parent, Configuration configuration, double complexity) {
+        super(title, image_url, price, currency, parent, configuration);
+        this.complexity = complexity;
+    }
+
+    public Generative(double complexity) {
+        this.complexity = complexity;
+    }
+
+    public Generative(String title, int price, String image_url, Configuration configuration, double complexity, String currency) {
+        super(title,image_url,price,currency,configuration);
+    }
+
     public void setComplexity(double complexity) {
         this.complexity = complexity;
     }

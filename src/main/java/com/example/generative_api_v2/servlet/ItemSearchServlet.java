@@ -1,9 +1,10 @@
 package com.example.generative_api_v2.servlet;
 
 
-import com.example.generative_api_v2.db.jdbc.StockItemJDBCRepository;
+import com.example.generative_api_v2.db.hibernate.StockItemHibernateRepository;
 import com.example.generative_api_v2.model.Item;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class ItemSearchServlet extends HttpServlet {
         String toSTr = req.getParameter("priceTo");
         int from = Integer.parseInt(fromStr);
         int to = Integer.parseInt(toSTr);
-        List<Item> result = StockItemJDBCRepository.getItemsWithPriceFromTo(from, to);
+        List<Item> result = StockItemHibernateRepository.getItemsWithPriceFromTo(from, to);
         resp.setContentType("application/json");
         PrintWriter writer = resp.getWriter();
         writer.write(objectMapper.writeValueAsString(result));

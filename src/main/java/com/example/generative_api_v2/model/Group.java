@@ -2,15 +2,24 @@ package com.example.generative_api_v2.model;
 
 import com.example.generative_api_v2.util.GroupIdGenerator;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "group_")
 public class Group {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private   int id;
+    @Column(name = "title")
     private   String title;
+    @Column(name = "parent")
     private int parent;
+    @Transient
     private   List<Item> items;
+    @Transient
     private   List<Group> groups;
 
     public void setItems(List<Item> items) {

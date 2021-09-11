@@ -1,11 +1,11 @@
 package com.example.generative_api_v2.dao;
 
 import com.example.generative_api_v2.db.hibernate.HibernateSessionFactoryUtil;
-import com.example.generative_api_v2.dto.ItemDTO;
 import com.example.generative_api_v2.model.Item;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -24,31 +24,70 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public List<Item> getAll() {
-        return null;
+        SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Item> allItems = session.createQuery("SELECT a FROM Item a", Item.class).getResultList();
+        transaction.commit();
+        return allItems;
+
     }
 
     @Override
-    public List<Item> getItemsWithPriceFromTo(int from, int to) {
-        return null;
+    public List<Item> getItemsWithPriceFromTo(int priceFrom, int to) {
+        SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Item> query = session.createQuery("SELECT a FROM Item a where a .price between :from and :to", Item.class);
+        query.setParameter("from", priceFrom);
+        query.setParameter("to", to);
+        List<Item> resultList = query.getResultList();
+        transaction.commit();
+        session.close();
+        return resultList;
     }
 
     @Override
     public Item getById(int id) {
-        return null;
+        SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Item item = session.get(Item.class, id);
+        transaction.commit();
+        session.close();
+        return item;
     }
 
     @Override
     public void deleteById(int id) {
-
+        SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Item item = session.get(Item.class, id);
+        session.remove(item);
+        transaction.commit();
+        session.close();
     }
 
     @Override
-    public void updateById(int id, ItemDTO itemDTO) {
-
+    public void updateById( Item item) {
+        SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.saveOrUpdate(item);
+        transaction.commit();
+        session.close();
     }
 
-    @Override
+
     public Item findLastItem() {
-        return null;
+        SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Item> items = session.createQuery("SELECT a FROM Item a where a.id=max(id)", Item.class).getResultList();
+        transaction.commit();
+        session.close();
+        if (items != null) return items.get(0);
+        else return null;
     }
 }

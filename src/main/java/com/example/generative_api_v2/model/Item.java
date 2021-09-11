@@ -1,26 +1,14 @@
 package com.example.generative_api_v2.model;
 
-import com.example.generative_api_v2.util.ItemIdGenerator;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 import javax.persistence.*;
 import java.util.Objects;
+
 @Entity
 @Table(name="item")
-
 public class Item {
     @Id
-    @GeneratedValue(generator = "sequence-generator")
-    @GenericGenerator(
-            name = "sequence-generator",
-            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-            parameters = {
-                    @Parameter(name = "sequence_name", value = "item_id_sequence"),
-                    @Parameter(name = "initial_value", value = "4"),
-                    @Parameter(name = "increment_size", value = "1")
-            }
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private  int id;
     @Column(name = "title")
     private  String title;
@@ -34,17 +22,25 @@ public class Item {
     private int parent;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "configuration_id", referencedColumnName = "id")
+//    @ManyToOne(targetEntity = Configuration.class)
+//    @JoinColumn(name = "configuration_id", referencedColumnName = "id")
+    @Transient
     private Configuration configuration;
 
+    public Item(String title, String image_url, int price, String currency, int parent, Configuration configuration) {
+        this.title = title;
+        this.image_url = image_url;
+        this.price = price;
+        this.currency = currency;
+        this.parent = parent;
+        this.configuration = configuration;
+    }
 
-    public Item(String title, int price, String image_url, Configuration configuration, String currency) {
+    public Item(String title, int price, String image_url, String currency) {
         this.title = title;
         this.price = price;
         this.currency = currency;
         this.image_url = image_url;
-       this.configuration = configuration;
     }
 
     public Item(  String title, int price, String image_url) {
@@ -54,14 +50,14 @@ public class Item {
 
     }
 
-
-
-    public Item(String title,int price, String image_url,  String currency) {
+    public Item(String title, String image_url, int price, String currency, Configuration configuration) {
         this.title = title;
         this.image_url = image_url;
         this.price = price;
         this.currency = currency;
+        this.configuration = configuration;
     }
+
 
     public void setId(int id) {
         this.id = id;
