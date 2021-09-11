@@ -1,6 +1,7 @@
 package com.example.generative_api_v2.servlet;
 
-import com.example.generative_api_v2.db.jdbc.GroupJDBCRepository;
+
+import com.example.generative_api_v2.db.hibernate.GroupHibernateRepository;
 import com.example.generative_api_v2.model.Group;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,7 +21,7 @@ public class GroupServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
-        List<Group> groups = GroupJDBCRepository.getGroupList();
+        List<Group> groups = GroupHibernateRepository.getAll();
         PrintWriter writer = resp.getWriter();
         writer.write(objectMapper.writeValueAsString(groups));
     }
@@ -29,7 +30,7 @@ public class GroupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String payload = req.getReader().lines().collect(Collectors.joining());
         Group group = objectMapper.readValue(payload, Group.class);
-        GroupJDBCRepository.add(group);
+        GroupHibernateRepository.add(group);
         resp.setContentType("application/json");
         PrintWriter writer = resp.getWriter();
         writer.write(objectMapper.writeValueAsString(group));

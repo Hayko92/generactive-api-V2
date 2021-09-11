@@ -1,9 +1,11 @@
 package com.example.generative_api_v2.servlet;
 
-import com.example.generative_api_v2.db.jdbc.GroupJDBCRepository;
+
+import com.example.generative_api_v2.db.hibernate.GroupHibernateRepository;
 import com.example.generative_api_v2.dto.GroupDTO;
 import com.example.generative_api_v2.model.Group;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +22,23 @@ public class GroupDeleteServlet extends HttpServlet {
         String idString = parts[parts.length - 1];
         try {
             int id = Integer.parseInt(idString);
-            GroupJDBCRepository.removeById(id);
+            GroupHibernateRepository.removeById(id);
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE, "WRONG ID");
+        }
+    }
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String path = req.getPathInfo();
+        String[] parts = path.split("/");
+        String idString = parts[parts.length - 1];
+        try {
+            int id = Integer.parseInt(idString);
+            Group group = GroupHibernateRepository.getById(id);
+            resp.setContentType("application/json");
+            PrintWriter writer = resp.getWriter();
+            writer.write(objectMapper.writeValueAsString(group));
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE, "WRONG ID");
         }
@@ -34,9 +52,13 @@ public class GroupDeleteServlet extends HttpServlet {
         ObjectMapper objectMapper = new ObjectMapper();
         String payload = req.getReader().lines().collect(Collectors.joining());
         GroupDTO groupDTO = objectMapper.readValue(payload, GroupDTO.class);
+
         try {
             int id = Integer.parseInt(idString);
-            Group group = GroupJDBCRepository.updateById(id, groupDTO);
+            Group group = GroupHibernateRepository.getById(id);
+            group.setId(id);
+            group.setTitle(groupDTO.getTitle());
+            GroupHibernateRepository.updateById(group);
             resp.setContentType("application/json");
             PrintWriter writer = resp.getWriter();
             writer.write(objectMapper.writeValueAsString(group));
