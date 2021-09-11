@@ -11,5 +11,5 @@ public interface ItemDAO {
     Item getById(int id);
     void deleteById(int id);
     void  updateById( Item item);
-
+    Item getLastAdded();
 }

@@ -1,5 +1,7 @@
 package com.example.generative_api_v2.db;
 
+import com.example.generative_api_v2.db.hibernate.GroupHibernateRepository;
+import com.example.generative_api_v2.db.hibernate.StockItemHibernateRepository;
 import com.example.generative_api_v2.db.jdbc.GroupJDBCRepository;
 import com.example.generative_api_v2.db.jdbc.StockItemJDBCRepository;
 import com.example.generative_api_v2.dto.GroupDTO;
@@ -16,19 +18,15 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GroupRepositoryTest {
     @BeforeEach
     protected   void clearItemAndGroupTables() {
-        try(Connection connection = TestDatabaseConnection.getConnection()) {
-            GroupJDBCRepository.clear(connection);
-            StockItemJDBCRepository.clear(connection);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        GroupHibernateRepository.clear();
+        StockItemHibernateRepository.clear();
     }
 
     @Test
     public void addTest() {
         Group group = new Group("test_name");
-        GroupJDBCRepository.add(group);
-        Group received = GroupJDBCRepository.getLastAdded();
+        GroupHibernateRepository.add(group);
+        Group received = GroupHibernateRepository.getLastAdded();
         assertEquals(group.getTitle(), received.getTitle());
     }
 
@@ -37,10 +35,10 @@ public class GroupRepositoryTest {
         Group group1 = new Group("test_name");
         Group group2 = new Group("test_name");
         Group group3 = new Group("test_name");
-        GroupJDBCRepository.add(group1);
-        GroupJDBCRepository.add(group2);
-        GroupJDBCRepository.add(group3);
-        List<Group> groups = GroupJDBCRepository.getGroupList();
+        GroupHibernateRepository.add(group1);
+        GroupHibernateRepository.add(group2);
+        GroupHibernateRepository.add(group3);
+        List<Group> groups = GroupHibernateRepository.getAll();
         assertEquals(3, groups.size());
     }
 
@@ -48,10 +46,10 @@ public class GroupRepositoryTest {
     public void findGroupByIdTest() {
         Group group1 = new Group("test_name");
         Group group2 = new Group("test_name");
-        GroupJDBCRepository.add(group1);
-        GroupJDBCRepository.add(group2);
-        Group groupReceived1 = GroupJDBCRepository.getGroupById(group1.getId());
-        Group groupReceived2 = GroupJDBCRepository.getGroupById(group1.getId());
+        GroupHibernateRepository.add(group1);
+        GroupHibernateRepository.add(group2);
+        Group groupReceived1 = GroupHibernateRepository.getById(group1.getId());
+        Group groupReceived2 = GroupHibernateRepository.getById(group1.getId());
         assertEquals(group1.getTitle(), groupReceived1.getTitle());
         assertEquals(group2.getTitle(), groupReceived2.getTitle());
     }
@@ -59,11 +57,11 @@ public class GroupRepositoryTest {
     @Test
     public void removeByIdTest() {
         Group group = new Group("test_name");
-        GroupJDBCRepository.add(group);
+        GroupHibernateRepository.add(group);
         int generatedId = group.getId();
-        assertNotNull(GroupJDBCRepository.getGroupById(generatedId));
-        GroupJDBCRepository.removeById(generatedId);
-        assertNull(GroupJDBCRepository.getGroupById(generatedId));
+        assertNotNull(GroupHibernateRepository.getById(generatedId));
+        GroupHibernateRepository.removeById(generatedId);
+        assertNull(GroupHibernateRepository.getById(generatedId));
     }
 
     @Test
