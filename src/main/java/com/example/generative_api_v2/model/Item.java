@@ -3,12 +3,13 @@ package com.example.generative_api_v2.model;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
-@Table(name="item")
-public class Item {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name = "item")
+public class Item  {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private  int id;
     @Column(name = "title")
     private  String title;

@@ -1,6 +1,14 @@
 package com.example.generative_api_v2.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "generactive_item")
 public class Generative extends Item {
+
+
+
+    @Column(name = "complexity")
     private double complexity;
 
     public Generative(String title, int price, String image_URL, double complexity, String currency) {
@@ -18,7 +26,7 @@ public class Generative extends Item {
     }
 
     public Generative(String title, int price, String image_url, Configuration configuration, double complexity, String currency) {
-        super(title,image_url,price,currency,configuration);
+        super(title, image_url, price, currency, configuration);
     }
 
     public void setComplexity(double complexity) {
@@ -29,6 +37,7 @@ public class Generative extends Item {
         super();
         complexity = 0;
     }
+
     @Override
     public double calculatePrice(Configuration configuration) {
         switch (configuration.getResolution()) {
@@ -41,6 +50,7 @@ public class Generative extends Item {
         }
         return 0;
     }
+
 
     public double getComplexity() {
         return complexity;

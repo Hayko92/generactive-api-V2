@@ -1,11 +1,15 @@
 package com.example.generative_api_v2.servlet;
 
 
-
+import com.example.generative_api_v2.db.hibernate.GenerativeItemHibernateRepository;
+import com.example.generative_api_v2.db.hibernate.StockItemHibernateRepository;
 import com.example.generative_api_v2.db.jdbc.GenerativeItemJDBCRepository;
 import com.example.generative_api_v2.dto.GeneractiveDTO;
+import com.example.generative_api_v2.dto.ItemDTO;
 import com.example.generative_api_v2.model.Generative;
+import com.example.generative_api_v2.model.Item;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,26 +30,53 @@ public class GenerativeItemUpdateServlet extends HttpServlet {
         ObjectMapper objectMapper = new ObjectMapper();
 
         String payLoad = req.getReader().lines().collect(Collectors.joining());
-        GeneractiveDTO itemDTO=objectMapper.readValue(payLoad, GeneractiveDTO.class);
+        GeneractiveDTO itemDTO = objectMapper.readValue(payLoad, GeneractiveDTO.class);
         try {
             int id = Integer.parseInt(idString);
-            Generative finded = GenerativeItemJDBCRepository.findItemById(id);
-            if (finded != null) {
-                finded.setConfiguration(itemDTO.getConfiguration());
-                finded.setCurrency(itemDTO.getCurrency());
-                finded.setParent(itemDTO.getParent());
-                finded.setPrice(itemDTO.getPrice());
-                finded.setTitle(itemDTO.getTitle());
-                finded.setImage_url(itemDTO.getImage_url());
-                finded.setComplexity(itemDTO.getComplexity());
-                GenerativeItemJDBCRepository.updateById(id, itemDTO);
-            } else return;
+            Generative finded = GenerativeItemHibernateRepository.getById(id);
+            finded.setConfiguration(itemDTO.getConfiguration());
+            finded.setCurrency(itemDTO.getCurrency());
+            finded.setImage_url(itemDTO.getImage_url());
+            finded.setParent(itemDTO.getParent());
+            finded.setPrice(itemDTO.getPrice());
+            finded.setTitle(itemDTO.getTitle());
+            finded.setComplexity(itemDTO.getComplexity());
+            GenerativeItemHibernateRepository.updateById(finded);
 
             resp.setContentType("application/json");
             PrintWriter writer = resp.getWriter();
             writer.write(objectMapper.writeValueAsString(finded));
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE, "WRONG ID");
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String path = req.getPathInfo();
+        String[] parts = path.split("/");
+        String idString = parts[parts.length - 1];
+        try {
+            int id = Integer.parseInt(idString);
+            Generative item = GenerativeItemHibernateRepository.getById(id);
+            resp.setContentType("application/json");
+            PrintWriter writer = resp.getWriter();
+            writer.write(objectMapper.writeValueAsString(item));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+        String path = req.getPathInfo();
+        String[] parts = path.split("/");
+        String idString = parts[parts.length - 1];
+        try {
+            int id = Integer.parseInt(idString);
+            StockItemHibernateRepository.deleteById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

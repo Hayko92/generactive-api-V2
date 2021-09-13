@@ -18,7 +18,7 @@ CREATE TABLE "group"
 (
     id     SERIAL primary key ,
     title  VARCHAR(20),
-    parent INT REFERENCES "group" (id)
+    parent INT REFERENCES group_ (id)
 );
 
 
@@ -29,16 +29,16 @@ CREATE TABLE generactive_item (
 DROP TABLE Configuration;
 --     "group",item,Generactive_Item;
 
-ALTER TABLE item ADD CONSTRAINT Fkey_gr FOREIGN KEY (parent) REFERENCES "group" (id);
+ALTER TABLE item ADD CONSTRAINT Fkey_gr FOREIGN KEY (parent) REFERENCES group_ (id);
 ALTER TABLE item ADD CONSTRAINT Fkey_conf FOREIGN KEY (Configuration_Id) REFERENCES Configuration (id);
 
-ALTER TABLE "group"
-    ADD CONSTRAINT Fkey_par FOREIGN KEY (Parent) REFERENCES "group" (id);
+ALTER TABLE group_
+    ADD CONSTRAINT Fkey_par FOREIGN KEY (Parent) REFERENCES group_ (id);
 
 ALTER TABLE item
     DROP CONSTRAINT Fkey_gr ;
 ALTER TABLE item
     DROP CONSTRAINT Fkey_conf ;
 
-ALTER TABLE "group"
+ALTER TABLE group_
     DROP CONSTRAINT Fkey_par;
