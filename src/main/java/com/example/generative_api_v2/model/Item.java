@@ -8,6 +8,7 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "item")
 public class Item  {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private  int id;
@@ -19,12 +20,19 @@ public class Item  {
     private  int price;
     @Column(name = "currency")
     private  String currency;
+
     @Column(name = "parent")
     private int parent;
 
 
+
 //    @ManyToOne(targetEntity = Configuration.class)
 //    @JoinColumn(name = "configuration_id", referencedColumnName = "id")
+
+    @ManyToOne
+    @JoinColumn(name = "id",insertable = false, updatable = false)
+    @Transient
+    private   Group group;
     @Transient
     private Configuration configuration;
 

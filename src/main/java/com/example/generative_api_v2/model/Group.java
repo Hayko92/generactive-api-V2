@@ -12,15 +12,17 @@ import java.util.Objects;
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private   int id;
+    private int id;
     @Column(name = "title")
-    private   String title;
+    private String title;
     @Column(name = "parent")
     private int parent;
+    @OneToMany
     @Transient
-    private   List<Item> items;
+    private List<Item> items;
+    @OneToMany
     @Transient
-    private   List<Group> groups;
+    private List<Group> groups;
 
     public void setItems(List<Item> items) {
         this.items = items;
@@ -94,7 +96,7 @@ public class Group {
     }
 
     public static Group buildNewGroup(String title) {
-        return new Group( title);
+        return new Group(title);
     }
 
     public void print(int level) {
