@@ -70,8 +70,8 @@ public final class GenerativeItemJDBCRepository {
             item.setImage_url(resultSet.getString(4));
             item.setCurrency(resultSet.getString(5));
             int parentid = resultSet.getInt(6);
-            Group group = GroupJDBCRepository.getGroupById(parentid);
-            item.setParent(group.getId());
+         //   Group group = GroupJDBCRepository.getGroupById(parentid);
+           // item.setParent(group.getId());
             int config_id = resultSet.getInt(7);
             Configuration configuration = getConfiguration(config_id);
             item.setConfiguration(configuration);
@@ -121,7 +121,7 @@ public final class GenerativeItemJDBCRepository {
                 item.setPrice(resultSet.getInt(3));
                 item.setImage_url(resultSet.getString(4));
                 item.setCurrency(resultSet.getString(5));
-                item.setParent(GroupJDBCRepository.getGroupById(resultSet.getInt(6)).getId());
+         //       item.setParent(GroupJDBCRepository.getGroupById(resultSet.getInt(6)).getId());
                 item.setConfiguration(getConfiguration(resultSet.getInt(7)));
             }
 

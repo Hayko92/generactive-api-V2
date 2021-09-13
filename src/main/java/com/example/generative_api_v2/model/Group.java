@@ -15,8 +15,10 @@ public class Group {
     private int id;
     @Column(name = "title")
     private String title;
-    @Column(name = "parent")
-    private int parent;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "parent")
+    private Group parent;
     @OneToMany
     @Transient
     private List<Item> items;
@@ -80,11 +82,11 @@ public class Group {
         this.id = id;
     }
 
-    public void setParent(int parent) {
+    public void setParent(Group parent) {
         this.parent = parent;
     }
 
-    public int getParent() {
+    public Group getParent() {
         return parent;
     }
 

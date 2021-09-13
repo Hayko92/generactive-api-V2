@@ -63,7 +63,7 @@ public class GroupJDBCRepository {
                     group = new Group();
                     group.setId(resultSet.getInt(1));
                     group.setTitle(resultSet.getString(2));
-                    group.setParent(resultSet.getInt(3));
+               //     group.setParent(resultSet.getInt(3));
 
                 }
                 Item item = new Item();
@@ -96,7 +96,7 @@ public class GroupJDBCRepository {
                 group1 = new Group();
                 group1.setId(resultSet1.getInt(1));
                 group1.setTitle(resultSet1.getString(2));
-                group1.setParent(resultSet1.getInt(3));
+             //   group1.setParent(resultSet1.getInt(3));
                 groups.add(group1);
             }
             if (group != null) {
@@ -116,8 +116,8 @@ public class GroupJDBCRepository {
             String query = "INSERT INTO \"group\"(Title,Parent) VALUES (?,?)";
             PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, group.getTitle());
-            if (group.getParent() != 0) statement.setInt(2, group.getParent());
-            else statement.setNull(2, Types.INTEGER);
+         //   if (group.getParent() != 0) statement.setInt(2, group.getParent());
+         //   else statement.setNull(2, Types.INTEGER);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
