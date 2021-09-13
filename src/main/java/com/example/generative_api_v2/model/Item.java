@@ -30,7 +30,8 @@ public class Item  {
 //    @JoinColumn(name = "configuration_id", referencedColumnName = "id")
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id",insertable = false, updatable = false)
+    @Transient
     private   Group group;
     @Transient
     private Configuration configuration;
