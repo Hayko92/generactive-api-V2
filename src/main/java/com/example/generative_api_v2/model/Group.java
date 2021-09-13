@@ -17,9 +17,9 @@ public class Group {
     private   String title;
     @Column(name = "parent")
     private int parent;
-    @Transient
+    @OneToMany
     private   List<Item> items;
-    @Transient
+    @OneToMany
     private   List<Group> groups;
 
     public void setItems(List<Item> items) {
