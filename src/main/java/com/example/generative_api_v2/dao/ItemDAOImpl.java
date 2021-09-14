@@ -27,7 +27,7 @@ public class ItemDAOImpl implements ItemDAO {
         SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        List<Item> allItems = session.createQuery("SELECT a FROM Item a", Item.class).getResultList();
+        List<Item> allItems = session.createQuery("SELECT a FROM  Item a", Item.class).getResultList();
         transaction.commit();
         return allItems;
 

@@ -16,7 +16,7 @@ public class Generative extends Item {
         this.complexity = complexity;
     }
 
-    public Generative(String title, String image_url, int price, String currency, int parent, Configuration configuration, double complexity) {
+    public Generative(String title, String image_url, int price, String currency, Group parent, Configuration configuration, double complexity) {
         super(title, image_url, price, currency, parent, configuration);
         this.complexity = complexity;
     }
