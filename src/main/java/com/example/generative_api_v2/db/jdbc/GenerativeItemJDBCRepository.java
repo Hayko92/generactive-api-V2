@@ -27,7 +27,7 @@ public final class GenerativeItemJDBCRepository {
             statement.setInt(2, item.getPrice());
             statement.setString(3, item.getImage_url());
             statement.setString(4, item.getCurrency());
-            statement.setInt(5, item.getParent());
+           // statement.setInt(5, item.getParent());
 
             if (item.getConfiguration() == null) {
                 statement.setNull(6, Types.INTEGER);
@@ -169,7 +169,7 @@ public final class GenerativeItemJDBCRepository {
                 statement.setInt(2, itemDTO.getPrice());
                 statement.setString(3, itemDTO.getImage_url());
                 statement.setString(4, itemDTO.getCurrency());
-             statement.setInt(5, itemDTO.getParent());
+           //  statement.setInt(5, itemDTO.getParent());
 
                 if (itemDTO.getConfiguration() != null)
                     statement.setInt(6, itemDTO.getConfiguration().getResolution().ordinal());

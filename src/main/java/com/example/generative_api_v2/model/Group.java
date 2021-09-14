@@ -16,7 +16,7 @@ public class Group {
     @Column(name = "title")
     private String title;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch =FetchType.LAZY)
     @JoinColumn(name = "parent")
     private Group parent;
     @OneToMany
@@ -41,7 +41,7 @@ public class Group {
     }
 
     public Group(String title) {
-        this.id = GroupIdGenerator.getNextId();
+      //  this.id = GroupIdGenerator.getNextId();
         this.title = title;
         this.items = new ArrayList<>();
         this.groups = new ArrayList<>();
@@ -53,7 +53,7 @@ public class Group {
 
     public void addItem(Item item) {
         this.items.add(item);
-        item.setParent(this.getId());
+        item.setParent(this);
     }
 
     public void setTitle(String title) {

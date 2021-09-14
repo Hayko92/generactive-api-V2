@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.Objects;
 
 
-@Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity
 @Table(name = "item")
 public class Item  {
 
@@ -21,22 +21,24 @@ public class Item  {
     @Column(name = "currency")
     private  String currency;
 
-    @Column(name = "parent")
-    private int parent;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent")
+    @Transient
+    private Group parent;
 
 
 
 //    @ManyToOne(targetEntity = Configuration.class)
 //    @JoinColumn(name = "configuration_id", referencedColumnName = "id")
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch =FetchType.LAZY)
     @JoinColumn(name = "id",insertable = false, updatable = false)
     @Transient
     private   Group group;
     @Transient
     private Configuration configuration;
 
-    public Item(String title, String image_url, int price, String currency, int parent, Configuration configuration) {
+    public Item(String title, String image_url, int price, String currency, Group parent, Configuration configuration) {
         this.title = title;
         this.image_url = image_url;
         this.price = price;
@@ -99,7 +101,7 @@ public class Item  {
         return currency;
     }
 
-    public int getParent() {
+    public Group getParent() {
         return parent;
     }
 
@@ -115,7 +117,7 @@ public class Item  {
         return price;
     }
 
-    public void setParent(int parent) {
+    public void setParent(Group parent) {
         this.parent = parent;
     }
 
@@ -161,12 +163,12 @@ public class Item  {
         Item item = (Item) o;
         return id == item.id && price == item.price && Objects.equals(title, item.title) && Objects.equals(image_url, item.image_url) && Objects.equals(currency, item.currency) && Objects.equals(parent, item.parent)
                 //&& Objects.equals(configuration, item.configuration);;
-        ;
+                ;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, title, image_url, price, currency, parent);
-                //, configuration);
+        //, configuration);
     }
 }

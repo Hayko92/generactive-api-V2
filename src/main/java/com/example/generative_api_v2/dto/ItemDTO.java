@@ -1,6 +1,7 @@
 package com.example.generative_api_v2.dto;
 
 import com.example.generative_api_v2.model.Configuration;
+import com.example.generative_api_v2.model.Group;
 import com.example.generative_api_v2.model.Resolution;
 
 public class ItemDTO {
@@ -9,7 +10,7 @@ public class ItemDTO {
     private  String image_url;
     private  int price;
     private  String currency;
-    private int parent;
+    private Group parent;
     private Configuration configuration;
 
 
@@ -59,7 +60,7 @@ public class ItemDTO {
         return currency;
     }
 
-    public int getParent() {
+    public Group getParent() {
         return parent;
     }
 
@@ -75,7 +76,7 @@ public class ItemDTO {
         return price;
     }
 
-    public void setParent(int parent) {
+    public void setParent(Group parent) {
         this.parent = parent;
     }
 

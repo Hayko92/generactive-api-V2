@@ -72,7 +72,7 @@ public class GroupJDBCRepository {
                 item.setPrice(resultSet.getInt(6));
                 item.setImage_url(resultSet.getString(7));
                 item.setCurrency(resultSet.getString(8));
-                item.setParent(resultSet.getInt(9));
+           //     item.setParent(resultSet.getInt(9));
                 int conf_id = resultSet.getInt(10);
                 String query = "SELECT * FROM configuration WHERE id=?";
                 PreparedStatement statement1 = connection.prepareStatement(query);
