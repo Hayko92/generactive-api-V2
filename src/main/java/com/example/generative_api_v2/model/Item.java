@@ -1,5 +1,7 @@
 package com.example.generative_api_v2.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -21,8 +23,8 @@ public class Item  {
     @Column(name = "currency")
     private  String currency;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "parent")
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Group parent;
 
 

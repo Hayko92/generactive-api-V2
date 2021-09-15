@@ -1,6 +1,6 @@
 package com.example.generative_api_v2.model;
 
-import com.example.generative_api_v2.util.GroupIdGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,14 +17,15 @@ public class Group {
     private String title;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "parent")
     private Group parent;
 
-    @OneToMany
-    @Transient
+    @OneToMany( fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent")
     private List<Item> items;
-    @OneToMany
-    @Transient
+    @OneToMany( fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent")
     private List<Group> groups;
 
     public void setItems(List<Item> items) {
@@ -42,7 +43,7 @@ public class Group {
     }
 
     public Group(String title) {
-      //  this.id = GroupIdGenerator.getNextId();
+        //  this.id = GroupIdGenerator.getNextId();
         this.title = title;
         this.items = new ArrayList<>();
         this.groups = new ArrayList<>();
