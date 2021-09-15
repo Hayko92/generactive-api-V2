@@ -22,6 +22,9 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
+
+
+
     compileOnly('javax.servlet:javax.servlet-api:4.0.1')
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.4'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.4'
@@ -33,9 +36,6 @@ dependencies {
     testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
     implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.5.7.Final'
     implementation group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.2.Final'
-
-
-
 }
 
 test {

@@ -1,6 +1,8 @@
 package com.example.generative_api_v2.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,16 +18,19 @@ public class Group {
     @Column(name = "title")
     private String title;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "parent")
+    @JsonManagedReference
     private Group parent;
 
-    @OneToMany( fetch = FetchType.LAZY)
+    @OneToMany( fetch = FetchType.EAGER)
     @JoinColumn(name = "parent")
+
     private List<Item> items;
-    @OneToMany( fetch = FetchType.LAZY)
+    @OneToMany( fetch = FetchType.EAGER)
     @JoinColumn(name = "parent")
+    @JsonBackReference
     private List<Group> groups;
 
     public void setItems(List<Item> items) {
