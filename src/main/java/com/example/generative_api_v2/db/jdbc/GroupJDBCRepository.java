@@ -81,8 +81,7 @@ public class GroupJDBCRepository {
                 String resolution = null;
                 if(conf.next())     resolution = conf.getString(2);
                 Configuration configuration = null;
-                if(resolution!=null)    configuration = new Configuration(Resolution.valueOf(resolution));
-                item.setConfiguration(configuration);
+
                 if (item.getId() != 0) items.add(item);
 
             }
@@ -145,8 +144,8 @@ public class GroupJDBCRepository {
             String query = "UPDATE \"group\" SET  Title=?, Parent=? WHERE Id=?";
             PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, groupDTO.getTitle());
-           if(groupDTO.getParent()!=0) statement.setInt(2, groupDTO.getParent());
-           else statement.setNull(2,Types.INTEGER);
+         //  if(groupDTO.getParent()!=0) statement.setInt(2, groupDTO.getParent());
+        //   else statement.setNull(2,Types.INTEGER);
             statement.setInt(3, id);
             statement.executeUpdate();
 

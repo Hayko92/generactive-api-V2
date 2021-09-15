@@ -22,13 +22,13 @@ public final class Storage {
         GROUP_LIST.add(group);
     }
 
-    public static void addItem(String type, String title, int price, String image_URL, Configuration configuration, double complexity, String currency) throws Exception {
-        if (type.equalsIgnoreCase("Stock")) {
-            ITEM_LIST.add(new Stock(title, price, image_URL, configuration, currency));
-        } else if (type.equalsIgnoreCase("Generative"))
-            ITEM_LIST.add(new Generative(title, price, image_URL, configuration, complexity, currency));
-        else throw new Exception("Wrong type");
-    }
+//    public static void addItem(String type, String title, int price, String image_URL, Configuration configuration, double complexity, String currency) throws Exception {
+//        if (type.equalsIgnoreCase("Stock")) {
+//            ITEM_LIST.add(new Stock(title, price, image_URL, configuration, currency));
+//        } else if (type.equalsIgnoreCase("Generative"))
+//            ITEM_LIST.add(new Generative(title, price, image_URL, complexity, currency));
+//        else throw new Exception("Wrong type");
+//    }
 
     public static void addItem(Item item) {
         ITEM_LIST.add(item);

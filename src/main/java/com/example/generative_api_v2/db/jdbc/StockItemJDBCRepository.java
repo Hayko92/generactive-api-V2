@@ -47,9 +47,7 @@ public final class StockItemJDBCRepository {
             statement.setString(4, item.getCurrency());
          //   if (item.getParent() > 0) statement.setInt(5, item.getParent());
           //  else statement.setNull(5, Types.INTEGER);
-            if (item.getConfiguration() == null) {
-                statement.setNull(6, Types.INTEGER);
-            } else statement.setInt(6, item.getConfiguration().getResolution().ordinal());
+
             statement.execute();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -132,8 +130,7 @@ public final class StockItemJDBCRepository {
             Group group = GroupJDBCRepository.getGroupById(parentid);
           //  if (group != null) item.setParent(group.getId());
             int config_id = resultSet.getInt(7);
-            Configuration configuration = getConfiguration(config_id);
-            if (configuration != null) item.setConfiguration(configuration);
+
             rv.add(item);
         }
         return rv;
@@ -156,7 +153,7 @@ public final class StockItemJDBCRepository {
                 item.setCurrency(resultSet.getString(5));
                 Group groupById = GroupJDBCRepository.getGroupById(resultSet.getInt(6));
              //   if (groupById != null) item.setParent(groupById.getId());
-                item.setConfiguration(getConfiguration(resultSet.getInt(7)));
+
             }
 
         } catch (SQLException e) {

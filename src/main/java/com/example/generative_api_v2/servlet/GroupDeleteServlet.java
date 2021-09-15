@@ -58,6 +58,7 @@ public class GroupDeleteServlet extends HttpServlet {
             Group group = GroupHibernateRepository.getById(id);
             group.setId(id);
             group.setTitle(groupDTO.getTitle());
+            group.setParent(groupDTO.getParent());
             GroupHibernateRepository.updateById(group);
             resp.setContentType("application/json");
             PrintWriter writer = resp.getWriter();

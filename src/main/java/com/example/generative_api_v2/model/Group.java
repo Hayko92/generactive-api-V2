@@ -16,9 +16,10 @@ public class Group {
     @Column(name = "title")
     private String title;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch =FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")
     private Group parent;
+
     @OneToMany
     @Transient
     private List<Item> items;

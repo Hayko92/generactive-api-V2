@@ -29,9 +29,6 @@ public final class GenerativeItemJDBCRepository {
             statement.setString(4, item.getCurrency());
            // statement.setInt(5, item.getParent());
 
-            if (item.getConfiguration() == null) {
-                statement.setNull(6, Types.INTEGER);
-            } else statement.setInt(6, item.getConfiguration().getResolution().ordinal());
             statement.execute();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -74,7 +71,7 @@ public final class GenerativeItemJDBCRepository {
            // item.setParent(group.getId());
             int config_id = resultSet.getInt(7);
             Configuration configuration = getConfiguration(config_id);
-            item.setConfiguration(configuration);
+
             item.setComplexity(resultSet.getDouble(8));
             rv.add(item);
         }
@@ -122,7 +119,7 @@ public final class GenerativeItemJDBCRepository {
                 item.setImage_url(resultSet.getString(4));
                 item.setCurrency(resultSet.getString(5));
          //       item.setParent(GroupJDBCRepository.getGroupById(resultSet.getInt(6)).getId());
-                item.setConfiguration(getConfiguration(resultSet.getInt(7)));
+
             }
 
         } catch (SQLException e) {
