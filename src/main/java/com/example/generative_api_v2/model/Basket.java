@@ -10,11 +10,11 @@ public class Basket {
         return items;
     }
 
-    public void printPrice() {
+    public void printPrice(Configuration configuration) {
         System.out.println("Items in your basket: " + this.getItems());
         int summ = 0;
         for (Item item : this.getItems()) {
-            summ += item.calculatePrice(item.getConfiguration());
+            //summ += item.calculatePrice(configuration));
         }
         System.out.println("Sum of your Basket:" + summ);
     }

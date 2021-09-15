@@ -85,7 +85,7 @@ public final class UserInputUtil {
                 int groupId = Integer.parseInt(bf.readLine());
                 Optional<Group> parent = Storage.getGroupById(groupId);
                 if (parent.isPresent()) {
-                    Storage.addItem(type, title, price, imageUrl, new Configuration(resolution1), complexity, currency);
+                   // Storage.addItem(type, title, price, imageUrl, complexity, currency);
                     parent.get().addItem(Storage.getLastItem().get());
                 }
             } catch (Exception e) {
@@ -111,7 +111,7 @@ public final class UserInputUtil {
                 System.out.println("Something went wrong...we are sorry");
             }
         }
-        basket.printPrice();
+      //  basket.printPrice( );
     }
 
     private UserInputUtil() {

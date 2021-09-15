@@ -21,30 +21,19 @@ public class Item  {
     @Column(name = "currency")
     private  String currency;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "parent")
-    @Transient
     private Group parent;
 
 
 
-//    @ManyToOne(targetEntity = Configuration.class)
-//    @JoinColumn(name = "configuration_id", referencedColumnName = "id")
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch =FetchType.LAZY)
-    @JoinColumn(name = "id",insertable = false, updatable = false)
-    @Transient
-    private   Group group;
-    @Transient
-    private Configuration configuration;
-
-    public Item(String title, String image_url, int price, String currency, Group parent, Configuration configuration) {
+    public Item(String title, String image_url, int price, String currency, Group parent) {
         this.title = title;
         this.image_url = image_url;
         this.price = price;
         this.currency = currency;
         this.parent = parent;
-        this.configuration = configuration;
     }
 
     public Item(String title, int price, String image_url, String currency) {
@@ -61,12 +50,11 @@ public class Item  {
 
     }
 
-    public Item(String title, String image_url, int price, String currency, Configuration configuration) {
+    public Item(String title, String image_url, int price, String currency) {
         this.title = title;
         this.image_url = image_url;
         this.price = price;
         this.currency = currency;
-        this.configuration = configuration;
     }
 
 
@@ -121,13 +109,7 @@ public class Item  {
         this.parent = parent;
     }
 
-    public Configuration getConfiguration() {
-        return configuration;
-    }
 
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
-    }
 
     public double calculatePrice(Configuration configuration) {
         switch (configuration.getResolution()) {

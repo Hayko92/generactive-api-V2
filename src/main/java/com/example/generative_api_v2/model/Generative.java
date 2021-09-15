@@ -11,13 +11,10 @@ public class Generative extends Item {
     @Column(name = "complexity")
     private double complexity;
 
-    public Generative(String title, int price, String image_URL, double complexity, String currency) {
-        super(title, price, image_URL, currency);
-        this.complexity = complexity;
-    }
 
-    public Generative(String title, String image_url, int price, String currency, Group parent, Configuration configuration, double complexity) {
-        super(title, image_url, price, currency, parent, configuration);
+
+    public Generative(String title, String image_url, int price, String currency, Group parent, double complexity) {
+        super(title, image_url, price, currency, parent);
         this.complexity = complexity;
     }
 
@@ -25,8 +22,8 @@ public class Generative extends Item {
         this.complexity = complexity;
     }
 
-    public Generative(String title, int price, String image_url, Configuration configuration, double complexity, String currency) {
-        super(title, image_url, price, currency, configuration);
+    public Generative(String title, int price, String image_url, double complexity, String currency) {
+        super(title, image_url, price, currency);
     }
 
     public void setComplexity(double complexity) {

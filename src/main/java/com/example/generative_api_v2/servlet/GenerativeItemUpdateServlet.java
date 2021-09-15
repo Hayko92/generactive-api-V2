@@ -34,7 +34,6 @@ public class GenerativeItemUpdateServlet extends HttpServlet {
         try {
             int id = Integer.parseInt(idString);
             Generative finded = GenerativeItemHibernateRepository.getById(id);
-            finded.setConfiguration(itemDTO.getConfiguration());
             finded.setCurrency(itemDTO.getCurrency());
             finded.setImage_url(itemDTO.getImage_url());
             finded.setParent(itemDTO.getParent());

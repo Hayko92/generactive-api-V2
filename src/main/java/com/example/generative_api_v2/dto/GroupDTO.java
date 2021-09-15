@@ -3,13 +3,15 @@ package com.example.generative_api_v2.dto;
 import com.example.generative_api_v2.model.Group;
 import com.example.generative_api_v2.model.Item;
 
+import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupDTO {
     private   int id;
     private String title;
-    private int parent;
+    @ManyToOne
+    private Group parent;
     private final List<Item> items;
     private final List<Group> groups;
 
@@ -49,11 +51,11 @@ public void setTitle(String title) {
         this.id = id;
     }
 
-    public void setParent(int parent) {
+    public void setParent(Group parent) {
         this.parent = parent;
     }
 
-    public int getParent() {
+    public Group getParent() {
         return parent;
     }
 }
