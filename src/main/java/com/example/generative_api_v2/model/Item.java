@@ -21,7 +21,7 @@ public class Item  {
     @Column(name = "currency")
     private  String currency;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")
     private Group parent;
 

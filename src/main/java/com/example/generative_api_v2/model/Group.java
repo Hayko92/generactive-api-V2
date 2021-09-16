@@ -20,11 +20,11 @@ public class Group {
     @JoinColumn(name = "parent")
     private Group parent;
 
-    @OneToMany
-    @Transient
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent")
     private List<Item> items;
-    @OneToMany
-    @Transient
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent")
     private List<Group> groups;
 
     public void setItems(List<Item> items) {
