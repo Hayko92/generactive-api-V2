@@ -3,7 +3,9 @@ package com.example.generative_api_v2.servlet;
 
 import com.example.generative_api_v2.db.hibernate.StockItemHibernateRepository;
 import com.example.generative_api_v2.model.Item;
+import com.example.generative_api_v2.service.ItemService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +17,12 @@ import java.util.List;
 
 @WebServlet(name = "searchItemsServlet", value = "/items/search")
 public class ItemSearchServlet extends HttpServlet {
+    private ItemService itemService;
+
+    @Autowired
+    public ItemSearchServlet(ItemService itemService) {
+        this.itemService = itemService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -23,7 +31,7 @@ public class ItemSearchServlet extends HttpServlet {
         String toSTr = req.getParameter("priceTo");
         int from = Integer.parseInt(fromStr);
         int to = Integer.parseInt(toSTr);
-        List<Item> result = StockItemHibernateRepository.getItemsWithPriceFromTo(from, to);
+        List<Item> result = itemService.getItemsWithPriceFromTo(from, to);
         resp.setContentType("application/json");
         PrintWriter writer = resp.getWriter();
         writer.write(objectMapper.writeValueAsString(result));

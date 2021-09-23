@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GroupRepositoryTest {
     @BeforeEach
     protected   void clearItemAndGroupTables() {
-        GroupHibernateRepository.clear();
         StockItemHibernateRepository.clear();
+        GroupHibernateRepository.clear();
     }
 
     @Test
@@ -49,7 +49,7 @@ public class GroupRepositoryTest {
         GroupHibernateRepository.add(group1);
         GroupHibernateRepository.add(group2);
         Group groupReceived1 = GroupHibernateRepository.getById(group1.getId());
-        Group groupReceived2 = GroupHibernateRepository.getById(group1.getId());
+        Group groupReceived2 = GroupHibernateRepository.getById(group2.getId());
         assertEquals(group1.getTitle(), groupReceived1.getTitle());
         assertEquals(group2.getTitle(), groupReceived2.getTitle());
     }
@@ -67,13 +67,14 @@ public class GroupRepositoryTest {
     @Test
     public void updateByIdTest() {
         Group group =new Group("Test_title");
-        GroupJDBCRepository.add(group);
+        String nameBeforeChanging = group.getTitle();
+        GroupHibernateRepository.add(group);
         int generatedId = group.getId();
-        GroupDTO groupDTO = new GroupDTO("changed_name");
-        GroupJDBCRepository.updateById(generatedId,groupDTO);
-        Group groupAfterUpdate = GroupJDBCRepository.getGroupById(generatedId);
-        assertNotEquals(group, groupAfterUpdate);
-        assertEquals(groupAfterUpdate.getTitle(),groupDTO.getTitle());
+        group.setTitle("changedname");
+        GroupHibernateRepository.updateById(group);
+        Group groupAfterUpdate = GroupHibernateRepository.getById(generatedId);
+        assertNotEquals(group.getTitle(), nameBeforeChanging);
+        assertEquals(groupAfterUpdate.getTitle(),group.getTitle());
     }
 }
 

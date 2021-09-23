@@ -3,8 +3,10 @@ package com.example.generative_api_v2.db;
 import com.example.generative_api_v2.db.hibernate.GroupHibernateRepository;
 import com.example.generative_api_v2.db.hibernate.StockItemHibernateRepository;
 import com.example.generative_api_v2.model.Item;
+import com.example.generative_api_v2.service.ItemService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -12,6 +14,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class StockItemRepositoryTest {
+    @Autowired
+    private ItemService itemService;
+
+
     @BeforeEach
     protected   void clearItemAndGroupTables() {
         GroupHibernateRepository.clear();
@@ -21,7 +27,7 @@ public class StockItemRepositoryTest {
     @Test
     public void addTest() {
         Item item = new Item("test_name", 100, "test_url", "USD");
-        StockItemHibernateRepository.save(item);
+        itemService.save(item);
         Item received = StockItemHibernateRepository.findLastAdded();
         assertEquals(item.getTitle(), received.getTitle());
         assertEquals(item.getCurrency(), received.getCurrency());
@@ -32,10 +38,10 @@ public class StockItemRepositoryTest {
         Item item1 = new Item("test_name", 100, "test_url", "USD");
         Item item2 = new Item("test_name", 100, "test_url", "USD");
         Item item3 = new Item("test_name", 100, "test_url", "USD");
-        StockItemHibernateRepository.save(item1);
-        StockItemHibernateRepository.save(item2);
-        StockItemHibernateRepository.save(item3);
-        List<Item> items = StockItemHibernateRepository.getAll();
+        itemService.save(item1);
+        itemService.save(item2);
+        itemService.save(item3);
+        List<Item> items = itemService.getAll();
         assertEquals(3, items.size());
     }
 
@@ -47,13 +53,13 @@ public class StockItemRepositoryTest {
         Item item4 = new Item("test_name", 170, "test_url", "USD");
         Item item5 = new Item("test_name", 200, "test_url", "USD");
         Item item6 = new Item("test_name", 210, "test_url", "USD");
-        StockItemHibernateRepository.save(item1);
-        StockItemHibernateRepository.save(item2);
-        StockItemHibernateRepository.save(item3);
-        StockItemHibernateRepository.save(item4);
-        StockItemHibernateRepository.save(item5);
-        StockItemHibernateRepository.save(item6);
-        List<Item> items = StockItemHibernateRepository.getItemsWithPriceFromTo(120, 170);
+        itemService.save(item1);
+        itemService.save(item2);
+        itemService.save(item3);
+        itemService.save(item4);
+        itemService.save(item5);
+        itemService.save(item6);
+        List<Item> items = itemService.getItemsWithPriceFromTo(120, 170);
         assertNotNull(items);
         assertTrue(items
                 .stream()
@@ -65,10 +71,10 @@ public class StockItemRepositoryTest {
     public void findItemByIdTest() {
         Item item1 = new Item("1", 100, "test_url", "USD");
         Item item2 = new Item("2", 120, "test_url", "USD");
-        StockItemHibernateRepository.save(item1);
-        StockItemHibernateRepository.save(item2);
-        Item itemFromRepo1 = StockItemHibernateRepository.getById(item1.getId());
-        Item itemFromRepo2 = StockItemHibernateRepository.getById(item2.getId());
+        itemService.save(item1);
+        itemService.save(item2);
+        Item itemFromRepo1 = itemService.getById(item1.getId());
+        Item itemFromRepo2 = itemService.getById(item2.getId());
         assertEquals(item1.getTitle(), itemFromRepo1.getTitle());
         assertEquals(item2.getTitle(), itemFromRepo2.getTitle());
     }
@@ -76,22 +82,22 @@ public class StockItemRepositoryTest {
     @Test
     void deleteByIdTest() {
         Item item = new Item("1", 100, "test_url", "USD");
-        StockItemHibernateRepository.save(item);
+        itemService.save(item);
         int generatedId = item.getId();
-        assertNotNull(StockItemHibernateRepository.getById(generatedId));
-        StockItemHibernateRepository.deleteById(generatedId);
-        assertNull(StockItemHibernateRepository.getById(generatedId));
+        assertNotNull(itemService.getById(generatedId));
+        itemService.deleteById(generatedId);
+        assertNull(itemService.getById(generatedId));
 
     }
 
     @Test
     public void updateByIdTest() {
         Item item = new Item("title", 150, "image_url");
-        StockItemHibernateRepository.save(item);
+        itemService.save(item);
         int generatedId = item.getId();
         Item itemDTO = new Item("changed", 100, "changed_image_url");
-        StockItemHibernateRepository.updateById(itemDTO);
-        Item itemaAfterUpdate = StockItemHibernateRepository.getById(generatedId);
+        itemService.updateById(itemDTO);
+        Item itemaAfterUpdate = itemService.getById(generatedId);
         assertNotEquals(item, itemaAfterUpdate);
         assertEquals(itemaAfterUpdate.getTitle(),itemDTO.getTitle());
         assertEquals(itemaAfterUpdate.getPrice(),itemDTO.getPrice());
