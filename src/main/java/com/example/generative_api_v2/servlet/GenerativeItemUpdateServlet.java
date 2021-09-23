@@ -8,7 +8,9 @@ import com.example.generative_api_v2.dto.GeneractiveDTO;
 import com.example.generative_api_v2.dto.ItemDTO;
 import com.example.generative_api_v2.model.Generative;
 import com.example.generative_api_v2.model.Item;
+import com.example.generative_api_v2.service.GenerativeItemService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +22,12 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "updateGenerativeItemById", value = "/generative-items/*")
 public class GenerativeItemUpdateServlet extends HttpServlet {
+   private GenerativeItemService generativeItemService;
 
+   @Autowired
+    public GenerativeItemUpdateServlet(GenerativeItemService generativeItemService) {
+        this.generativeItemService = generativeItemService;
+    }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -33,7 +40,7 @@ public class GenerativeItemUpdateServlet extends HttpServlet {
         GeneractiveDTO itemDTO = objectMapper.readValue(payLoad, GeneractiveDTO.class);
         try {
             int id = Integer.parseInt(idString);
-            Generative finded = GenerativeItemHibernateRepository.getById(id);
+            Generative finded = generativeItemService.getById(id);
             finded.setCurrency(itemDTO.getCurrency());
             finded.setImage_url(itemDTO.getImage_url());
             finded.setParent(itemDTO.getParent());
@@ -58,7 +65,7 @@ public class GenerativeItemUpdateServlet extends HttpServlet {
         String idString = parts[parts.length - 1];
         try {
             int id = Integer.parseInt(idString);
-            Generative item = GenerativeItemHibernateRepository.getById(id);
+            Generative item = generativeItemService.getById(id);
             resp.setContentType("application/json");
             PrintWriter writer = resp.getWriter();
             writer.write(objectMapper.writeValueAsString(item));
@@ -73,7 +80,7 @@ public class GenerativeItemUpdateServlet extends HttpServlet {
         String idString = parts[parts.length - 1];
         try {
             int id = Integer.parseInt(idString);
-            StockItemHibernateRepository.deleteById(id);
+            generativeItemService.deleteById(id);
         } catch (Exception e) {
             e.printStackTrace();
         }

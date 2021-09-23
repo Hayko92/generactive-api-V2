@@ -7,9 +7,10 @@ import com.example.generative_api_v2.dao.ItemDAOImpl;
 import com.example.generative_api_v2.model.Generative;
 import com.example.generative_api_v2.model.Item;
 import org.hibernate.Session;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 public final class GenerativeItemHibernateRepository {
     private static final GenerativeItemDAO itemDAO = new GenerativeItemDAOImpl();
 

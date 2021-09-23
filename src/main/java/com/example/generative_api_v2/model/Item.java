@@ -28,7 +28,6 @@ public class Item  {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")
     @JsonBackReference
-
     private Group parent;
 
 

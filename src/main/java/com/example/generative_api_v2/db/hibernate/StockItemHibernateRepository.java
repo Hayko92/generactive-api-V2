@@ -4,37 +4,38 @@ import com.example.generative_api_v2.dao.ItemDAO;
 import com.example.generative_api_v2.dao.ItemDAOImpl;
 import com.example.generative_api_v2.model.Item;
 import org.hibernate.Session;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.util.List;
-
+@Component
 public final class StockItemHibernateRepository {
     private static final ItemDAO itemDAO = new ItemDAOImpl();
 
     private StockItemHibernateRepository() {
     }
 
-    public static void save(Item item) {
+    public  void save(Item item) {
         itemDAO.add(item);
     }
 
-    public static List<Item> getAll() {
+    public  List<Item> getAll() {
         return itemDAO.getAll();
     }
 
-    public static void deleteById(int id) {
+    public  void deleteById(int id) {
         itemDAO.deleteById(id);
     }
 
-    public static Item getById(int id) {
+    public  Item getById(int id) {
         return itemDAO.getById(id);
     }
 
-    public static void updateById(Item item) {
+    public  void updateById(Item item) {
         itemDAO.updateById(item);
     }
 
-    public static List<Item> getItemsWithPriceFromTo(int from, int to) {
+    public  List<Item> getItemsWithPriceFromTo(int from, int to) {
         return itemDAO.getItemsWithPriceFromTo(from, to);
     }
 
