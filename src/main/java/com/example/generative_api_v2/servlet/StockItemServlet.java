@@ -1,7 +1,6 @@
 package com.example.generative_api_v2.servlet;
 
 
-import com.example.generative_api_v2.db.hibernate.StockItemHibernateRepository;
 import com.example.generative_api_v2.model.Item;
 import com.example.generative_api_v2.service.ItemService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "stockAddingItemServlet", value = "/items")
 public class StockItemServlet extends HttpServlet {
-    private ItemService itemService;
+    private final ItemService itemService;
 
     @Autowired
     public StockItemServlet(ItemService itemService) {

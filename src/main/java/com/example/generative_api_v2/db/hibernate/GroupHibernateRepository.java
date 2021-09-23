@@ -1,9 +1,11 @@
 package com.example.generative_api_v2.db.hibernate;
 
+import com.example.generative_api_v2.conf.ApplicationContext;
 import com.example.generative_api_v2.dao.GroupDAO;
 import com.example.generative_api_v2.dao.GroupDAOImpl;
 import com.example.generative_api_v2.model.Group;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 
@@ -31,7 +33,8 @@ public class GroupHibernateRepository {
     }
 
     public static void clear() {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        SessionFactory sessionFactory = ApplicationContext.context.getBean("getSessionfactory",SessionFactory.class);
+        Session session =sessionFactory.openSession();
         session.beginTransaction();
         session.createQuery("delete  from Group").executeUpdate();
         session.close();
