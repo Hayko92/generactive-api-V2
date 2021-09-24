@@ -1,4 +1,4 @@
-package com.example.generative_api_v2.db;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
