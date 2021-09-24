@@ -112,7 +112,7 @@ public final class GenerativeItemJDBCRepository {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 item = new Generative();
-                item.setComplexity(resultSet.getInt(8));
+                item.setComplexity(resultSet.getDouble(8));
                 item.setId(resultSet.getInt(1));
                 item.setTitle(resultSet.getString(2));
                 item.setPrice(resultSet.getInt(3));

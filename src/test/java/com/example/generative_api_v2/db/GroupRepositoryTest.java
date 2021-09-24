@@ -2,15 +2,10 @@ package com.example.generative_api_v2.db;
 
 import com.example.generative_api_v2.db.hibernate.GroupHibernateRepository;
 import com.example.generative_api_v2.db.hibernate.StockItemHibernateRepository;
-import com.example.generative_api_v2.db.jdbc.GroupJDBCRepository;
-import com.example.generative_api_v2.db.jdbc.StockItemJDBCRepository;
-import com.example.generative_api_v2.dto.GroupDTO;
 import com.example.generative_api_v2.model.Group;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

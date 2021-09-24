@@ -21,7 +21,7 @@ public class Group {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "parent")
-    @JsonManagedReference
+    @JsonBackReference
     private Group parent;
 
     @OneToMany( fetch = FetchType.EAGER)
@@ -30,7 +30,8 @@ public class Group {
     private List<Item> items;
     @OneToMany( fetch = FetchType.EAGER)
     @JoinColumn(name = "parent")
-    @JsonBackReference
+
+   @JsonManagedReference
     private List<Group> groups;
 
     public void setItems(List<Item> items) {

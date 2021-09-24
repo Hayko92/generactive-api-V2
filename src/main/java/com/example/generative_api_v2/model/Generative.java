@@ -9,7 +9,7 @@ public class Generative extends Item {
 
 
     @Column(name = "complexity")
-    private double complexity;
+    private Double complexity;
 
 
 
@@ -26,13 +26,13 @@ public class Generative extends Item {
         super(title, image_url, price, currency);
     }
 
-    public void setComplexity(double complexity) {
+    public void setComplexity(Double complexity) {
         this.complexity = complexity;
     }
 
     public Generative() {
         super();
-        complexity = 0;
+        complexity = 0d;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Generative extends Item {
     }
 
 
-    public double getComplexity() {
+    public Double getComplexity() {
         return complexity;
     }
 }
