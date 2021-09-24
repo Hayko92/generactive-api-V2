@@ -1,5 +1,6 @@
 package com.example.generative_api_v2.db.hibernate;
 
+import com.example.generative_api_v2.conf.ApplicationContext;
 import com.example.generative_api_v2.dao.GenerativeItemDAO;
 import com.example.generative_api_v2.dao.GenerativeItemDAOImpl;
 import com.example.generative_api_v2.dao.ItemDAO;
@@ -7,11 +8,14 @@ import com.example.generative_api_v2.dao.ItemDAOImpl;
 import com.example.generative_api_v2.model.Generative;
 import com.example.generative_api_v2.model.Item;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 @Component
 public final class GenerativeItemHibernateRepository {
+    SessionFactory sessionFactory = ApplicationContext.context.getBean("getSessionfactory",SessionFactory.class);
+
     private static final GenerativeItemDAO itemDAO = new GenerativeItemDAOImpl();
 
     private GenerativeItemHibernateRepository() {
@@ -42,7 +46,8 @@ public final class GenerativeItemHibernateRepository {
     }
 
     public static void clear( ) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        SessionFactory sessionFactory = ApplicationContext.context.getBean("getSessionfactory",SessionFactory.class);
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.createQuery("delete  from Generative ").executeUpdate();
         session.close();

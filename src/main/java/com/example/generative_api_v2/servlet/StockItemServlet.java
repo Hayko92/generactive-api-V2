@@ -1,7 +1,10 @@
 package com.example.generative_api_v2.servlet;
 
 
+
+
 import com.example.generative_api_v2.conf.ApplicationContext;
+
 import com.example.generative_api_v2.model.Item;
 import com.example.generative_api_v2.service.StockItemServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +21,9 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "stockAddingItemServlet", value = "/items")
 public class StockItemServlet extends HttpServlet {
+
+
+
 
     private StockItemServiceImpl itemService;
 

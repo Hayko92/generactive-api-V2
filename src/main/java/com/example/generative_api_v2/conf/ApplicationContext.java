@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationContext {
+
+
+
   public static final   ClassPathXmlApplicationContext context =
+
             new ClassPathXmlApplicationContext("applicationContext.xml");
 }

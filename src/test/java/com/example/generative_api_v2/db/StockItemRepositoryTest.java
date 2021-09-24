@@ -1,12 +1,12 @@
 package com.example.generative_api_v2.db;
 
+import com.example.generative_api_v2.conf.ApplicationContext;
 import com.example.generative_api_v2.db.hibernate.GroupHibernateRepository;
 import com.example.generative_api_v2.db.hibernate.StockItemHibernateRepository;
 import com.example.generative_api_v2.model.Item;
-import com.example.generative_api_v2.service.ItemService;
+import com.example.generative_api_v2.service.StockItemServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -14,14 +14,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class StockItemRepositoryTest {
-    @Autowired
-    private ItemService itemService;
+
+    private  StockItemServiceImpl itemService;
 
 
     @BeforeEach
     protected   void clearItemAndGroupTables() {
         GroupHibernateRepository.clear();
         StockItemHibernateRepository.clear();
+        itemService = ApplicationContext.context.getBean("stockItemServiceImpl",StockItemServiceImpl.class);
     }
 
     @Test
@@ -96,6 +97,7 @@ public class StockItemRepositoryTest {
         itemService.save(item);
         int generatedId = item.getId();
         Item itemDTO = new Item("changed", 100, "changed_image_url");
+        itemDTO.setId(generatedId);
         itemService.updateById(itemDTO);
         Item itemaAfterUpdate = itemService.getById(generatedId);
         assertNotEquals(item, itemaAfterUpdate);
