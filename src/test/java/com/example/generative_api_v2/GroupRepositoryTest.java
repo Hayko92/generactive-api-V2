@@ -17,8 +17,8 @@ public class GroupRepositoryTest {
     @BeforeEach
     protected   void clearItemAndGroupTables() {
         groupHibernateRepository = ApplicationContext.context.getBean("groupHibernateRepository",GroupHibernateRepository.class);
-//        StockItemHibernateRepository.clear();
-//        groupHibernateRepository.clear();
+        StockItemHibernateRepository.clear();
+        groupHibernateRepository.clear();
 
     }
 
@@ -79,6 +79,5 @@ public class GroupRepositoryTest {
         assertNotEquals(group.getTitle(), nameBeforeChanging);
         assertEquals(groupAfterUpdate.getTitle(),group.getTitle());
     }
-
 
 }

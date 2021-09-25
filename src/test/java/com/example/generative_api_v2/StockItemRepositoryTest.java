@@ -12,19 +12,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 public class StockItemRepositoryTest {
 
     private StockItemServiceImpl itemService;
     private StockItemHibernateRepository stockItemHibernateRepository;
 
-
-
     @BeforeEach
     protected void clearItemAndGroupTables() {
         GroupHibernateRepository groupHibernateRepository = ApplicationContext.context.getBean("groupHibernateRepository", GroupHibernateRepository.class);
-//        groupHibernateRepository.clear();
-//        StockItemHibernateRepository.clear();
+        groupHibernateRepository.clear();
+        StockItemHibernateRepository.clear();
         itemService = ApplicationContext.context.getBean("stockItemServiceImpl", StockItemServiceImpl.class);
         stockItemHibernateRepository = ApplicationContext.context.getBean("stockItemHibernateRepository", StockItemHibernateRepository.class);
     }

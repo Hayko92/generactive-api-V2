@@ -5,14 +5,13 @@ import java.util.Objects;
 import java.util.Properties;
 
 public class TestDatabaseConfigUtil {
+
     public static final String DATABASE_PROPERTIES_FILE = "database.properties";
 
     public static Properties getConnectionProperties() {
 
         Properties props = new Properties();
-
         try {
-
             props.load(Objects.requireNonNull(TestDatabaseConnection.class
                     .getClassLoader()
                     .getResource(DATABASE_PROPERTIES_FILE)).openStream());
@@ -24,4 +23,5 @@ public class TestDatabaseConfigUtil {
                     + DATABASE_PROPERTIES_FILE);
         }
     }
+
 }
