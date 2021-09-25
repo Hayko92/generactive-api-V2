@@ -2,19 +2,12 @@ package com.example.generative_api_v2.servlet;
 
 
 import com.example.generative_api_v2.conf.ApplicationContext;
-import com.example.generative_api_v2.db.hibernate.GenerativeItemHibernateRepository;
-import com.example.generative_api_v2.db.hibernate.StockItemHibernateRepository;
-import com.example.generative_api_v2.db.jdbc.GenerativeItemJDBCRepository;
 import com.example.generative_api_v2.dto.GeneractiveDTO;
-import com.example.generative_api_v2.dto.ItemDTO;
 import com.example.generative_api_v2.model.Generative;
-import com.example.generative_api_v2.model.Item;
 import com.example.generative_api_v2.service.GeneractiveItemServiceImpl;
 import com.example.generative_api_v2.service.GenerativeItemService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,15 +18,9 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "updateGenerativeItemById", value = "/generative-items/*")
 public class GenerativeItemUpdateServlet extends HttpServlet {
-    private GeneractiveItemServiceImpl generativeItemService;
 
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        generativeItemService = ApplicationContext.context.getBean("generactiveItemServiceImpl",GeneractiveItemServiceImpl.class);
-    }
-
-
+    private final GenerativeItemService generativeItemService
+            = ApplicationContext.context.getBean("generactiveItemServiceImpl", GeneractiveItemServiceImpl.class);
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -91,4 +78,5 @@ public class GenerativeItemUpdateServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
 }

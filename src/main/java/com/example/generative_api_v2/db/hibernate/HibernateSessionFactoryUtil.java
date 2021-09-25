@@ -6,15 +6,13 @@ import com.example.generative_api_v2.model.Item;
 import com.example.generative_api_v2.model.Stock;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 
+public final class HibernateSessionFactoryUtil {
 
-public  final class HibernateSessionFactoryUtil {
-
+    private HibernateSessionFactoryUtil() {
+    }
 
     public static SessionFactory getSessionfactory() {
-
         Configuration configuration = new Configuration().configure();
         configuration.addAnnotatedClass(Configuration.class);
         configuration.addAnnotatedClass(Item.class);
@@ -22,9 +20,6 @@ public  final class HibernateSessionFactoryUtil {
         configuration.addAnnotatedClass(Stock.class);
         configuration.addAnnotatedClass(Group.class);
         return configuration.buildSessionFactory();
-    }
-
-    private HibernateSessionFactoryUtil() {
     }
 
 }

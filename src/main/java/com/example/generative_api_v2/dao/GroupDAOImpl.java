@@ -1,6 +1,5 @@
 package com.example.generative_api_v2.dao;
 
-import com.example.generative_api_v2.conf.ApplicationContext;
 import com.example.generative_api_v2.db.hibernate.HibernateSessionFactoryUtil;
 import com.example.generative_api_v2.model.Group;
 import org.hibernate.Session;
@@ -10,9 +9,14 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
 @Component
-public class GroupDAOImpl implements GroupDAO{
-    SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionfactory();
+public class GroupDAOImpl implements GroupDAO {
+
+    private final SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionfactory();
+
+    public GroupDAOImpl() {
+    }
 
     @Override
     public void add(Group group) {
@@ -72,6 +76,4 @@ public class GroupDAOImpl implements GroupDAO{
         else return null;
     }
 
-    public GroupDAOImpl() {
-    }
 }

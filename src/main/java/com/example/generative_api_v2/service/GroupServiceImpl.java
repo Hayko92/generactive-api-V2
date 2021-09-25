@@ -12,6 +12,9 @@ public class GroupServiceImpl implements GroupService {
 
     private GroupHibernateRepository groupHibernateRepository;
 
+    public GroupServiceImpl() {
+    }
+
     @Autowired
     public GroupServiceImpl(GroupHibernateRepository groupHibernateRepository) {
         this.groupHibernateRepository = groupHibernateRepository;
@@ -40,8 +43,5 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public void updateById(Group group) {
         groupHibernateRepository.updateById(group);
-    }
-
-    public GroupServiceImpl() {
     }
 }

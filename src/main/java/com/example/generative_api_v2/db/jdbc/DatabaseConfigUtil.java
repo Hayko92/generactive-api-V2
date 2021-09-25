@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 public class DatabaseConfigUtil {
+
     public static final String DATABASE_PROPERTIES_FILE = "database.properties";
 
     public static Properties getConnectionProperties() {
@@ -12,7 +13,6 @@ public class DatabaseConfigUtil {
         Properties props = new Properties();
 
         try {
-
             props.load(Objects.requireNonNull(DatabaseConfigUtil.class
                     .getClassLoader()
                     .getResource(DATABASE_PROPERTIES_FILE)).openStream());

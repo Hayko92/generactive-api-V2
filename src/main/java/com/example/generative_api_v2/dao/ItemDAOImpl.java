@@ -1,6 +1,5 @@
 package com.example.generative_api_v2.dao;
 
-import com.example.generative_api_v2.conf.ApplicationContext;
 import com.example.generative_api_v2.db.hibernate.HibernateSessionFactoryUtil;
 import com.example.generative_api_v2.model.Item;
 import org.hibernate.Session;
@@ -10,14 +9,17 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
 @Component
 public class ItemDAOImpl implements ItemDAO {
-    SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionfactory();
 
+    private final SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionfactory();
+
+    public ItemDAOImpl() {
+    }
 
     @Override
     public void add(Item item) {
-
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(item);
@@ -86,10 +88,7 @@ public class ItemDAOImpl implements ItemDAO {
         List<Item> resultList = query.getResultList();
         if (resultList != null) return resultList.get(0);
         else return null;
-
-
     }
-
 
     public Item findLastItem() {
         Session session = sessionFactory.openSession();
@@ -101,6 +100,4 @@ public class ItemDAOImpl implements ItemDAO {
         else return null;
     }
 
-    public ItemDAOImpl() {
-    }
 }

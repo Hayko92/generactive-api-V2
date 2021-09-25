@@ -6,19 +6,20 @@ import javax.persistence.*;
 @Table(name = "generactive_item")
 public class Generative extends Item {
 
-
-
     @Column(name = "complexity")
     private Double complexity;
 
-
-
-    public Generative(String title, String image_url, int price, String currency, Group parent, double complexity) {
-        super(title, image_url, price, currency, parent);
-        this.complexity = complexity;
+    public Generative() {
+        super();
+        complexity = 0d;
     }
 
     public Generative(double complexity) {
+        this.complexity = complexity;
+    }
+
+    public Generative(String title, String image_url, int price, String currency, Group parent, double complexity) {
+        super(title, image_url, price, currency, parent);
         this.complexity = complexity;
     }
 
@@ -28,11 +29,6 @@ public class Generative extends Item {
 
     public void setComplexity(Double complexity) {
         this.complexity = complexity;
-    }
-
-    public Generative() {
-        super();
-        complexity = 0d;
     }
 
     @Override
@@ -48,8 +44,8 @@ public class Generative extends Item {
         return 0;
     }
 
-
     public Double getComplexity() {
         return complexity;
     }
+
 }

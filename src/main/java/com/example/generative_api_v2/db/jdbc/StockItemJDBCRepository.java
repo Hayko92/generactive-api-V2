@@ -45,9 +45,6 @@ public final class StockItemJDBCRepository {
             statement.setInt(2, item.getPrice());
             statement.setString(3, item.getImage_url());
             statement.setString(4, item.getCurrency());
-         //   if (item.getParent() > 0) statement.setInt(5, item.getParent());
-          //  else statement.setNull(5, Types.INTEGER);
-
             statement.execute();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -128,7 +125,6 @@ public final class StockItemJDBCRepository {
             item.setCurrency(resultSet.getString(5));
             int parentid = resultSet.getInt(6);
             Group group = GroupJDBCRepository.getGroupById(parentid);
-          //  if (group != null) item.setParent(group.getId());
             int config_id = resultSet.getInt(7);
 
             rv.add(item);
@@ -152,8 +148,6 @@ public final class StockItemJDBCRepository {
 
                 item.setCurrency(resultSet.getString(5));
                 Group groupById = GroupJDBCRepository.getGroupById(resultSet.getInt(6));
-             //   if (groupById != null) item.setParent(groupById.getId());
-
             }
 
         } catch (SQLException e) {
@@ -183,9 +177,6 @@ public final class StockItemJDBCRepository {
             statement.setInt(2, itemDTO.getPrice());
             statement.setString(3, itemDTO.getImage_url());
             statement.setString(4, itemDTO.getCurrency());
-         //   if (itemDTO.getParent() > 0) statement.setInt(5, itemDTO.getParent());
-          //  else statement.setNull(5, Types.INTEGER);
-
             if (itemDTO.getConfiguration() != null) {
                 statement.setInt(6, itemDTO.getConfiguration().getResolution().ordinal());
             } else statement.setNull(6, Types.INTEGER);

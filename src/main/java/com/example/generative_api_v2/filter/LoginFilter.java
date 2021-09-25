@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebFilter(filterName = "LoginFilter", urlPatterns = {"/items/*", "/groups/*","/groups","/items"})
+@WebFilter(filterName = "LoginFilter", urlPatterns = {"/items/*", "/groups/*", "/groups", "/items"})
 public class LoginFilter extends HttpFilter {
 
     @Override
@@ -22,4 +22,5 @@ public class LoginFilter extends HttpFilter {
             writer.write("sorry,you have not permissions to this page");
         } else chain.doFilter(req, res);
     }
+
 }

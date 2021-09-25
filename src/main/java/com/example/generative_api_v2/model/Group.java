@@ -1,7 +1,6 @@
 package com.example.generative_api_v2.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -11,8 +10,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "group_")
-
 public class Group {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -20,20 +19,30 @@ public class Group {
     private String title;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "parent")
     @JsonBackReference
     private Group parent;
 
-    @OneToMany( cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "parent")
-
     private List<Item> items;
-    @OneToMany( fetch = FetchType.EAGER)
-    @JoinColumn(name = "parent")
 
-   @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "parent")
+    @JsonManagedReference
     private List<Group> groups;
+
+    public Group() {
+        this.title = "";
+        this.items = new ArrayList<>();
+        this.groups = new ArrayList<>();
+    }
+
+    public Group(String title) {
+        this.title = title;
+        this.items = new ArrayList<>();
+        this.groups = new ArrayList<>();
+    }
 
     public void setItems(List<Item> items) {
         this.items = items;
@@ -43,30 +52,17 @@ public class Group {
         this.groups = groups;
     }
 
-    public Group() {
-        this.title = "";
-        this.items = new ArrayList<>();
-        this.groups = new ArrayList<>();
-    }
-
-    public Group(String title) {
-        //  this.id = GroupIdGenerator.getNextId();
-        this.title = title;
-        this.items = new ArrayList<>();
-        this.groups = new ArrayList<>();
-    }
-
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void addItem(Item item) {
         this.items.add(item);
         item.setParent(this);
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public List<Group> getGroups() {
@@ -76,7 +72,6 @@ public class Group {
     public void addGroup(Group group) {
         this.groups.add(group);
         group.setParent(this.parent);
-
     }
 
     public List<Item> getItems() {
@@ -144,4 +139,5 @@ public class Group {
     public int hashCode() {
         return Objects.hash(id, title, parent, items, groups);
     }
+
 }

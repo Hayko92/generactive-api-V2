@@ -10,7 +10,10 @@ import java.util.List;
 @Component
 public class StockItemServiceImpl implements ItemService {
 
-    private   StockItemHibernateRepository stockItemHibernateRepository;
+    private StockItemHibernateRepository stockItemHibernateRepository;
+
+    public StockItemServiceImpl() {
+    }
 
     @Autowired
     public StockItemServiceImpl(StockItemHibernateRepository stockItemHibernateRepository) {
@@ -24,7 +27,7 @@ public class StockItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getAll() {
-      return   stockItemHibernateRepository.getAll();
+        return stockItemHibernateRepository.getAll();
     }
 
     @Override
@@ -34,7 +37,7 @@ public class StockItemServiceImpl implements ItemService {
 
     @Override
     public Item getById(int id) {
-    return     stockItemHibernateRepository.getById(id);
+        return stockItemHibernateRepository.getById(id);
     }
 
     @Override
@@ -44,9 +47,7 @@ public class StockItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getItemsWithPriceFromTo(int from, int to) {
-     return stockItemHibernateRepository.getItemsWithPriceFromTo(from, to);
+        return stockItemHibernateRepository.getItemsWithPriceFromTo(from, to);
     }
 
-    public StockItemServiceImpl() {
-    }
 }

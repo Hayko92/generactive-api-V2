@@ -5,5 +5,4 @@ public enum Resolution {
 
     Resolution() {
     }
-
 }

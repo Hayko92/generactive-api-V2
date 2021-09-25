@@ -2,12 +2,11 @@ package com.example.generative_api_v2.servlet;
 
 
 import com.example.generative_api_v2.conf.ApplicationContext;
-import com.example.generative_api_v2.db.hibernate.GroupHibernateRepository;
 import com.example.generative_api_v2.model.Group;
+import com.example.generative_api_v2.service.GroupService;
 import com.example.generative_api_v2.service.GroupServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,14 +18,10 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "groupServlet", value = "/groups")
 public class GroupServlet extends HttpServlet {
-    ObjectMapper objectMapper = new ObjectMapper();
-    GroupServiceImpl groupService;
 
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        groupService = ApplicationContext.context.getBean("groupServiceImpl",GroupServiceImpl.class);
-    }
+    ObjectMapper objectMapper = new ObjectMapper();
+    GroupService groupService = ApplicationContext.context.getBean("groupServiceImpl", GroupServiceImpl.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
@@ -44,4 +39,5 @@ public class GroupServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         writer.write(objectMapper.writeValueAsString(group));
     }
+
 }

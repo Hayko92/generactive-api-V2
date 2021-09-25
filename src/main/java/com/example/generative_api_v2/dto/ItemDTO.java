@@ -2,7 +2,6 @@ package com.example.generative_api_v2.dto;
 
 import com.example.generative_api_v2.model.Configuration;
 import com.example.generative_api_v2.model.Group;
-import com.example.generative_api_v2.model.Resolution;
 
 public class ItemDTO {
     private  int id;
@@ -13,6 +12,8 @@ public class ItemDTO {
     private Group parent;
     private Configuration configuration;
 
+    public ItemDTO() {
+    }
 
     public ItemDTO(String title, int price, String image_url, Configuration configuration, String currency) {
         this.title = title;
@@ -46,10 +47,6 @@ public class ItemDTO {
 
     public void setCurrency(String currency) {
         this.currency = currency;
-    }
-
-    public ItemDTO() {
-
     }
 
     public String getImage_url() {

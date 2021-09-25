@@ -1,6 +1,7 @@
 package com.example.generative_api_v2.dto;
 
-public class GeneractiveDTO extends ItemDTO{
+public class GeneractiveDTO extends ItemDTO {
+
     private double complexity;
 
     public double getComplexity() {
@@ -13,4 +14,5 @@ public class GeneractiveDTO extends ItemDTO{
     public void setComplexity(double complexity) {
         this.complexity = complexity;
     }
+
 }

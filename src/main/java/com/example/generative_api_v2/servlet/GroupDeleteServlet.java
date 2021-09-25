@@ -2,15 +2,12 @@ package com.example.generative_api_v2.servlet;
 
 
 import com.example.generative_api_v2.conf.ApplicationContext;
-import com.example.generative_api_v2.db.hibernate.GroupHibernateRepository;
 import com.example.generative_api_v2.dto.GroupDTO;
 import com.example.generative_api_v2.model.Group;
-import com.example.generative_api_v2.service.GeneractiveItemServiceImpl;
 import com.example.generative_api_v2.service.GroupService;
 import com.example.generative_api_v2.service.GroupServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,13 +19,7 @@ import java.util.stream.Collectors;
 @WebServlet(name = "deleteGroupById", value = "/groups/*")
 public class GroupDeleteServlet extends HttpServlet {
 
- GroupServiceImpl groupService;
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        groupService = ApplicationContext.context.getBean("groupServiceImpl",GroupServiceImpl.class);
-    }
+    GroupService groupService = ApplicationContext.context.getBean("groupServiceImpl", GroupServiceImpl.class);
 
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         String path = req.getPathInfo();
@@ -79,7 +70,6 @@ public class GroupDeleteServlet extends HttpServlet {
             writer.write(objectMapper.writeValueAsString(group));
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE, "WRONG ID");
-
         }
     }
 }

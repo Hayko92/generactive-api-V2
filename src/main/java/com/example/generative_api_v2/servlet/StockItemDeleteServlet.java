@@ -3,10 +3,10 @@ package com.example.generative_api_v2.servlet;
 import com.example.generative_api_v2.conf.ApplicationContext;
 import com.example.generative_api_v2.dto.ItemDTO;
 import com.example.generative_api_v2.model.Item;
+import com.example.generative_api_v2.service.ItemService;
 import com.example.generative_api_v2.service.StockItemServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,13 +18,8 @@ import java.util.stream.Collectors;
 @WebServlet(name = "deleteItemById", value = "/items/*")
 public class StockItemDeleteServlet extends HttpServlet {
 
-    private StockItemServiceImpl itemService;
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        itemService = ApplicationContext.context.getBean("stockItemServiceImpl",StockItemServiceImpl.class);
-    }
+    private final ItemService itemService
+            = ApplicationContext.context.getBean("stockItemServiceImpl", StockItemServiceImpl.class);
 
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         String path = req.getPathInfo();
@@ -81,4 +76,5 @@ public class StockItemDeleteServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE, "WRONG ID");
         }
     }
+
 }
