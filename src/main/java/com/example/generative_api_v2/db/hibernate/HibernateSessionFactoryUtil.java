@@ -9,13 +9,11 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
-@org.springframework.context.annotation.Configuration
-@Scope("singleton")
-public class HibernateSessionFactoryUtil {
+
+public  final class HibernateSessionFactoryUtil {
 
 
-    @Bean
-    public SessionFactory getSessionfactory() {
+    public static SessionFactory getSessionfactory() {
 
         Configuration configuration = new Configuration().configure();
         configuration.addAnnotatedClass(Configuration.class);

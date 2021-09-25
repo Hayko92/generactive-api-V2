@@ -11,6 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "group_")
+
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +25,7 @@ public class Group {
     @JsonBackReference
     private Group parent;
 
-    @OneToMany( fetch = FetchType.EAGER)
+    @OneToMany( cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "parent")
 
     private List<Item> items;

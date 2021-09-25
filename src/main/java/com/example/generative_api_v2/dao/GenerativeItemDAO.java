@@ -2,6 +2,7 @@ package com.example.generative_api_v2.dao;
 
 import com.example.generative_api_v2.model.Generative;
 import com.example.generative_api_v2.model.Item;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 

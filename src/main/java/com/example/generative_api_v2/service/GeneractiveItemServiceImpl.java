@@ -47,4 +47,7 @@ public class GeneractiveItemServiceImpl implements GenerativeItemService {
     public List<Generative> getItemsWithPriceFromTo(int from, int to) {
         return generativeItemHibernateRepository.getItemsWithPriceFromTo(from, to);
     }
+
+    public GeneractiveItemServiceImpl() {
+    }
 }

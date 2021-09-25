@@ -6,41 +6,50 @@ import com.example.generative_api_v2.dao.GroupDAOImpl;
 import com.example.generative_api_v2.model.Group;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
+ @Component
+public   class GroupHibernateRepository {
+   private    GroupDAOImpl groupDAO ;
+      @Autowired
+     public   void setGroupDAO(GroupDAOImpl groupDAO) {
+      this.groupDAO = groupDAO;
+     }
 
-public class GroupHibernateRepository {
-    static GroupDAO groupDAO = new GroupDAOImpl();
-
-    public static List<Group> getAll() {
+     public   List<Group> getAll() {
         return groupDAO.getAll();
     }
 
-    public static void add(Group group) {
+    public   void add(Group group) {
         groupDAO.add(group);
     }
 
-    public static void removeById(int id) {
+    public   void removeById(int id) {
         groupDAO.deleteById(id);
     }
 
-    public static Group getById(int id) {
+    public   Group getById(int id) {
         return groupDAO.getById(id);
     }
 
-    public static void updateById(Group group) {
+    public   void updateById(Group group) {
         groupDAO.updateById(group);
     }
 
-    public static void clear() {
-        SessionFactory sessionFactory = ApplicationContext.context.getBean("getSessionfactory",SessionFactory.class);
-        Session session =sessionFactory.openSession();
-        session.beginTransaction();
-        session.createQuery("delete  from Group").executeUpdate();
-        session.close();
+//    public   void clear() {
+//        SessionFactory sessionFactory = ApplicationContext.context.getBean("getSessionfactory",SessionFactory.class);
+//        Session session =sessionFactory.openSession();
+//        session.beginTransaction();
+//        session.createQuery("delete  from Group").executeUpdate();
+//        session.close();
+//    }
+
+    public   Group getLastAdded() {
+       return groupDAO.getLastAdded();
     }
 
-    public static Group getLastAdded() {
-       return groupDAO.getLastAdded();
+    public GroupHibernateRepository() {
     }
 }

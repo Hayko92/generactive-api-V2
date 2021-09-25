@@ -46,4 +46,7 @@ public class StockItemServiceImpl implements ItemService {
     public List<Item> getItemsWithPriceFromTo(int from, int to) {
      return stockItemHibernateRepository.getItemsWithPriceFromTo(from, to);
     }
+
+    public StockItemServiceImpl() {
+    }
 }

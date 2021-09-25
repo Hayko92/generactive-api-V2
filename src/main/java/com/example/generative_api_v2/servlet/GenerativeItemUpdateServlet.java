@@ -53,7 +53,7 @@ public class GenerativeItemUpdateServlet extends HttpServlet {
             finded.setPrice(itemDTO.getPrice());
             finded.setTitle(itemDTO.getTitle());
             finded.setComplexity(itemDTO.getComplexity());
-            GenerativeItemHibernateRepository.updateById(finded);
+            generativeItemService.updateById(finded);
 
             resp.setContentType("application/json");
             PrintWriter writer = resp.getWriter();
