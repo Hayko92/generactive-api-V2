@@ -1,4 +1,4 @@
-package com.example.generative_api_v2;
+package com.example.generative_api_v2.db;
 
 import com.example.generative_api_v2.conf.ApplicationContext;
 import com.example.generative_api_v2.db.hibernate.GroupHibernateRepository;

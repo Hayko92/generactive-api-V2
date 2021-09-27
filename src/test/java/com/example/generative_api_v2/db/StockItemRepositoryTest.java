@@ -1,4 +1,4 @@
-package com.example.generative_api_v2;
+package com.example.generative_api_v2.db;
 
 import com.example.generative_api_v2.conf.ApplicationContext;
 import com.example.generative_api_v2.db.hibernate.GroupHibernateRepository;
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 

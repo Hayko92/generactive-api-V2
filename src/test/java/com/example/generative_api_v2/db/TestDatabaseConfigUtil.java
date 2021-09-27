@@ -1,4 +1,4 @@
-package com.example.generative_api_v2;
+package com.example.generative_api_v2.db;
 
 import java.io.IOException;
 import java.util.Objects;
