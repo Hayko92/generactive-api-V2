@@ -1,22 +1,25 @@
 package com.example.generative_api_v2.dao;
 
-import com.example.generative_api_v2.conf.ApplicationContext;
 import com.example.generative_api_v2.db.hibernate.HibernateSessionFactoryUtil;
 import com.example.generative_api_v2.model.Generative;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class GenerativeItemDAOImpl implements GenerativeItemDAO {
-    SessionFactory sessionFactory = ApplicationContext.context.getBean("getSessionfactory",SessionFactory.class);
 
+    private final SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionfactory();
+
+    public GenerativeItemDAOImpl() {
+    }
 
     @Override
     public void add(Generative item) {
-   //     SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(item);
@@ -26,7 +29,6 @@ public class GenerativeItemDAOImpl implements GenerativeItemDAO {
 
     @Override
     public List<Generative> getAll() {
-   //     SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         List<Generative> allItems = session.createQuery("SELECT a FROM Generative a", Generative.class).getResultList();
@@ -37,7 +39,6 @@ public class GenerativeItemDAOImpl implements GenerativeItemDAO {
 
     @Override
     public List<Generative> getItemsWithPriceFromTo(int priceFrom, int to) {
-    //    SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Query<Generative> query = session.createQuery("SELECT a FROM Generative a where a .price between :from and :to", Generative.class);
@@ -51,7 +52,6 @@ public class GenerativeItemDAOImpl implements GenerativeItemDAO {
 
     @Override
     public Generative getById(int id) {
-   //     SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Generative item = session.get(Generative.class, id);
@@ -62,7 +62,6 @@ public class GenerativeItemDAOImpl implements GenerativeItemDAO {
 
     @Override
     public void deleteById(int id) {
-    //    SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Generative item = session.get(Generative.class, id);
@@ -73,7 +72,6 @@ public class GenerativeItemDAOImpl implements GenerativeItemDAO {
 
     @Override
     public void updateById(Generative item) {
-   //     SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.update(item);
@@ -83,7 +81,6 @@ public class GenerativeItemDAOImpl implements GenerativeItemDAO {
 
     @Override
     public Generative getLastAdded() {
-   //     SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Query<Generative> query = session.createQuery("select i from Generative i order by i.id desc ");
@@ -91,13 +88,9 @@ public class GenerativeItemDAOImpl implements GenerativeItemDAO {
         List<Generative> resultList = query.getResultList();
         if (resultList != null) return resultList.get(0);
         else return null;
-
-
     }
 
-
     public Generative findLastItem() {
-  //      SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         List<Generative> items = session.createQuery("SELECT a FROM Generative a where a.id=max(id)", Generative.class).getResultList();
@@ -106,4 +99,5 @@ public class GenerativeItemDAOImpl implements GenerativeItemDAO {
         if (items != null) return items.get(0);
         else return null;
     }
+
 }

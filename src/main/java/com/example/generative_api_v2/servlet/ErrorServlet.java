@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "ErrorHandlingServlet", value = "/error")
 public class ErrorServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Integer code = (Integer) req.getAttribute("javax.servlet.error.status_code");
@@ -16,7 +17,8 @@ public class ErrorServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         String title = "Error Handling\n";
         writer.write(title);
-        writer.write("Error code: "+code+"\n");
-        writer.write("Error Message: "+message+"\n");
+        writer.write("Error code: " + code + "\n");
+        writer.write("Error Message: " + message + "\n");
     }
+
 }

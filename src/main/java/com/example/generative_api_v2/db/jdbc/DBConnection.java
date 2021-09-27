@@ -9,6 +9,7 @@ final class DBConnection {
     public static final String URL = DatabaseConfigUtil.getConnectionProperties().getProperty("db.url");
     public static final String USER = DatabaseConfigUtil.getConnectionProperties().getProperty("db.user");
     public static final String PASSWORD = DatabaseConfigUtil.getConnectionProperties().getProperty("db.password");
+
     private DBConnection() {
     }
 
@@ -23,4 +24,5 @@ final class DBConnection {
         }
         return connection;
     }
+
 }

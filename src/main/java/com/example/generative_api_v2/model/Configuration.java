@@ -14,7 +14,6 @@ public class Configuration {
     @Enumerated(EnumType.STRING)
     private Resolution resolution;
 
-//    @OneToMany(mappedBy = "configuration", cascade = CascadeType.ALL )
     private List<Item> items;
 
     public Configuration() {

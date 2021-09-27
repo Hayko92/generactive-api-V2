@@ -9,27 +9,31 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
 @Table(name = "item")
-public class Item  {
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private  int id;
+    private int id;
+
     @Column(name = "title")
-    private  String title;
+    private String title;
+
     @Column(name = "image_url")
-    private  String image_url;
+    private String image_url;
+
     @Column(name = "price")
-    private  int price;
+    private int price;
+
     @Column(name = "currency")
-    private  String currency;
+    private String currency;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")
     @JsonBackReference
     private Group parent;
 
-
-
+    public Item() {
+    }
 
     public Item(String title, String image_url, int price, String currency, Group parent) {
         this.title = title;
@@ -46,11 +50,10 @@ public class Item  {
         this.image_url = image_url;
     }
 
-    public Item(  String title, int price, String image_url) {
+    public Item(String title, int price, String image_url) {
         this.title = title;
         this.price = price;
         this.image_url = image_url;
-
     }
 
     public Item(String title, String image_url, int price, String currency) {
@@ -59,7 +62,6 @@ public class Item  {
         this.price = price;
         this.currency = currency;
     }
-
 
     public void setId(int id) {
         this.id = id;
@@ -79,9 +81,6 @@ public class Item  {
 
     public void setCurrency(String currency) {
         this.currency = currency;
-    }
-
-    public Item() {
     }
 
     public String getImage_url() {
@@ -111,8 +110,6 @@ public class Item  {
     public void setParent(Group parent) {
         this.parent = parent;
     }
-
-
 
     public double calculatePrice(Configuration configuration) {
         switch (configuration.getResolution()) {
@@ -146,14 +143,12 @@ public class Item  {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return id == item.id && price == item.price && Objects.equals(title, item.title) && Objects.equals(image_url, item.image_url) && Objects.equals(currency, item.currency) && Objects.equals(parent, item.parent)
-                //&& Objects.equals(configuration, item.configuration);;
-                ;
+        return id == item.id && price == item.price && Objects.equals(title, item.title) && Objects.equals(image_url, item.image_url) && Objects.equals(currency, item.currency) && Objects.equals(parent, item.parent);
+
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, title, image_url, price, currency, parent);
-        //, configuration);
     }
 }

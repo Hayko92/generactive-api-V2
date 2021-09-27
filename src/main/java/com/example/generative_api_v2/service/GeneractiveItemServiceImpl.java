@@ -1,7 +1,6 @@
 package com.example.generative_api_v2.service;
 
 import com.example.generative_api_v2.db.hibernate.GenerativeItemHibernateRepository;
-import com.example.generative_api_v2.db.hibernate.StockItemHibernateRepository;
 import com.example.generative_api_v2.model.Generative;
 import com.example.generative_api_v2.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,9 @@ import java.util.List;
 public class GeneractiveItemServiceImpl implements GenerativeItemService {
 
     private GenerativeItemHibernateRepository generativeItemHibernateRepository;
+
+    public GeneractiveItemServiceImpl() {
+    }
 
     @Autowired
     public GeneractiveItemServiceImpl(GenerativeItemHibernateRepository generativeItemHibernateRepository) {

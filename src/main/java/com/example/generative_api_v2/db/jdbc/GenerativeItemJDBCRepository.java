@@ -18,7 +18,6 @@ public final class GenerativeItemJDBCRepository {
 
     public static void add(Generative item) {
         try (Connection connection = DBConnection.getConnection()) {
-
             PreparedStatement statement;
             String query = "INSERT INTO Generactive_Item (Title, Price, Image_Url, Currency, Parent, Configuration_Id, Complexity) VALUES (?,?,?,?,?,?,?)";
             statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -27,8 +26,6 @@ public final class GenerativeItemJDBCRepository {
             statement.setInt(2, item.getPrice());
             statement.setString(3, item.getImage_url());
             statement.setString(4, item.getCurrency());
-           // statement.setInt(5, item.getParent());
-
             statement.execute();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -67,8 +64,6 @@ public final class GenerativeItemJDBCRepository {
             item.setImage_url(resultSet.getString(4));
             item.setCurrency(resultSet.getString(5));
             int parentid = resultSet.getInt(6);
-         //   Group group = GroupJDBCRepository.getGroupById(parentid);
-           // item.setParent(group.getId());
             int config_id = resultSet.getInt(7);
             Configuration configuration = getConfiguration(config_id);
 
@@ -118,7 +113,6 @@ public final class GenerativeItemJDBCRepository {
                 item.setPrice(resultSet.getInt(3));
                 item.setImage_url(resultSet.getString(4));
                 item.setCurrency(resultSet.getString(5));
-         //       item.setParent(GroupJDBCRepository.getGroupById(resultSet.getInt(6)).getId());
 
             }
 
@@ -166,8 +160,6 @@ public final class GenerativeItemJDBCRepository {
                 statement.setInt(2, itemDTO.getPrice());
                 statement.setString(3, itemDTO.getImage_url());
                 statement.setString(4, itemDTO.getCurrency());
-           //  statement.setInt(5, itemDTO.getParent());
-
                 if (itemDTO.getConfiguration() != null)
                     statement.setInt(6, itemDTO.getConfiguration().getResolution().ordinal());
                 else statement.setNull(6, Types.INTEGER);
@@ -176,6 +168,6 @@ public final class GenerativeItemJDBCRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
+
 }

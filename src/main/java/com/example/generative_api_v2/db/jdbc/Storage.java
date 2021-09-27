@@ -14,21 +14,12 @@ public final class Storage {
     private static final List<Group> GROUP_LIST = new ArrayList<>();
     private static final List<Item> ITEM_LIST = new ArrayList<>();
 
-
     private Storage() {
     }
 
     public static void addGroup(Group group) {
         GROUP_LIST.add(group);
     }
-
-//    public static void addItem(String type, String title, int price, String image_URL, Configuration configuration, double complexity, String currency) throws Exception {
-//        if (type.equalsIgnoreCase("Stock")) {
-//            ITEM_LIST.add(new Stock(title, price, image_URL, configuration, currency));
-//        } else if (type.equalsIgnoreCase("Generative"))
-//            ITEM_LIST.add(new Generative(title, price, image_URL, complexity, currency));
-//        else throw new Exception("Wrong type");
-//    }
 
     public static void addItem(Item item) {
         ITEM_LIST.add(item);
@@ -77,8 +68,6 @@ public final class Storage {
                 .stream()
                 .filter(el -> el.getId() == id)
                 .findAny();
-
-
     }
 
     public static Group findGroupByName(String name) {
@@ -86,13 +75,12 @@ public final class Storage {
                 .stream()
                 .filter(el -> el.getTitle().equals(name))
                 .findAny().orElse(null);
-
     }
 
     public static List<Group> findSubGroupsByParent(Group parent) {
         return getGroupList()
                 .stream()
-                .filter(el -> el.getParent()==parent.getParent())
+                .filter(el -> el.getParent() == parent.getParent())
                 .collect(Collectors.toList());
     }
 

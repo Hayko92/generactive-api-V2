@@ -1,4 +1,4 @@
-package com.example.generative_api_v2.db;
+package com.example.generative_api_v2;
 
 import com.example.generative_api_v2.conf.ApplicationContext;
 import com.example.generative_api_v2.db.hibernate.GroupHibernateRepository;
@@ -13,24 +13,25 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 public class StockItemRepositoryTest {
 
-    private  StockItemServiceImpl itemService;
-
+    private StockItemServiceImpl itemService;
+    private StockItemHibernateRepository stockItemHibernateRepository;
 
     @BeforeEach
-    protected   void clearItemAndGroupTables() {
-        GroupHibernateRepository.clear();
+    protected void clearItemAndGroupTables() {
+        GroupHibernateRepository groupHibernateRepository = ApplicationContext.context.getBean("groupHibernateRepository", GroupHibernateRepository.class);
+        groupHibernateRepository.clear();
         StockItemHibernateRepository.clear();
-        itemService = ApplicationContext.context.getBean("stockItemServiceImpl",StockItemServiceImpl.class);
+        itemService = ApplicationContext.context.getBean("stockItemServiceImpl", StockItemServiceImpl.class);
+        stockItemHibernateRepository = ApplicationContext.context.getBean("stockItemHibernateRepository", StockItemHibernateRepository.class);
     }
 
     @Test
     public void addTest() {
         Item item = new Item("test_name", 100, "test_url", "USD");
         itemService.save(item);
-        Item received = StockItemHibernateRepository.findLastAdded();
+        Item received = stockItemHibernateRepository.findLastAdded();
         assertEquals(item.getTitle(), received.getTitle());
         assertEquals(item.getCurrency(), received.getCurrency());
     }
@@ -102,9 +103,9 @@ public class StockItemRepositoryTest {
         itemService.updateById(itemDTO);
         Item itemaAfterUpdate = itemService.getById(generatedId);
         assertNotEquals(item, itemaAfterUpdate);
-        assertEquals(itemaAfterUpdate.getTitle(),itemDTO.getTitle());
-        assertEquals(itemaAfterUpdate.getPrice(),itemDTO.getPrice());
-        assertEquals(itemaAfterUpdate.getImage_url(),itemDTO.getImage_url());
+        assertEquals(itemaAfterUpdate.getTitle(), itemDTO.getTitle());
+        assertEquals(itemaAfterUpdate.getPrice(), itemDTO.getPrice());
+        assertEquals(itemaAfterUpdate.getImage_url(), itemDTO.getImage_url());
 
     }
 }
