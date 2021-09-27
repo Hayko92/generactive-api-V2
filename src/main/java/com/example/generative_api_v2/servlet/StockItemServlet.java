@@ -40,4 +40,6 @@ public class StockItemServlet extends HttpServlet {
         writer.write(objectMapper.writeValueAsString(items));
     }
 
+
+
 }
