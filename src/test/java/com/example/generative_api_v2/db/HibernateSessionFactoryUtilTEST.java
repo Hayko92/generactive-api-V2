@@ -1,4 +1,4 @@
-package com.example.generative_api_v2;
+package com.example.generative_api_v2.db;
 
 import com.example.generative_api_v2.model.Generative;
 import com.example.generative_api_v2.model.Group;
