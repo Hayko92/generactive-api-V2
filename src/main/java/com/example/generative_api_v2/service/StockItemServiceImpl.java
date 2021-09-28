@@ -1,6 +1,8 @@
 package com.example.generative_api_v2.service;
 
 import com.example.generative_api_v2.db.hibernate.StockItemHibernateRepository;
+import com.example.generative_api_v2.dto.ItemDTO;
+import com.example.generative_api_v2.mapper.ItemMapper;
 import com.example.generative_api_v2.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,18 +13,22 @@ import java.util.List;
 public class StockItemServiceImpl implements ItemService {
 
     private StockItemHibernateRepository stockItemHibernateRepository;
+    private ItemMapper itemMapper;
 
     public StockItemServiceImpl() {
     }
 
     @Autowired
-    public StockItemServiceImpl(StockItemHibernateRepository stockItemHibernateRepository) {
+    public StockItemServiceImpl(StockItemHibernateRepository stockItemHibernateRepository, ItemMapper itemMapper) {
         this.stockItemHibernateRepository = stockItemHibernateRepository;
+        this.itemMapper = itemMapper;
     }
 
     @Override
-    public void save(Item item) {
-        stockItemHibernateRepository.save(item);
+    public Item save(ItemDTO itemDTO) {
+        Item item = new Item();
+        item = itemMapper.map(item, itemDTO);
+        return stockItemHibernateRepository.save(item);
     }
 
     @Override
@@ -41,8 +47,10 @@ public class StockItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void updateById(Item item) {
-        stockItemHibernateRepository.updateById(item);
+    public Item updateById(int id, ItemDTO itemDTO) {
+        Item item = stockItemHibernateRepository.getById(id);
+        item = itemMapper.map(item, itemDTO);
+        return stockItemHibernateRepository.updateById(item);
     }
 
     @Override

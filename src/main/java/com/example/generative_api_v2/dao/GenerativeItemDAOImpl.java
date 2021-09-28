@@ -19,12 +19,13 @@ public class GenerativeItemDAOImpl implements GenerativeItemDAO {
     }
 
     @Override
-    public void add(Generative item) {
+    public Generative add(Generative item) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(item);
         transaction.commit();
         session.close();
+        return item;
     }
 
     @Override
@@ -71,12 +72,13 @@ public class GenerativeItemDAOImpl implements GenerativeItemDAO {
     }
 
     @Override
-    public void updateById(Generative item) {
+    public Generative updateById(Generative item) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.update(item);
         transaction.commit();
         session.close();
+        return item;
     }
 
     @Override

@@ -4,9 +4,7 @@ import com.example.generative_api_v2.dto.GroupDTO;
 import com.example.generative_api_v2.model.Group;
 import com.example.generative_api_v2.service.GroupService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,19 +13,21 @@ import java.util.List;
 @RequestMapping("/groups")
 public class GroupController {
 
-    @Autowired
-    private GroupService groupService;
+    private final GroupService groupService;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @Autowired
+    public GroupController(GroupService groupService) {
+        this.groupService = groupService;
+    }
+
+    @GetMapping
     public List<Group> getAll() {
         return groupService.getAll();
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Group add(@RequestBody String sendedGroup) throws JsonProcessingException {
-        Group group = new ObjectMapper().readValue(sendedGroup, Group.class);
-        groupService.save(group);
-        return group;
+    @PostMapping
+    public Group add(@RequestBody GroupDTO sendedGroup) throws JsonProcessingException {
+        return groupService.save(sendedGroup);
     }
 
     @DeleteMapping("/{id}")
@@ -41,15 +41,8 @@ public class GroupController {
     }
 
     @PutMapping("/{id}")
-    public Group updateByyId(@PathVariable int id, @RequestBody String updatedGroup) throws JsonProcessingException {
-        Group group = groupService.getById(id);
-        GroupDTO groupDTO = new ObjectMapper().readValue(updatedGroup, GroupDTO.class);
-        group.setTitle(groupDTO.getTitle());
-        group.setParent(groupDTO.getParent());
-        group.setItems(groupDTO.getItems());
-        group.setGroups(groupDTO.getGroups());
-        groupService.updateById(group);
-        return group;
+    public Group updateByyId(@PathVariable int id, @RequestBody GroupDTO updatedGroup) {
+        return groupService.updateById(id, updatedGroup);
     }
 
 }

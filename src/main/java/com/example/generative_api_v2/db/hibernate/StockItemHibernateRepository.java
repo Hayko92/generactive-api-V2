@@ -22,8 +22,8 @@ public final class StockItemHibernateRepository {
         this.itemDAO = itemDAO;
     }
 
-    public void save(Item item) {
-        itemDAO.add(item);
+    public Item save(Item item) {
+        return itemDAO.add(item);
     }
 
     public List<Item> getAll() {
@@ -38,8 +38,8 @@ public final class StockItemHibernateRepository {
         return itemDAO.getById(id);
     }
 
-    public void updateById(Item item) {
-        itemDAO.updateById(item);
+    public Item updateById(Item item) {
+        return itemDAO.updateById(item);
     }
 
     public List<Item> getItemsWithPriceFromTo(int from, int to) {
