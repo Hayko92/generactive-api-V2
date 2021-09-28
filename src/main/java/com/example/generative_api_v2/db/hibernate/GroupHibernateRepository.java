@@ -26,8 +26,9 @@ public class GroupHibernateRepository {
         return groupDAO.getAll();
     }
 
-    public void add(Group group) {
+    public Group add(Group group) {
         groupDAO.add(group);
+        return group;
     }
 
     public void removeById(int id) {

@@ -23,8 +23,8 @@ public final class GenerativeItemHibernateRepository {
         this.itemDAO = itemDAO;
     }
 
-    public void save(Generative item) {
-        itemDAO.add(item);
+    public Generative save(Generative generative) {
+        return itemDAO.add(generative);
     }
 
     public List<Generative> getAll() {
@@ -39,8 +39,8 @@ public final class GenerativeItemHibernateRepository {
         return itemDAO.getById(id);
     }
 
-    public void updateById(Generative item) {
-        itemDAO.updateById(item);
+    public Generative updateById(Generative item) {
+        return itemDAO.updateById(item);
     }
 
     public List<Generative> getItemsWithPriceFromTo(int from, int to) {

@@ -19,12 +19,13 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public void add(Item item) {
+    public Item add(Item item) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(item);
         transaction.commit();
         session.close();
+        return item;
     }
 
     @Override
@@ -71,12 +72,13 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public void updateById(Item item) {
+    public Item updateById(Item item) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.update(item);
         transaction.commit();
         session.close();
+        return item;
     }
 
     @Override

@@ -5,9 +5,7 @@ import com.example.generative_api_v2.model.Generative;
 import com.example.generative_api_v2.model.Item;
 import com.example.generative_api_v2.service.GenerativeItemService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,18 +14,22 @@ import java.util.List;
 @RequestMapping("/generative-items")
 public class GenerativeItemController {
 
+
+    private final GenerativeItemService generativeItemService;
+
     @Autowired
-    private GenerativeItemService generativeItemService;
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public GenerativeItemController(GenerativeItemService generativeItemService) {
+        this.generativeItemService = generativeItemService;
+    }
+
+    @GetMapping
     public List<Generative> getAll() {
         return generativeItemService.getAll();
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Generative add(@RequestBody String sendedItem) throws JsonProcessingException {
-        Generative item = new ObjectMapper().readValue(sendedItem, Generative.class);
-        generativeItemService.save(item);
-        return item;
+    @PostMapping
+    public Generative add(@RequestBody GeneractiveDTO sendedItem) throws JsonProcessingException {
+        return generativeItemService.save(sendedItem);
     }
 
     @DeleteMapping("/{id}")
@@ -41,17 +43,8 @@ public class GenerativeItemController {
     }
 
     @PutMapping("/{id}")
-    public Generative updateByyId(@PathVariable int id, @RequestBody String updatedItem) throws JsonProcessingException {
-        Generative item = generativeItemService.getById(id);
-        GeneractiveDTO itemDTO = new ObjectMapper().readValue(updatedItem, GeneractiveDTO.class);
-        item.setCurrency(itemDTO.getCurrency());
-        item.setImage_url(itemDTO.getImage_url());
-        item.setParent(itemDTO.getParent());
-        item.setPrice(itemDTO.getPrice());
-        item.setTitle(itemDTO.getTitle());
-        item.setComplexity(itemDTO.getComplexity());
-        generativeItemService.updateById(item);
-        return item;
+    public Generative updateByyId(@PathVariable int id, @RequestBody GeneractiveDTO updatedItem) {
+        return generativeItemService.updateById(id, updatedItem);
     }
 
     @GetMapping("/search")

@@ -1,8 +1,9 @@
 package com.example.generative_api_v2.service;
 
 import com.example.generative_api_v2.db.hibernate.GenerativeItemHibernateRepository;
+import com.example.generative_api_v2.dto.GeneractiveDTO;
+import com.example.generative_api_v2.mapper.GeneractiveItemMapper;
 import com.example.generative_api_v2.model.Generative;
-import com.example.generative_api_v2.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,18 +13,22 @@ import java.util.List;
 public class GeneractiveItemServiceImpl implements GenerativeItemService {
 
     private GenerativeItemHibernateRepository generativeItemHibernateRepository;
+    private GeneractiveItemMapper generactiveItemMapper;
 
     public GeneractiveItemServiceImpl() {
     }
 
     @Autowired
-    public GeneractiveItemServiceImpl(GenerativeItemHibernateRepository generativeItemHibernateRepository) {
+    public GeneractiveItemServiceImpl(GenerativeItemHibernateRepository generativeItemHibernateRepository, GeneractiveItemMapper generactiveItemMapper) {
         this.generativeItemHibernateRepository = generativeItemHibernateRepository;
+        this.generactiveItemMapper = generactiveItemMapper;
     }
 
     @Override
-    public void save(Item item) {
-        generativeItemHibernateRepository.save((Generative) item);
+    public Generative save(GeneractiveDTO generactiveDTO) {
+        Generative generative = new Generative();
+        generactiveItemMapper.map(generative, generactiveDTO);
+        return generativeItemHibernateRepository.save(generative);
     }
 
     @Override
@@ -41,8 +46,10 @@ public class GeneractiveItemServiceImpl implements GenerativeItemService {
         return generativeItemHibernateRepository.getById(id);
     }
 
-    public void updateById(Generative item) {
-        generativeItemHibernateRepository.updateById(item);
+    public Generative updateById(int id, GeneractiveDTO generactiveDTO) {
+        Generative generative = generativeItemHibernateRepository.getById(id);
+
+        return generativeItemHibernateRepository.updateById(generative);
     }
 
     @Override

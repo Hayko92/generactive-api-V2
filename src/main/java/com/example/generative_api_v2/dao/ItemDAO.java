@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ItemDAO {
 
-    void add(Item item);
+    Item add(Item item);
 
     List<Item> getAll();
 
@@ -16,7 +16,7 @@ public interface ItemDAO {
 
     void deleteById(int id);
 
-    void updateById(Item item);
+    Item updateById(Item item);
 
     Item getLastAdded();
 

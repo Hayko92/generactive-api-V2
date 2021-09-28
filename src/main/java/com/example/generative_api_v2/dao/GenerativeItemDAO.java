@@ -1,11 +1,12 @@
 package com.example.generative_api_v2.dao;
 
 import com.example.generative_api_v2.model.Generative;
+
 import java.util.List;
 
 public interface GenerativeItemDAO {
 
-    void add(Generative item);
+    Generative add(Generative generative);
 
     List<Generative> getAll();
 
@@ -15,7 +16,7 @@ public interface GenerativeItemDAO {
 
     void deleteById(int id);
 
-    void updateById(Generative item);
+    Generative updateById(Generative item);
 
     Generative getLastAdded();
 
