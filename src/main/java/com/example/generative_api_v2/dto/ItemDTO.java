@@ -29,6 +29,13 @@ public class ItemDTO {
         this.image_url = image_url;
     }
 
+    public ItemDTO(String title, int price,String image_url,  String currency) {
+        this.title = title;
+        this.image_url = image_url;
+        this.price = price;
+        this.currency = currency;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

@@ -15,6 +15,7 @@ public final class ItemMapperImpl implements ItemMapper{
         item.setParent(itemDTO.getParent());
         item.setTitle(itemDTO.getTitle());
         item.setPrice(itemDTO.getPrice());
+        item.setImage_url(itemDTO.getImage_url());
         return  item;
     }
 }
