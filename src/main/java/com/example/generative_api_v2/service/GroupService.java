@@ -16,6 +16,6 @@ public interface GroupService {
 
     Group getById(int id);
 
-    void updateById(Group item);
+    void updateById(Group group);
 
 }
