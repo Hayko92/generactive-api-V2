@@ -3,6 +3,7 @@ package com.example.generative_api_v2.db;
 import com.example.generative_api_v2.conf.ApplicationContext;
 import com.example.generative_api_v2.db.hibernate.GroupHibernateRepository;
 import com.example.generative_api_v2.db.hibernate.StockItemHibernateRepository;
+import com.example.generative_api_v2.dto.ItemDTO;
 import com.example.generative_api_v2.model.Item;
 import com.example.generative_api_v2.service.StockItemServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +30,7 @@ public class StockItemRepositoryTest {
 
     @Test
     public void addTest() {
-        Item item = new Item("test_name", 100, "test_url", "USD");
+        ItemDTO item = new ItemDTO("test_name", 100, "test_url", "USD");
         itemService.save(item);
         Item received = stockItemHibernateRepository.findLastAdded();
         assertEquals(item.getTitle(), received.getTitle());
@@ -38,9 +39,9 @@ public class StockItemRepositoryTest {
 
     @Test
     public void getAllTest() {
-        Item item1 = new Item("test_name", 100, "test_url", "USD");
-        Item item2 = new Item("test_name", 100, "test_url", "USD");
-        Item item3 = new Item("test_name", 100, "test_url", "USD");
+        ItemDTO item1 = new ItemDTO("test_name", 100, "test_url", "USD");
+        ItemDTO item2 = new ItemDTO("test_name", 100, "test_url", "USD");
+        ItemDTO item3 = new ItemDTO("test_name", 100, "test_url", "USD");
         itemService.save(item1);
         itemService.save(item2);
         itemService.save(item3);
@@ -50,12 +51,12 @@ public class StockItemRepositoryTest {
 
     @Test
     public void getItemsWithPriceFromToTest() {
-        Item item1 = new Item("test_name", 100, "test_url", "USD");
-        Item item2 = new Item("test_name", 120, "test_url", "USD");
-        Item item3 = new Item("test_name", 160, "test_url", "USD");
-        Item item4 = new Item("test_name", 170, "test_url", "USD");
-        Item item5 = new Item("test_name", 200, "test_url", "USD");
-        Item item6 = new Item("test_name", 210, "test_url", "USD");
+        ItemDTO item1 = new ItemDTO("test_name", 100, "test_url", "USD");
+        ItemDTO item2 = new ItemDTO("test_name", 120, "test_url", "USD");
+        ItemDTO item3 = new ItemDTO("test_name", 160, "test_url", "USD");
+        ItemDTO item4 = new ItemDTO("test_name", 170, "test_url", "USD");
+        ItemDTO item5 = new ItemDTO("test_name", 200, "test_url", "USD");
+        ItemDTO item6 = new ItemDTO("test_name", 210, "test_url", "USD");
         itemService.save(item1);
         itemService.save(item2);
         itemService.save(item3);
@@ -72,10 +73,10 @@ public class StockItemRepositoryTest {
 
     @Test
     public void findItemByIdTest() {
-        Item item1 = new Item("1", 100, "test_url", "USD");
-        Item item2 = new Item("2", 120, "test_url", "USD");
-        itemService.save(item1);
-        itemService.save(item2);
+        ItemDTO itemDTO1 = new ItemDTO("1", 100, "test_url", "USD");
+        ItemDTO itemDTO2 = new ItemDTO("2", 120, "test_url", "USD");
+        Item item1 = itemService.save(itemDTO1);
+        Item item2 = itemService.save(itemDTO2);
         Item itemFromRepo1 = itemService.getById(item1.getId());
         Item itemFromRepo2 = itemService.getById(item2.getId());
         assertEquals(item1.getTitle(), itemFromRepo1.getTitle());
@@ -84,9 +85,9 @@ public class StockItemRepositoryTest {
 
     @Test
     void deleteByIdTest() {
-        Item item = new Item("1", 100, "test_url", "USD");
-        itemService.save(item);
-        int generatedId = item.getId();
+        ItemDTO item = new ItemDTO("1", 100, "test_url", "USD");
+       Item generatedItem = itemService.save(item);
+        int generatedId = generatedItem.getId();
         assertNotNull(itemService.getById(generatedId));
         itemService.deleteById(generatedId);
         assertNull(itemService.getById(generatedId));
@@ -95,12 +96,12 @@ public class StockItemRepositoryTest {
 
     @Test
     public void updateByIdTest() {
-        Item item = new Item("title", 150, "image_url");
-        itemService.save(item);
-        int generatedId = item.getId();
-        Item itemDTO = new Item("changed", 100, "changed_image_url");
+        ItemDTO item = new ItemDTO("title", 150, "image_url");
+        Item savedItem =   itemService.save(item);
+        int generatedId = savedItem.getId();
+        ItemDTO itemDTO = new ItemDTO("changed", 100, "changed_image_url");
         itemDTO.setId(generatedId);
-        itemService.updateById(itemDTO);
+        itemService.updateById(generatedId, itemDTO);
         Item itemaAfterUpdate = itemService.getById(generatedId);
         assertNotEquals(item, itemaAfterUpdate);
         assertEquals(itemaAfterUpdate.getTitle(), itemDTO.getTitle());
