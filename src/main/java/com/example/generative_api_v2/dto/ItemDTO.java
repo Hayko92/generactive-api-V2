@@ -92,4 +92,5 @@ public class ItemDTO {
         this.configuration = configuration;
     }
 
+
 }
