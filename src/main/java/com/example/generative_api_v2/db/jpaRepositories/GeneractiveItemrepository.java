@@ -1,7 +1,6 @@
 package com.example.generative_api_v2.db.jpaRepositories;
 
 import com.example.generative_api_v2.model.Generative;
-import com.example.generative_api_v2.model.Item;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
