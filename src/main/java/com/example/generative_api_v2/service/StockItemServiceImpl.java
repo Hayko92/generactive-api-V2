@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.swing.text.html.parser.Entity;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +20,8 @@ import java.util.Optional;
 @Component
 public class StockItemServiceImpl implements ItemService {
 
-
+    @PersistenceContext
+    private EntityManager entityManager;
     private ItemRepository itemRepository;
     private ItemMapper itemMapper;
 
@@ -45,13 +48,20 @@ public class StockItemServiceImpl implements ItemService {
         return itemRepository.findAll();
     }
 
+    //this works but...
+//    @Override
+//    public List<Item> getAll(int offset, int limit) {
+//        Pageable pageable = PageRequest.of(offset / limit, limit);
+//        Page<Item> page = itemRepository.findAll(pageable);
+//        return page.getContent();
+//    }
     @Override
     public List<Item> getAll(int offset, int limit) {
-
-        Pageable pageable = PageRequest.of(offset / limit, limit);
-        Page<Item> page = itemRepository.findAll(pageable);
-        return page.getContent();
-
+        List<Item> items = entityManager.createQuery("select i FROM Item i", Item.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+        return items;
     }
 
     @Transactional
