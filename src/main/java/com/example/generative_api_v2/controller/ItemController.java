@@ -5,8 +5,10 @@ import com.example.generative_api_v2.model.Item;
 import com.example.generative_api_v2.service.ItemService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,8 +28,9 @@ public class ItemController {
     }
 
     @PostMapping
-    public Item add(@RequestBody ItemDTO sendedItem) throws JsonProcessingException {
-        return itemService.save(sendedItem);
+    public Item add(  @RequestBody @Valid ItemDTO sendedItem, BindingResult bindingResult) throws Exception {
+       if(bindingResult.hasErrors()) throw new Exception(bindingResult.getAllErrors().get(0).getDefaultMessage()) ;
+    else return itemService.save(sendedItem);
     }
 
     @DeleteMapping("/{id}")

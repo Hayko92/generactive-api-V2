@@ -13,7 +13,7 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id;
+    private Integer id;
 
     @Column(name = "title")
     private String title;
@@ -99,7 +99,7 @@ public class Item {
         return title;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -131,6 +131,10 @@ public class Item {
                 ", price=" + price +
                 ", currency='" + currency + '\'' +
                 '}';
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void print() {
