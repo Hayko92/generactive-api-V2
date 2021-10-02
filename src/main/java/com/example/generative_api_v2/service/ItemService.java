@@ -12,6 +12,7 @@ public interface ItemService {
     Item save(ItemDTO itemDTO);
 
     List<Item> getAll();
+    List<Item> getAll(int offset, int limit);
 
     void deleteById(int id);
 
@@ -20,4 +21,6 @@ public interface ItemService {
     Item updateById(int id, ItemDTO itemDTO);
 
     List<Item> getItemsWithPriceFromTo(int from, int to);
+
+//    List<Item> getAllWithPagination(int offset, int limit);
 }

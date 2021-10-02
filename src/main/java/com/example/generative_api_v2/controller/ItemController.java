@@ -3,7 +3,6 @@ package com.example.generative_api_v2.controller;
 import com.example.generative_api_v2.dto.ItemDTO;
 import com.example.generative_api_v2.model.Item;
 import com.example.generative_api_v2.service.ItemService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +50,11 @@ public class ItemController {
     @GetMapping("/search")
     public List<Item> searchWithMinAndMaxPrices(@RequestParam int priceFrom, @RequestParam int priceTo) {
         return itemService.getItemsWithPriceFromTo(priceFrom, priceTo);
+    }
+
+    @GetMapping("/paginated")
+    public List<Item> getAll(@RequestParam int offset, @RequestParam int limit) {
+        return itemService.getAll(offset,limit);
     }
 
 }
