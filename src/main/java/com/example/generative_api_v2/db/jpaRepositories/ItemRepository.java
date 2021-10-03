@@ -9,8 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item,Integer> {
-    List<Item>  findByPriceBetween(int from, int to);
-     List<Item> findAll();
+public interface ItemRepository extends JpaRepository<Item, Integer> {
+    List<Item> findByPriceBetween(int from, int to);
+
+    List<Item> findAll();
+
+    Page<Item> findAll(Pageable pageable);
 
 }
