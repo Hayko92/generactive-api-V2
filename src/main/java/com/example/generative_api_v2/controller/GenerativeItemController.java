@@ -14,7 +14,6 @@ import java.util.List;
 @RequestMapping("/generative-items")
 public class GenerativeItemController {
 
-
     private final GenerativeItemService generativeItemService;
 
     @Autowired

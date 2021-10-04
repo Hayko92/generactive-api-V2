@@ -14,7 +14,7 @@ public class Configuration {
     @Enumerated(EnumType.STRING)
     private Resolution resolution;
 
-    private List<Item> items;
+
 
     public Configuration() {
     }
@@ -38,12 +38,5 @@ public class Configuration {
     public void setId(int id) {
         this.id = id;
     }
-     @Transient
-    public List<Item> getItems() {
-        return   items;
-    }
 
-    public void setItems(List<Item> item) {
-        this.items = item;
-    }
 }

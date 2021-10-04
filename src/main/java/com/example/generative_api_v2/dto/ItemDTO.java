@@ -3,8 +3,15 @@ package com.example.generative_api_v2.dto;
 import com.example.generative_api_v2.model.Configuration;
 import com.example.generative_api_v2.model.Group;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class ItemDTO {
     private  int id;
+    @NotNull(message = "can not be NULL:custom message")
+    @Size
+    @NotBlank
     private  String title;
     private  String image_url;
     private  int price;
@@ -91,5 +98,6 @@ public class ItemDTO {
     public void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
     }
+
 
 }

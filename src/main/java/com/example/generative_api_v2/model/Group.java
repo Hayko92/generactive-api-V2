@@ -14,7 +14,7 @@ public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "title")
     private String title;
 
@@ -78,7 +78,7 @@ public class Group {
         return items;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

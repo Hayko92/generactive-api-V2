@@ -2,14 +2,17 @@ package com.example.generative_api_v2.util;
 
 import com.example.generative_api_v2.db.jdbc.Storage;
 import com.example.generative_api_v2.model.*;
+import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Optional;
 
 public final class UserInputUtil {
+
     public static void createGroup(BufferedReader bf) throws IOException {
         while (true) {
+
             System.out.println("Please Enter name of group");
             String title = bf.readLine();
             if (title.equalsIgnoreCase("exit")) break;

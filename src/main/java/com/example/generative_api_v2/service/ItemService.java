@@ -13,6 +13,8 @@ public interface ItemService {
 
     List<Item> getAll();
 
+    List<Item> getAll(int offset, int limit , String sortBy);
+
     void deleteById(int id);
 
     Item getById(int id);
@@ -20,4 +22,5 @@ public interface ItemService {
     Item updateById(int id, ItemDTO itemDTO);
 
     List<Item> getItemsWithPriceFromTo(int from, int to);
+
 }
