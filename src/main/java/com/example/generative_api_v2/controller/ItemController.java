@@ -45,7 +45,7 @@ public class ItemController {
         return itemService.getItemsWithPriceFromTo(priceFrom, priceTo);
     }
 
-    @GetMapping("")
+    @GetMapping()
     public List<Item> getAll(@RequestParam int offset,
                              @RequestParam int limit,
                              @RequestParam(required = false) String sortBy) {
