@@ -32,6 +32,7 @@ public class AppConfig {
         dataSource.setPassword("123456");
         dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres?createDatabaseIfNotExist=true");
 
+
         return dataSource;
     }
 
@@ -62,7 +63,7 @@ public class AppConfig {
 
     Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL10Dialect");
         return properties;
     }
