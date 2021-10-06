@@ -1,7 +1,6 @@
 package com.example.generative_api_v2.dto;
 
 import com.example.generative_api_v2.model.Group;
-import com.example.generative_api_v2.model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +9,16 @@ public class GroupDTO {
     private int id;
     private String title;
     private Group parent;
-    private final List<Item> items;
-    private final List<Group> groups;
+    private   List<ItemDTO> items;
+    private   List<GroupDTO> groups;
+
+    public void setItems(List<ItemDTO> items) {
+        this.items = items;
+    }
+
+    public void setGroups(List<GroupDTO> groups) {
+        this.groups = groups;
+    }
 
     public GroupDTO() {
         this.title = "";
@@ -29,7 +36,7 @@ public class GroupDTO {
         return title;
     }
 
-    public List<Group> getGroups() {
+    public List<GroupDTO> getGroups() {
         return groups;
     }
 
@@ -37,7 +44,7 @@ public class GroupDTO {
         this.title = title;
     }
 
-    public List<Item> getItems() {
+    public List<ItemDTO> getItems() {
         return items;
     }
 

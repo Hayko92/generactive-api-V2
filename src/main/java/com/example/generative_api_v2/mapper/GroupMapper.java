@@ -4,5 +4,6 @@ import com.example.generative_api_v2.dto.GroupDTO;
 import com.example.generative_api_v2.model.Group;
 
 public interface GroupMapper {
-    Group map(Group group, GroupDTO groupDTO);
+    Group mapToGroup( GroupDTO groupDTO);
+    GroupDTO mapToGroupDTO(Group group);
 }
