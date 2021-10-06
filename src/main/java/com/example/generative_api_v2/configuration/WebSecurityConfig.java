@@ -1,6 +1,7 @@
 package com.example.generative_api_v2.configuration;
 
 
+import com.example.generative_api_v2.configuration.userService.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,12 +16,13 @@ import javax.sql.DataSource;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
+    @Autowired
+    CustomUserDetailService userDetailService;
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .jdbcAuthentication()
-                .dataSource(dataSource);
+        auth.userDetailsService(userDetailService);
+
     }
 
     @Override
