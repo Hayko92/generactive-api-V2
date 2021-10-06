@@ -1,6 +1,5 @@
 package com.example.generative_api_v2.service;
 
-import com.example.generative_api_v2.db.hibernate.GenerativeItemHibernateRepository;
 import com.example.generative_api_v2.db.jpaRepositories.GeneractiveItemrepository;
 import com.example.generative_api_v2.dto.GeneractiveDTO;
 import com.example.generative_api_v2.mapper.GeneractiveItemMapper;
@@ -30,7 +29,7 @@ public class GeneractiveItemServiceImpl implements GenerativeItemService {
     @Override
     public Generative save(GeneractiveDTO generactiveDTO) {
         Generative generative = new Generative();
-        generactiveItemMapper.map(generative, generactiveDTO);
+        generactiveItemMapper.mapToGeneractive(generactiveDTO);
         return generativeJPARepository.save(generative);
     }
 

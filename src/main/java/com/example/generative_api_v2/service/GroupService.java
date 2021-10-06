@@ -9,14 +9,14 @@ import java.util.List;
 
 @Component
 public interface GroupService {
-    Group save(GroupDTO group);
+    GroupDTO save(GroupDTO group);
 
-    List<Group> getAll();
+    List<GroupDTO> getAll();
 
     void deleteById(int id);
 
-    Group getById(int id);
+    GroupDTO getById(int id);
 
-    Group updateById(int id, GroupDTO group);
+    GroupDTO updateById(int id, GroupDTO group);
 
 }

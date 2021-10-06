@@ -1,7 +1,6 @@
 package com.example.generative_api_v2.dto;
 
 import com.example.generative_api_v2.model.Configuration;
-import com.example.generative_api_v2.model.Group;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -16,8 +15,9 @@ public class ItemDTO {
     private  String image_url;
     private  int price;
     private  String currency;
-    private Group parent;
     private Configuration configuration;
+    private GroupDTO parent;
+    private int parentId;
 
     public ItemDTO() {
     }
@@ -71,9 +71,6 @@ public class ItemDTO {
         return currency;
     }
 
-    public Group getParent() {
-        return parent;
-    }
 
     public String getTitle() {
         return title;
@@ -87,8 +84,20 @@ public class ItemDTO {
         return price;
     }
 
-    public void setParent(Group parent) {
+    public GroupDTO getParent() {
+        return parent;
+    }
+
+    public void setParent(GroupDTO parent) {
         this.parent = parent;
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
     }
 
     public Configuration getConfiguration() {

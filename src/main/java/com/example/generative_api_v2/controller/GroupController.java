@@ -1,7 +1,6 @@
 package com.example.generative_api_v2.controller;
 
 import com.example.generative_api_v2.dto.GroupDTO;
-import com.example.generative_api_v2.model.Group;
 import com.example.generative_api_v2.service.GroupService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,12 @@ public class GroupController {
     }
 
     @GetMapping
-    public List<Group> getAll() {
+    public List<GroupDTO> getAll() {
         return groupService.getAll();
     }
 
     @PostMapping
-    public Group add(@RequestBody GroupDTO sendedGroup) throws JsonProcessingException {
+    public GroupDTO add(@RequestBody GroupDTO sendedGroup) throws JsonProcessingException {
         return groupService.save(sendedGroup);
     }
 
@@ -36,12 +35,12 @@ public class GroupController {
     }
 
     @GetMapping("/{id}")
-    public Group getbyId(@PathVariable int id) {
+    public GroupDTO getbyId(@PathVariable int id) {
         return groupService.getById(id);
     }
 
     @PutMapping("/{id}")
-    public Group updateByyId(@PathVariable int id, @RequestBody GroupDTO updatedGroup) {
+    public GroupDTO updateByyId(@PathVariable int id, @RequestBody GroupDTO updatedGroup) {
         return groupService.updateById(id, updatedGroup);
     }
 

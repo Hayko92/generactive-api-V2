@@ -2,6 +2,8 @@ package com.example.generative_api_v2.service;
 
 import com.example.generative_api_v2.db.jpaRepositories.ItemRepository;
 import com.example.generative_api_v2.dto.ItemDTO;
+import com.example.generative_api_v2.mapper.GeneractiveItemMapper;
+import com.example.generative_api_v2.mapper.GroupMapper;
 import com.example.generative_api_v2.mapper.ItemMapper;
 import com.example.generative_api_v2.model.Item;
 import com.example.generative_api_v2.pagination.CustomPageable;
@@ -13,37 +15,39 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class StockItemServiceImpl implements ItemService {
 
     private ItemRepository itemRepository;
     private ItemMapper itemMapper;
+    private GroupMapper groupMapper;
+    private GeneractiveItemMapper generactiveItemMapper;
 
     public StockItemServiceImpl() {
     }
 
     @Autowired
-    public StockItemServiceImpl(ItemRepository itemRepository, ItemMapper itemMapper) {
+    public StockItemServiceImpl(ItemRepository itemRepository, ItemMapper itemMapper, GroupMapper groupMapper, GeneractiveItemMapper generactiveItemMapper) {
         this.itemRepository = itemRepository;
         this.itemMapper = itemMapper;
+        this.groupMapper = groupMapper;
+        this.generactiveItemMapper = generactiveItemMapper;
     }
 
     @Transactional
     @Override
-    public Item save(ItemDTO itemDTO) {
-        Item item = new Item();
-        item = itemMapper.map(item, itemDTO);
-        return itemRepository.save(item);
+    public ItemDTO save(ItemDTO itemDTO) {
+        Item item = itemMapper.mapToItem(itemDTO);
+        itemRepository.save(item);
+        return itemMapper.mapToItemDTO(item);
     }
 
-    @Override
-    public List<Item> getAll() {
-        return null;
-    }
+
 
     @Override
-    public List<Item> getAll(int offset, int limit, String sortBy) {
+    public List<ItemDTO> getAll(int offset, int limit, String sortBy) {
         CustomPageable customPageable;
         Sort sort;
         if (sortBy != null) {
@@ -51,7 +55,10 @@ public class StockItemServiceImpl implements ItemService {
         } else sort = Sort.unsorted();
         customPageable = new CustomPageable(offset, limit, sort);
         Page<Item> items = itemRepository.findAll(customPageable);
-        return items.getContent();
+        return items.getContent()
+                .stream()
+                .map(i->itemMapper.mapToItemDTO(i))
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -61,25 +68,30 @@ public class StockItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item getById(int id) {
+    public ItemDTO getById(int id) {
         Optional<Item> finded = itemRepository.findById(id);
-        return finded.orElse(null);
+        return finded.map(item -> itemMapper.mapToItemDTO(item))
+                .orElse(null);
     }
 
     @Transactional
     @Override
-    public Item updateById(int id, ItemDTO itemDTO) {
+    public ItemDTO updateById(int id, ItemDTO itemDTO) {
         Item item = itemRepository.findById(id).orElse(null);
         if (item != null) {
-            item = itemMapper.map(item, itemDTO);
-            return itemRepository.save(item);
+            itemDTO.setId(id);
+            item = itemMapper.mapToItem(itemDTO);
+            return itemMapper.mapToItemDTO(itemRepository.save(item));
         }
         return null;
     }
 
     @Override
-    public List<Item> getItemsWithPriceFromTo(int from, int to) {
-        return itemRepository.findByPriceBetween(from, to);
+    public List<ItemDTO> getItemsWithPriceFromTo(int from, int to) {
+        return itemRepository.findByPriceBetween(from, to)
+                .stream()
+                .map(i->itemMapper.mapToItemDTO(i))
+                .collect(Collectors.toList());
     }
 
 }

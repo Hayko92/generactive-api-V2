@@ -1,7 +1,6 @@
 package com.example.generative_api_v2.controller;
 
 import com.example.generative_api_v2.dto.ItemDTO;
-import com.example.generative_api_v2.model.Item;
 import com.example.generative_api_v2.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,7 @@ public class ItemController {
     }
 
     @PostMapping
-    public Item add(@RequestBody @Valid ItemDTO sendedItem) {
+    public ItemDTO add(@RequestBody @Valid ItemDTO sendedItem) {
     return itemService.save(sendedItem);
     }
 
@@ -31,22 +30,22 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public Item getById(@PathVariable int id) {
+    public ItemDTO getById(@PathVariable int id) {
         return itemService.getById(id);
     }
 
     @PutMapping("/{id}")
-    public Item updateByyId(@PathVariable int id, @RequestBody ItemDTO updatedItem) {
+    public ItemDTO updateByyId(@PathVariable int id, @RequestBody ItemDTO updatedItem) {
         return itemService.updateById(id, updatedItem);
     }
 
     @GetMapping("/search")
-    public List<Item> searchWithMinAndMaxPrices(@RequestParam int priceFrom, @RequestParam int priceTo) {
+    public List<ItemDTO> searchWithMinAndMaxPrices(@RequestParam int priceFrom, @RequestParam int priceTo) {
         return itemService.getItemsWithPriceFromTo(priceFrom, priceTo);
     }
 
     @GetMapping()
-    public List<Item> getAll(@RequestParam int offset,
+    public List<ItemDTO> getAll(@RequestParam int offset,
                              @RequestParam int limit,
                              @RequestParam(required = false) String sortBy) {
         return itemService.getAll(offset,limit, sortBy);

@@ -1,6 +1,5 @@
 package com.example.generative_api_v2.service;
 
-import com.example.generative_api_v2.db.hibernate.GroupHibernateRepository;
 import com.example.generative_api_v2.db.jpaRepositories.GroupRepository;
 import com.example.generative_api_v2.dto.GroupDTO;
 import com.example.generative_api_v2.mapper.GroupMapper;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class GroupServiceImpl implements GroupService {
@@ -30,16 +30,18 @@ public class GroupServiceImpl implements GroupService {
 
     @Transactional
     @Override
-    public Group save(GroupDTO groupDTO) {
-        Group group = new Group();
-        groupMapper.map(group, groupDTO);
-        return groupRepository.save(group);
+    public GroupDTO save(GroupDTO groupDTO) {
+        Group group = groupMapper.mapToGroup(groupDTO);
+        return groupMapper.mapToGroupDTO(groupRepository.save(group));
     }
 
     @Transactional
     @Override
-    public List<Group> getAll() {
-        return groupRepository.findAll();
+    public List<GroupDTO> getAll() {
+        return groupRepository.findAll()
+                .stream()
+                .map(g->groupMapper.mapToGroupDTO(g))
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -50,19 +52,19 @@ public class GroupServiceImpl implements GroupService {
 
     @Transactional
     @Override
-    public Group getById(int id) {
+    public GroupDTO getById(int id) {
         Optional<Group> finded = groupRepository.findById(id);
-        return finded.orElse(null);
+        return finded.map(group -> groupMapper.mapToGroupDTO(group)).orElse(null);
     }
 
     @Transactional
     @Override
-    public Group updateById(int id, GroupDTO groupDTO) {
+    public GroupDTO updateById(int id, GroupDTO groupDTO) {
         Optional<Group> finded = groupRepository.findById(id);
         if (finded.isPresent()) {
-            groupMapper.map(finded.get(), groupDTO);
+            Group group =   groupMapper.mapToGroup( groupDTO);
             groupRepository.save(finded.get());
-            return finded.get();
+            return groupMapper.mapToGroupDTO(finded.get());
         }
 
         return null;

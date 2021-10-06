@@ -9,18 +9,16 @@ import java.util.List;
 @Component
 public interface ItemService {
 
-    Item save(ItemDTO itemDTO);
+    ItemDTO save(ItemDTO itemDTO);
 
-    List<Item> getAll();
-
-    List<Item> getAll(int offset, int limit , String sortBy);
+    List<ItemDTO> getAll(int offset, int limit , String sortBy);
 
     void deleteById(int id);
 
-    Item getById(int id);
+    ItemDTO getById(int id);
 
-    Item updateById(int id, ItemDTO itemDTO);
+    ItemDTO updateById(int id, ItemDTO itemDTO);
 
-    List<Item> getItemsWithPriceFromTo(int from, int to);
+    List<ItemDTO> getItemsWithPriceFromTo(int from, int to);
 
 }
