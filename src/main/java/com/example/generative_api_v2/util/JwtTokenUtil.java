@@ -3,9 +3,7 @@ package com.example.generative_api_v2.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -13,20 +11,21 @@ import java.time.ZoneId;
 import java.util.Date;
 
 @Component
-public  class JwtTokenUtil {
+public class JwtTokenUtil {
 
-    @Value ("${secret}")
+    @Value("${secret}")
     String secret;
 
     public JwtTokenUtil() {
     }
+
     public String generateToken(String login) {
 
         Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());
         return Jwts.builder()
                 .setSubject(login)
                 .setExpiration(date)
-                .signWith(SignatureAlgorithm.HS512,  secret)
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
 
@@ -35,7 +34,7 @@ public  class JwtTokenUtil {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
         } catch (Exception expEx) {
-           return false;
+            return false;
         }
     }
 
