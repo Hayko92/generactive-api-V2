@@ -9,6 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends CrudRepository<User, Long> {
     User findByUsername(String username);
 
-    @Query("select u from  User u where u.username=?1 and u.password=?2")
     User save(User u);
 }
