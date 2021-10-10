@@ -32,7 +32,7 @@ public class CustomUserDetailService implements UserDetailsService {
     }
 
     public User saveUser(User userEntity) {
-        Authority userRole = roleRepository.findByAuthority("ROLE_USER");
+        Authority userRole = roleRepository.findByAuthority("USER");
         Set<Authority> roles = Set.of(userRole);
         userEntity.setRoles(roles);
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));

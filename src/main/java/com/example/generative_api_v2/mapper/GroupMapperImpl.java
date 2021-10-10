@@ -24,7 +24,7 @@ public class GroupMapperImpl implements GroupMapper{
 
         group.setItems(groupDTO.getItems()
                 .stream()
-                .map(i->itemMapper.mapToItem(i))
+                .map(itemMapper::mapToItem)
                 .collect(Collectors.toList()));
 
         group.setGroups(groupDTO.getGroups()
