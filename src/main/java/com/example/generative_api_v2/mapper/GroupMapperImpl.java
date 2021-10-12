@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component;
 import java.util.stream.Collectors;
 
 @Component
-public class GroupMapperImpl implements GroupMapper{
-  private final ItemMapper itemMapper = new ItemMapperImpl(this);
-
+public class GroupMapperImpl implements GroupMapper {
+    private final ItemMapper itemMapper = new ItemMapperImpl(this);
 
     public GroupMapperImpl() {
 
@@ -20,8 +19,6 @@ public class GroupMapperImpl implements GroupMapper{
         Group group = new Group();
         group.setId(groupDTO.getId());
         group.setTitle(groupDTO.getTitle());
-        group.setParent(groupDTO.getParent());
-
         group.setItems(groupDTO.getItems()
                 .stream()
                 .map(itemMapper::mapToItem)
@@ -31,6 +28,8 @@ public class GroupMapperImpl implements GroupMapper{
                 .stream()
                 .map(this::mapToGroup)
                 .collect(Collectors.toList()));
+        if (groupDTO.getParent() != null) group.setParent(mapToGroup(groupDTO.getParent()));
+
         return group;
     }
 
@@ -39,7 +38,9 @@ public class GroupMapperImpl implements GroupMapper{
         GroupDTO groupDTO = new GroupDTO();
         groupDTO.setId(group.getId());
         groupDTO.setTitle(group.getTitle());
-
+        if (group.getParent() != null) {
+            groupDTO.setParentID(group.getParent().getId());
+        }
         groupDTO.setGroups(group.getGroups()
                 .stream()
                 .map(this::mapToGroupDTO)

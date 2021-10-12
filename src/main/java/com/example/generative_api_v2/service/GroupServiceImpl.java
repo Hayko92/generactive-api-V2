@@ -32,7 +32,8 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupDTO save(GroupDTO groupDTO) {
         Group group = groupMapper.mapToGroup(groupDTO);
-        return groupMapper.mapToGroupDTO(groupRepository.save(group));
+        group = groupRepository.save(group);
+        return groupMapper.mapToGroupDTO(group);
     }
 
     @Transactional
@@ -69,4 +70,5 @@ public class GroupServiceImpl implements GroupService {
 
         return null;
     }
+
 }
