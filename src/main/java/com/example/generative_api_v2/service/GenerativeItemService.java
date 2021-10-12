@@ -9,13 +9,13 @@ import java.util.List;
 @Component
 public interface GenerativeItemService {
 
-    Generative save(GeneractiveDTO item);
+    GeneractiveDTO save(GeneractiveDTO item);
 
     List<Generative> getAll();
 
     void deleteById(int id);
 
-    Generative getById(int id);
+    GeneractiveDTO getById(int id);
 
     List<Generative> getItemsWithPriceFromTo(int from, int to);
 

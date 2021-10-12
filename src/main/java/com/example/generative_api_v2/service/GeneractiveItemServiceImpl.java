@@ -27,10 +27,10 @@ public class GeneractiveItemServiceImpl implements GenerativeItemService {
 
     @Transactional
     @Override
-    public Generative save(GeneractiveDTO generactiveDTO) {
-        Generative generative = new Generative();
-        generactiveItemMapper.mapToGeneractive(generactiveDTO);
-        return generativeJPARepository.save(generative);
+    public GeneractiveDTO save(GeneractiveDTO generactiveDTO) {
+        Generative generative = generactiveItemMapper.mapToGeneractive(generactiveDTO);
+        generativeJPARepository.save(generative);
+        return generactiveItemMapper.mapToGeneractiveDTO(generative);
     }
 
     @Transactional
@@ -47,8 +47,9 @@ public class GeneractiveItemServiceImpl implements GenerativeItemService {
 
     @Transactional
     @Override
-    public Generative getById(int id) {
-        return generativeJPARepository.findById(id);
+    public GeneractiveDTO getById(int id) {
+        Generative finded = generativeJPARepository.findById(id);
+        return generactiveItemMapper.mapToGeneractiveDTO(finded);
     }
 
     @Transactional

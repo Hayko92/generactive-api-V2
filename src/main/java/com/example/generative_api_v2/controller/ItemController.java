@@ -1,6 +1,8 @@
 package com.example.generative_api_v2.controller;
 
+import com.example.generative_api_v2.dto.GroupDTO;
 import com.example.generative_api_v2.dto.ItemDTO;
+import com.example.generative_api_v2.service.GroupService;
 import com.example.generative_api_v2.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +15,12 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
+    private final GroupService groupService;
 
     @Autowired
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, GroupService groupService) {
         this.itemService = itemService;
+        this.groupService = groupService;
     }
 
     @PostMapping
@@ -49,6 +53,13 @@ public class ItemController {
                              @RequestParam int limit,
                              @RequestParam(required = false) String sortBy) {
         return itemService.getAll(offset,limit, sortBy);
+    }
+    @PutMapping("/{id}/{parentId}")
+    public ItemDTO updateByyId(@PathVariable int id, @PathVariable int parentId) {
+        ItemDTO itemDTO = itemService.getById(id);
+        GroupDTO groupDTO = groupService.getById(parentId);
+        itemDTO.setParent(groupDTO);
+        return itemService.save(itemDTO);
     }
 
 }

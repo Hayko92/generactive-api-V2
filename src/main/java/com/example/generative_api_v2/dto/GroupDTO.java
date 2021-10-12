@@ -1,6 +1,6 @@
 package com.example.generative_api_v2.dto;
 
-import com.example.generative_api_v2.model.Group;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,9 @@ import java.util.List;
 public class GroupDTO {
     private int id;
     private String title;
-    private Group parent;
+    private int parentID;
+    @JsonIgnore
+    private GroupDTO parent;
     private   List<ItemDTO> items;
     private   List<GroupDTO> groups;
 
@@ -56,11 +58,31 @@ public class GroupDTO {
         this.id = id;
     }
 
-    public void setParent(Group parent) {
+    public void setParent(GroupDTO parent) {
         this.parent = parent;
+        this.parentID =parent.id;
     }
 
-    public Group getParent() {
+    public GroupDTO getParent() {
         return parent;
+    }
+
+    public int getParentID() {
+        return parentID;
+    }
+
+    public void setParentID(int parentID) {
+        this.parentID = parentID;
+    }
+
+
+    public boolean containing(int groupID) {
+        boolean res = false;
+        for(GroupDTO groupDTO: groups) {
+            if(groupDTO.parentID==groupID) return true;
+            res = groupDTO.containing(id);
+            if(res) break; 
+        } return res;
+
     }
 }

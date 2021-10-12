@@ -2,6 +2,7 @@ package com.example.generative_api_v2.controller;
 
 import com.example.generative_api_v2.dto.GroupDTO;
 import com.example.generative_api_v2.service.GroupService;
+import com.example.generative_api_v2.util.SubGroupCheckUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +44,15 @@ public class GroupController {
     public GroupDTO updateByyId(@PathVariable int id, @RequestBody GroupDTO updatedGroup) {
         return groupService.updateById(id, updatedGroup);
     }
+
+    @PutMapping("/{id}/{parentId}")
+    public GroupDTO updateByyId(@PathVariable int id, @PathVariable int parentId) {
+        GroupDTO mainGroupDTO = groupService.getById(id);
+        GroupDTO parentgroupDTO = groupService.getById(parentId);
+       if(!SubGroupCheckUtil.checkSetability(parentgroupDTO,mainGroupDTO)) throw  new RuntimeException("this Id can not be parent");
+        mainGroupDTO.setParent(parentgroupDTO);
+        return groupService.save(mainGroupDTO);
+    }
+
 
 }

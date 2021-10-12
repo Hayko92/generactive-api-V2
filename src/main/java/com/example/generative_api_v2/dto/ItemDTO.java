@@ -1,6 +1,7 @@
 package com.example.generative_api_v2.dto;
 
 import com.example.generative_api_v2.model.Configuration;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -16,6 +17,7 @@ public class ItemDTO {
     private  int price;
     private  String currency;
     private Configuration configuration;
+    @JsonIgnore
     private GroupDTO parent;
     private int parentId;
 
