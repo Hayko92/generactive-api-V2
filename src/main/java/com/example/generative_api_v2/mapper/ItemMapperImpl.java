@@ -17,14 +17,17 @@ public final class ItemMapperImpl implements ItemMapper{
     }
 
     @Override
-    public Item mapToItem(  ItemDTO itemDTO) {
-        Item item = new Item();
+    public Item mapToItem(  ItemDTO itemDTO, Item item) {
+
         item.setId(itemDTO.getId());
         item.setCurrency(itemDTO.getCurrency());
        if(itemDTO.getParent()!=null) item.setParent(groupMapper.mapToGroup(itemDTO.getParent()));
         item.setTitle(itemDTO.getTitle());
         item.setPrice(itemDTO.getPrice());
         item.setImage_url(itemDTO.getImage_url());
+        if (itemDTO.getUpdatedAt() != null) item.setUpdatedAt(itemDTO.getUpdatedAt());
+        if (itemDTO.getCreatedAt() != null) item.setCreatedAt(itemDTO.getCreatedAt());
+        if (itemDTO.getCreatedBy() != null) item.setCreatedBy(itemDTO.getCreatedBy());
         return  item;
     }
 
@@ -37,6 +40,9 @@ public final class ItemMapperImpl implements ItemMapper{
         itemDTO.setPrice(item.getPrice());
         itemDTO.setImage_url(item.getImage_url());
         itemDTO.setTitle(item.getTitle());
+        itemDTO.setUpdatedAt(item.getUpdatedAt());
+        itemDTO.setCreatedAt(item.getCreatedAt());
+        itemDTO.setCreatedBy(item.getCreatedBy());
         return itemDTO;
 
     }

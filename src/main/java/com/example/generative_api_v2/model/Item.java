@@ -1,8 +1,10 @@
 package com.example.generative_api_v2.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 
@@ -26,6 +28,17 @@ public class Item {
 
     @Column(name = "currency")
     private String currency;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "created_at")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date updatedAt;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")
@@ -109,6 +122,30 @@ public class Item {
 
     public void setParent(Group parent) {
         this.parent = parent;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public double calculatePrice(Configuration configuration) {

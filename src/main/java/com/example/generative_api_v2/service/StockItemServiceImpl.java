@@ -10,9 +10,15 @@ import com.example.generative_api_v2.pagination.CustomPageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,8 +45,10 @@ public class StockItemServiceImpl implements ItemService {
     @Transactional
     @Override
     public ItemDTO save(ItemDTO itemDTO) {
-        Item item = itemMapper.mapToItem(itemDTO);
-        itemRepository.save(item);
+        itemDTO =setCreatingDate(itemDTO);
+        itemDTO =setCreatingUserName(itemDTO);
+        Item item = itemMapper.mapToItem(itemDTO, new Item());
+        item = itemRepository.save(item);
         return itemMapper.mapToItemDTO(item);
     }
 
@@ -80,7 +88,8 @@ public class StockItemServiceImpl implements ItemService {
         Item item = itemRepository.findById(id).orElse(null);
         if (item != null) {
             itemDTO.setId(id);
-            item = itemMapper.mapToItem(itemDTO);
+            itemDTO = setUpdatingDate(itemDTO);
+            item = itemMapper.mapToItem(itemDTO, item);
             return itemMapper.mapToItemDTO(itemRepository.save(item));
         }
         return null;
@@ -92,6 +101,32 @@ public class StockItemServiceImpl implements ItemService {
                 .stream()
                 .map(i->itemMapper.mapToItemDTO(i))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @PrePersist
+    public ItemDTO setCreatingDate(ItemDTO itemDTO) {
+        Date date = new Date();
+        itemDTO.setCreatedAt(date);
+        return itemDTO;
+    }
+
+    @Override
+    @PrePersist
+    public ItemDTO setUpdatingDate(ItemDTO itemDTO) {
+        Date date = new Date();
+        itemDTO.setUpdatedAt(date);
+        return itemDTO;
+    }
+
+
+    @Override
+    @PreUpdate
+    public ItemDTO setCreatingUserName(ItemDTO itemDTO) {
+       UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       String name =userDetails.getUsername();
+       itemDTO.setCreatedBy(name);
+       return itemDTO;
     }
 
 }
