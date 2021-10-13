@@ -144,7 +144,7 @@ public class Group {
         this.createdBy = userDetails.getUsername();
     }
     @PreUpdate
-    public void setUpdateDate() {
+    public void settingUpdatedate() {
         this.updatedAt =new Date();
     }
 
