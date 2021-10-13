@@ -16,9 +16,9 @@ public class GroupDTO {
     private   List<ItemDTO> items;
     private   List<GroupDTO> groups;
      private String createdBy;
-     @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Yerevan")
     private Date createdAt;
-     @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Yerevan")
     private Date updatedAt;
 
     public void setItems(List<ItemDTO> items) {

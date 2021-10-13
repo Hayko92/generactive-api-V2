@@ -24,9 +24,9 @@ public class ItemDTO {
     private GroupDTO parent;
     private int parentId;
     private String createdBy;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Yerevan")
     private Date createdAt;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Yerevan")
     private Date updatedAt;
 
     public ItemDTO() {
