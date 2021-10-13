@@ -1,25 +1,33 @@
 package com.example.generative_api_v2.dto;
 
 import com.example.generative_api_v2.model.Configuration;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 public class ItemDTO {
-    private  int id;
+    private int id;
     @NotNull(message = "can not be NULL:custom message")
     @Size
     @NotBlank
-    private  String title;
-    private  String image_url;
-    private  int price;
-    private  String currency;
+    private String title;
+    private String image_url;
+    private int price;
+    private String currency;
     private Configuration configuration;
     @JsonIgnore
     private GroupDTO parent;
     private int parentId;
+    private String createdBy;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date updatedAt;
 
     public ItemDTO() {
     }
@@ -32,13 +40,13 @@ public class ItemDTO {
         this.configuration = configuration;
     }
 
-    public ItemDTO(  String title, int price, String image_url) {
+    public ItemDTO(String title, int price, String image_url) {
         this.title = title;
         this.price = price;
         this.image_url = image_url;
     }
 
-    public ItemDTO(String title, int price,String image_url,  String currency) {
+    public ItemDTO(String title, int price, String image_url, String currency) {
         this.title = title;
         this.image_url = image_url;
         this.price = price;
@@ -110,5 +118,27 @@ public class ItemDTO {
         this.configuration = configuration;
     }
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }

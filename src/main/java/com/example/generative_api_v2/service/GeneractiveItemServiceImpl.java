@@ -5,9 +5,14 @@ import com.example.generative_api_v2.dto.GeneractiveDTO;
 import com.example.generative_api_v2.mapper.GeneractiveItemMapper;
 import com.example.generative_api_v2.model.Generative;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -28,8 +33,10 @@ public class GeneractiveItemServiceImpl implements GenerativeItemService {
     @Transactional
     @Override
     public GeneractiveDTO save(GeneractiveDTO generactiveDTO) {
-        Generative generative = generactiveItemMapper.mapToGeneractive(generactiveDTO);
-        generativeJPARepository.save(generative);
+        generactiveDTO =setCreatingDate(generactiveDTO);
+        generactiveDTO =setCreatingUserName(generactiveDTO);
+        Generative generative = generactiveItemMapper.mapToGeneractive(generactiveDTO, new Generative());
+        generative  =   generativeJPARepository.save(generative);
         return generactiveItemMapper.mapToGeneractiveDTO(generative);
     }
 
@@ -54,9 +61,45 @@ public class GeneractiveItemServiceImpl implements GenerativeItemService {
 
     @Transactional
     public Generative updateById(int id, GeneractiveDTO generactiveDTO) {
+        generactiveDTO =setUpdatingDate(generactiveDTO);
         Generative generative = generativeJPARepository.findById(id);
+        if(generative==null) throw new RuntimeException("There is now item with id "+id);
+        generactiveDTO.setId(id);
+        generative = generactiveItemMapper.mapToGeneractive(generactiveDTO, generative);
+        setUpdatingDate(generative);
+        generative = generativeJPARepository.save(generative);
+        return generative;
+    }
 
-        return generativeJPARepository.save(generative);
+    @PrePersist
+    @Override
+    public GeneractiveDTO setCreatingDate(GeneractiveDTO itemDTO) {
+        Date date = new Date();
+        itemDTO.setCreatedAt(date);
+        return itemDTO;
+    }
+
+    @PreUpdate
+    @Override
+    public GeneractiveDTO setUpdatingDate(GeneractiveDTO itemDTO) {
+        Date date = new Date();
+        itemDTO.setUpdatedAt(date);
+        return itemDTO;
+    }
+
+    @PreUpdate
+    public Generative setUpdatingDate(Generative item) {
+        Date date = new Date();
+        item.setUpdatedAt(date);
+        return item;
+    }
+
+    @Override
+    public GeneractiveDTO setCreatingUserName(GeneractiveDTO generactiveDTO) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String name =userDetails.getUsername();
+        generactiveDTO.setCreatedBy(name);
+        return generactiveDTO;
     }
 
     @Transactional

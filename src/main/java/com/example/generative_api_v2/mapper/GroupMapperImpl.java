@@ -2,6 +2,7 @@ package com.example.generative_api_v2.mapper;
 
 import com.example.generative_api_v2.dto.GroupDTO;
 import com.example.generative_api_v2.model.Group;
+import com.example.generative_api_v2.model.Item;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
@@ -21,7 +22,7 @@ public class GroupMapperImpl implements GroupMapper {
         group.setTitle(groupDTO.getTitle());
         group.setItems(groupDTO.getItems()
                 .stream()
-                .map(itemMapper::mapToItem)
+                .map(e->itemMapper.mapToItem(e, new Item()))
                 .collect(Collectors.toList()));
 
         group.setGroups(groupDTO.getGroups()
