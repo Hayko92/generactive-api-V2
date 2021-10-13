@@ -5,14 +5,9 @@ import com.example.generative_api_v2.dto.GroupDTO;
 import com.example.generative_api_v2.mapper.GroupMapper;
 import com.example.generative_api_v2.model.Group;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,8 +30,6 @@ public class GroupServiceImpl implements GroupService {
     @Transactional
     @Override
     public GroupDTO save(GroupDTO groupDTO) {
-        groupDTO = setCreatingDate(groupDTO);
-        groupDTO = setCreatingUserName(groupDTO);
         Group group = groupMapper.mapToGroup(groupDTO, new Group());
         group = groupRepository.save(group);
         return groupMapper.mapToGroupDTO(group);
@@ -67,38 +60,14 @@ public class GroupServiceImpl implements GroupService {
     @Transactional
     @Override
     public GroupDTO updateById(int id, GroupDTO groupDTO) {
-        Optional<Group> finded = groupRepository.findById(id);
-        if (finded.isPresent()) {
-            Group group = finded.get();
+       Group finded = groupRepository.findById(id).orElse(null);
+        if (finded!=null) {
             groupDTO.setId(id);
-            groupDTO = setUpdatingDate(groupDTO);
-            group = groupMapper.mapToGroup(groupDTO, group);
-            group = groupRepository.save(group);
-            return groupMapper.mapToGroupDTO(group);
+            finded = groupMapper.mapToGroup(groupDTO, finded);
+            finded = groupRepository.save(finded);
+            return groupMapper.mapToGroupDTO(finded);
         }
         return null;
-    }
-
-    @Override
-    @PrePersist
-    public GroupDTO setCreatingDate(GroupDTO group) {
-        group.setCreatedAt(new Date());
-        return group;
-    }
-
-    @Override
-    @PreUpdate
-    public GroupDTO setUpdatingDate(GroupDTO group) {
-        group.setUpdatedAt(new Date());
-        return group;
-    }
-
-    @Override
-    public GroupDTO setCreatingUserName(GroupDTO group) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String name = userDetails.getUsername();
-        group.setCreatedBy(name);
-        return group;
     }
 
 }

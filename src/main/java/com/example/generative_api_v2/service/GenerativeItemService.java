@@ -1,7 +1,6 @@
 package com.example.generative_api_v2.service;
 
 import com.example.generative_api_v2.dto.GeneractiveDTO;
-import com.example.generative_api_v2.dto.ItemDTO;
 import com.example.generative_api_v2.model.Generative;
 import org.springframework.stereotype.Component;
 
@@ -21,11 +20,5 @@ public interface GenerativeItemService {
     List<Generative> getItemsWithPriceFromTo(int from, int to);
 
     Generative updateById(int id, GeneractiveDTO generativeDTO);
-
-    GeneractiveDTO setCreatingDate(GeneractiveDTO itemDTO);
-
-    GeneractiveDTO setUpdatingDate(GeneractiveDTO itemDTO);
-
-    GeneractiveDTO setCreatingUserName(GeneractiveDTO itemDTO);
 
 }
