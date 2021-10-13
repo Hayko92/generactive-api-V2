@@ -1,6 +1,7 @@
 package com.example.generative_api_v2.mapper;
 
 import com.example.generative_api_v2.dto.ItemDTO;
+import com.example.generative_api_v2.model.Group;
 import com.example.generative_api_v2.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public final class ItemMapperImpl implements ItemMapper{
 
         item.setId(itemDTO.getId());
         item.setCurrency(itemDTO.getCurrency());
-       if(itemDTO.getParent()!=null) item.setParent(groupMapper.mapToGroup(itemDTO.getParent()));
+       if(itemDTO.getParent()!=null) item.setParent(groupMapper.mapToGroup(itemDTO.getParent(), new Group()));
         item.setTitle(itemDTO.getTitle());
         item.setPrice(itemDTO.getPrice());
         item.setImage_url(itemDTO.getImage_url());

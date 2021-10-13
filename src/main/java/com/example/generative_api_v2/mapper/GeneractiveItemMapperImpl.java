@@ -2,6 +2,7 @@ package com.example.generative_api_v2.mapper;
 
 import com.example.generative_api_v2.dto.GeneractiveDTO;
 import com.example.generative_api_v2.model.Generative;
+import com.example.generative_api_v2.model.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +23,7 @@ public final class GeneractiveItemMapperImpl implements GeneractiveItemMapper {
         generative.setId(generactiveDTO.getId());
         if (generactiveDTO.getCurrency() != null) generative.setCurrency(generactiveDTO.getCurrency());
         if (generactiveDTO.getParent() != null)
-            generative.setParent(groupMapper.mapToGroup(generactiveDTO.getParent()));
+            generative.setParent(groupMapper.mapToGroup(generactiveDTO.getParent(), new Group()));
         if (generactiveDTO.getTitle() != null) generative.setTitle(generactiveDTO.getTitle());
         if (generactiveDTO.getPrice() != 0) generative.setPrice(generactiveDTO.getPrice());
         generative.setComplexity(generactiveDTO.getComplexity());

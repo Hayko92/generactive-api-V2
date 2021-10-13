@@ -12,24 +12,26 @@ public class GroupMapperImpl implements GroupMapper {
     private final ItemMapper itemMapper = new ItemMapperImpl(this);
 
     public GroupMapperImpl() {
-
     }
 
     @Override
-    public Group mapToGroup(GroupDTO groupDTO) {
-        Group group = new Group();
+    public Group mapToGroup(GroupDTO groupDTO, Group group) {
+
         group.setId(groupDTO.getId());
         group.setTitle(groupDTO.getTitle());
         group.setItems(groupDTO.getItems()
                 .stream()
-                .map(e->itemMapper.mapToItem(e, new Item()))
+                .map(e -> itemMapper.mapToItem(e, new Item()))
                 .collect(Collectors.toList()));
 
         group.setGroups(groupDTO.getGroups()
                 .stream()
-                .map(this::mapToGroup)
+                .map(e -> mapToGroup(e, new Group()))
                 .collect(Collectors.toList()));
-        if (groupDTO.getParent() != null) group.setParent(mapToGroup(groupDTO.getParent()));
+        if (groupDTO.getParent() != null) group.setParent(mapToGroup(groupDTO.getParent(), new Group()));
+        if (groupDTO.getUpdatedAt() != null) group.setUpdatedAt(groupDTO.getUpdatedAt());
+        if (groupDTO.getCreatedAt() != null) group.setCreatedAt(groupDTO.getCreatedAt());
+        if (groupDTO.getCreatedBy() != null) group.setCreatedBy(groupDTO.getCreatedBy());
 
         return group;
     }
@@ -51,6 +53,9 @@ public class GroupMapperImpl implements GroupMapper {
                 .stream()
                 .map(itemMapper::mapToItemDTO)
                 .collect(Collectors.toList()));
+        groupDTO.setUpdatedAt(group.getUpdatedAt());
+        groupDTO.setCreatedAt(group.getCreatedAt());
+        groupDTO.setCreatedBy(group.getCreatedBy());
         return groupDTO;
     }
 }
