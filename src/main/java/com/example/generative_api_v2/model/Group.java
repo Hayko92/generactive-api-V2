@@ -1,10 +1,12 @@
 package com.example.generative_api_v2.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,6 +33,17 @@ public class Group {
     @JoinColumn(name = "parent")
     @JsonManagedReference
     private List<Group> groups;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "created_at")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date updatedAt;
 
     public Group() {
         this.title = "";
@@ -94,6 +107,34 @@ public class Group {
         return parent;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @Override
     public String toString() {
         return "model.Group{" +
@@ -132,7 +173,7 @@ public class Group {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Group group = (Group) o;
-        return id == group.id && Objects.equals(title, group.title) && Objects.equals(parent, group.parent) && Objects.equals(items, group.items) && Objects.equals(groups, group.groups);
+        return Objects.equals(id, group.id) && Objects.equals(title, group.title) && Objects.equals(parent, group.parent) && Objects.equals(items, group.items) && Objects.equals(groups, group.groups);
     }
 
     @Override
