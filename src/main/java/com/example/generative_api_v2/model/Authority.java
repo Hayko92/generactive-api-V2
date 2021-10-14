@@ -1,30 +1,45 @@
 package com.example.generative_api_v2.model;
 
-import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Collection;
 
 @Entity
-@Table(name = "authorities")
-public class Authority implements GrantedAuthority {
+public class Authority {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "authority")
-    private String authority;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_authorities",
-            joinColumns = {@JoinColumn(name = "roles_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")}
-    )
-    private Set<User> users;
+    @Column(name = "name")
+    private String name;
 
-    @Override
-    public String getAuthority() {
-        return authority;
+    @ManyToMany(mappedBy = "authorities", fetch = FetchType.EAGER)
+    private Collection<Role> roles;
+
+    public Authority() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 }

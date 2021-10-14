@@ -6,6 +6,7 @@ import com.example.generative_api_v2.filter.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -35,7 +36,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/","/groups", "/items", "/items/*", "groups/*").hasRole("USER")
+                .antMatchers(HttpMethod.GET,"/","/groups", "/items", "/items/*", "groups/*").hasAnyAuthority("CAN_READ_ALL_ITEMS","CAN_READ_ALL_GROUPS")
+                .antMatchers(HttpMethod.POST,"/","/groups", "/items", "/items/*", "groups/*").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/","/groups", "/items", "/items/*", "groups/*").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/","/groups", "/items", "/items/*", "groups/*").hasRole("ADMIN")
                 .antMatchers("/login","/register").permitAll()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
