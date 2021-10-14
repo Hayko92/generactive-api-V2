@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface GroupRepository extends JpaRepository<Group, Integer> {
     List<Group> findAll();
+    Group getById(Integer id);
 
 }

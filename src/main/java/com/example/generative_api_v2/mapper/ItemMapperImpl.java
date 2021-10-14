@@ -22,7 +22,7 @@ public final class ItemMapperImpl implements ItemMapper{
 
         item.setId(itemDTO.getId());
         item.setCurrency(itemDTO.getCurrency());
-       if(itemDTO.getParent()!=null) item.setParent(groupMapper.mapToGroup(itemDTO.getParent(), new Group()));
+        if(itemDTO.getParent()!=null) item.setParent(groupMapper.mapToGroup(itemDTO.getParent(), new Group()));
         item.setTitle(itemDTO.getTitle());
         item.setPrice(itemDTO.getPrice());
         item.setImage_url(itemDTO.getImage_url());

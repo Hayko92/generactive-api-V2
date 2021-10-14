@@ -40,11 +40,11 @@ public class Group {
     private String createdBy;
 
     @Column(name = "created_at")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Yerevan")
     private Date createdAt;
 
     @Column(name = "updated_at")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Yerevan")
     private Date updatedAt;
 
     public Group() {
@@ -149,6 +149,17 @@ public class Group {
         this.updatedAt = new Date();
     }
 
+
+    @PrePersist
+    public void setOwnerAndCreationDate() {
+        this.createdAt=new Date();
+        UserDetails userDetails =(UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        this.createdBy = userDetails.getUsername();
+    }
+    @PreUpdate
+    public void settingUpdatedate() {
+        this.updatedAt =new Date();
+    }
 
     @Override
     public String toString() {

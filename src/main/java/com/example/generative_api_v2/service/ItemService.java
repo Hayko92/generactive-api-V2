@@ -20,10 +20,4 @@ public interface ItemService {
 
     List<ItemDTO> getItemsWithPriceFromTo(int from, int to);
 
-    ItemDTO setCreatingDate(ItemDTO itemDTO);
-
-    ItemDTO setUpdatingDate(ItemDTO itemDTO);
-
-    ItemDTO setCreatingUserName(ItemDTO itemDTO);
-
 }
