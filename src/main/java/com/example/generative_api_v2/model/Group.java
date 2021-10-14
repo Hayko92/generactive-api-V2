@@ -129,13 +129,6 @@ public class Group {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-    @PrePersist
-    public void setCreatingDate() {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String name = userDetails.getUsername();
-        this.createdAt = new Date();
-        this.createdBy = name;
-    }
 
     public Date getUpdatedAt() {
         return updatedAt;
@@ -144,11 +137,6 @@ public class Group {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
-    @PreUpdate
-    public void setUpdatingTime() {
-        this.updatedAt = new Date();
-    }
-
 
     @PrePersist
     public void setOwnerAndCreationDate() {

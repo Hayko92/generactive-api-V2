@@ -17,11 +17,11 @@ public class User {
 
     @ManyToMany(cascade = { CascadeType.DETACH,CascadeType.MERGE,CascadeType.REMOVE,CascadeType.REFRESH },fetch = FetchType.EAGER)
     @JoinTable(
-            name = "users_authorities",
+            name = "users_role",
             joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "roles_id") }
+            inverseJoinColumns = { @JoinColumn(name = "role_id") }
     )
-    private Set<Authority> roles;
+    private Set<Role> roles;
 
     @Column(name = "enabled")
     private boolean enabled = true;
@@ -50,11 +50,11 @@ public class User {
         this.password = password;
     }
 
-    public Set<Authority> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Authority> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

@@ -2,7 +2,7 @@ package com.example.generative_api_v2.configuration.userService;
 
 import com.example.generative_api_v2.db.jpaRepositories.RoleRepository;
 import com.example.generative_api_v2.db.jpaRepositories.UserRepository;
-import com.example.generative_api_v2.model.Authority;
+import com.example.generative_api_v2.model.Role;
 import com.example.generative_api_v2.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,8 +32,8 @@ public class CustomUserDetailService implements UserDetailsService {
     }
 
     public User saveUser(User userEntity) {
-        Authority userRole = roleRepository.findByAuthority("USER");
-        Set<Authority> roles = Set.of(userRole);
+        Role userRole = roleRepository.findByAuthority("USER");
+        Set<Role> roles = Set.of(userRole);
         userEntity.setRoles(roles);
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         return userRepository.save(userEntity);

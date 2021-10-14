@@ -1,9 +1,12 @@
 package com.example.generative_api_v2.configuration.userService;
 
+import com.example.generative_api_v2.model.Role;
 import com.example.generative_api_v2.model.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class MyUserPrincipal implements UserDetails {
@@ -16,7 +19,15 @@ public class MyUserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles();
+         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+         for (Role role: user.getRoles()) {
+             authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
+             role.getAuthorities()
+                     .stream()
+                     .map(e->new SimpleGrantedAuthority(e.getName()))
+                     .forEach(authorities::add);
+         }
+         return authorities;
     }
 
     @Override
