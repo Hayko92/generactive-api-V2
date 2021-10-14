@@ -3,6 +3,8 @@ package com.example.generative_api_v2.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -123,8 +125,16 @@ public class Group {
         return createdAt;
     }
 
+
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+    @PrePersist
+    public void setCreatingDate() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String name = userDetails.getUsername();
+        this.createdAt = new Date();
+        this.createdBy = name;
     }
 
     public Date getUpdatedAt() {
@@ -134,6 +144,11 @@ public class Group {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+    @PreUpdate
+    public void setUpdatingTime() {
+        this.updatedAt = new Date();
+    }
+
 
     @Override
     public String toString() {

@@ -35,8 +35,8 @@ public class GroupServiceImpl implements GroupService {
     @Transactional
     @Override
     public GroupDTO save(GroupDTO groupDTO) {
-        groupDTO = setCreatingDate(groupDTO);
-        groupDTO = setCreatingUserName(groupDTO);
+       // groupDTO = setCreatingDate(groupDTO);
+     //   groupDTO = setCreatingUserName(groupDTO);
         Group group = groupMapper.mapToGroup(groupDTO, new Group());
         group = groupRepository.save(group);
         return groupMapper.mapToGroupDTO(group);
@@ -71,34 +71,33 @@ public class GroupServiceImpl implements GroupService {
         if (finded.isPresent()) {
             Group group = finded.get();
             groupDTO.setId(id);
-            groupDTO = setUpdatingDate(groupDTO);
+           // groupDTO = setUpdatingDate(groupDTO);
             group = groupMapper.mapToGroup(groupDTO, group);
             group = groupRepository.save(group);
             return groupMapper.mapToGroupDTO(group);
         }
         return null;
     }
-
-    @Override
-    @PrePersist
-    public GroupDTO setCreatingDate(GroupDTO group) {
-        group.setCreatedAt(new Date());
-        return group;
-    }
-
-    @Override
-    @PreUpdate
-    public GroupDTO setUpdatingDate(GroupDTO group) {
-        group.setUpdatedAt(new Date());
-        return group;
-    }
-
-    @Override
-    public GroupDTO setCreatingUserName(GroupDTO group) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String name = userDetails.getUsername();
-        group.setCreatedBy(name);
-        return group;
-    }
+//
+//    @Override
+//    @PrePersist
+//    public GroupDTO setCreatingDate(GroupDTO group) {
+//        group.setCreatedAt(new Date());
+//        return group;
+//    }
+//
+//    @Override
+//    public GroupDTO setUpdatingDate(GroupDTO group) {
+//        group.setUpdatedAt(new Date());
+//        return group;
+//    }
+//
+//    @Override
+//    public GroupDTO setCreatingUserName(GroupDTO group) {
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        String name = userDetails.getUsername();
+//        group.setCreatedBy(name);
+//        return group;
+//    }
 
 }

@@ -20,10 +20,10 @@ public interface GroupService {
 
     GroupDTO updateById(int id, GroupDTO group);
 
-    GroupDTO setCreatingDate(GroupDTO group);
-
-    GroupDTO setUpdatingDate(GroupDTO group);
-
-    GroupDTO setCreatingUserName(GroupDTO group);
+//    GroupDTO setCreatingDate(GroupDTO group);
+//
+//    GroupDTO setUpdatingDate(GroupDTO group);
+//
+//    GroupDTO setCreatingUserName(GroupDTO group);
 
 }
