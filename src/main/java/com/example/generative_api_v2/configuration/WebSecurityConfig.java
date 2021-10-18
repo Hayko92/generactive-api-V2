@@ -21,12 +21,39 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     DataSource dataSource;
-    @Autowired
     CustomUserDetailService userDetailService;
-    @Autowired
     JwtTokenFilter jwtFilter;
+
+    public WebSecurityConfig() {
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public CustomUserDetailService getUserDetailService() {
+        return userDetailService;
+    }
+
+    @Autowired
+    public void setUserDetailService(CustomUserDetailService userDetailService) {
+        this.userDetailService = userDetailService;
+    }
+
+    public JwtTokenFilter getJwtFilter() {
+        return jwtFilter;
+    }
+
+    @Autowired
+    public void setJwtFilter(JwtTokenFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -36,11 +63,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/","/groups", "/items", "/items/*", "groups/*").hasAnyAuthority("CAN_READ_ALL_ITEMS","CAN_READ_ALL_GROUPS")
-                .antMatchers(HttpMethod.POST,"/","/groups", "/items", "/items/*", "groups/*").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE,"/","/groups", "/items", "/items/*", "groups/*").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT,"/","/groups", "/items", "/items/*", "groups/*").hasRole("ADMIN")
-                .antMatchers("/login","/register").permitAll()
+                .antMatchers(HttpMethod.GET, "/", "/groups", "/items", "/items/*", "groups/*").hasAnyAuthority("CAN_READ_ALL_ITEMS", "CAN_READ_ALL_GROUPS")
+                .antMatchers(HttpMethod.POST, "/", "/groups", "/items", "/items/*", "groups/*").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/", "/groups", "/items", "/items/*", "groups/*").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/", "/groups", "/items", "/items/*", "groups/*").hasRole("ADMIN")
+                .antMatchers("/login", "/register").permitAll()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }

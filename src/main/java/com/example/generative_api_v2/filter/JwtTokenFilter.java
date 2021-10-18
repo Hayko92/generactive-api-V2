@@ -22,12 +22,26 @@ public class JwtTokenFilter extends GenericFilterBean {
 
     public static final String AUTHORIZATION = "Authorization";
 
-    private final JwtTokenUtil jwtProvider;
-    private final CustomUserDetailService userDetailsService;
+    private  JwtTokenUtil jwtProvider;
+    private  CustomUserDetailService userDetailsService;
+
+    public JwtTokenFilter() {
+    }
+
+    public JwtTokenUtil getJwtProvider() {
+        return jwtProvider;
+    }
 
     @Autowired
-    public JwtTokenFilter(JwtTokenUtil jwtProvider, CustomUserDetailService userDetailsService) {
+    public void setJwtProvider(JwtTokenUtil jwtProvider) {
         this.jwtProvider = jwtProvider;
+    }
+
+    public CustomUserDetailService getUserDetailsService() {
+        return userDetailsService;
+    }
+    @Autowired
+    public void setUserDetailsService(CustomUserDetailService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 

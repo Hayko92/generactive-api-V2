@@ -15,14 +15,39 @@ import java.util.Set;
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 
-    @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
+    private PasswordEncoder passwordEncoder;
+
+    public CustomUserDetailService() {
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
 
     @Autowired
-    RoleRepository roleRepository;
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public RoleRepository getRoleRepository() {
+        return roleRepository;
+    }
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    public void setRoleRepository(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
+    public PasswordEncoder getPasswordEncoder() {
+        return passwordEncoder;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public MyUserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
